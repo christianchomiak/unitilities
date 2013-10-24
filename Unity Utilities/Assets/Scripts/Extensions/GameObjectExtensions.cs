@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public static class GameObjectExtension
+public static class GameObjectExtensions
 {
     #region Recursive Modifiers
     public static void SetCollisionRecursively(this GameObject gameObject, bool tf)

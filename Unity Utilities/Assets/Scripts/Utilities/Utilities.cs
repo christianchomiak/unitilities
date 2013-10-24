@@ -38,6 +38,7 @@ public class Utilities
 
     #endregion
 
+
     #region EnumsFunctions
 
     public static T GetRandomEnum<T>(int limit)
@@ -61,6 +62,7 @@ public class Utilities
     }
 
     #endregion
+
 
     #region Randoms
 
@@ -98,6 +100,7 @@ public class Utilities
 
     #endregion
 
+
     #region Conversions
 
     public static bool IntToBool(int i)
@@ -116,6 +119,7 @@ public class Utilities
 
     #endregion
 
+
     #region Strings
 
     public static string FillNumberWithLeftZeros(int number, int maxDigits)
@@ -131,6 +135,7 @@ public class Utilities
     }
 
     #endregion
+
 
     #region ColorGeneration
 
@@ -307,7 +312,8 @@ public class Utilities
     /// <returns></returns>
     public static Vector3 RGBToHSV(float r, float g, float b)
     {
-        return RGBToHSV(new Color(r, g, b));
+        return (new Color(r, g, b)).GetHSV();
+        //return RGBToHSV(new Color(r, g, b));
     }
 
     /// <summary>
@@ -317,7 +323,9 @@ public class Utilities
     /// <returns>Vector3 containing the HSV representation of the RGB color</returns>
     public static Vector3 RGBToHSV(Color color) //, out float h, out float s, out float v)
     {
-        float h, s, v;
+        return color.GetHSV();
+
+        /*float h, s, v;
 
         float min = Mathf.Min(Mathf.Min(color.r, color.g), color.b);
         float max = Mathf.Max(Mathf.Max(color.r, color.g), color.b);
@@ -359,7 +367,7 @@ public class Utilities
         if (h < 0)
             h += 360;
 
-        return new Vector3(h, s, v);
+        return new Vector3(h, s, v);*/
     }
 
     /// <summary>
