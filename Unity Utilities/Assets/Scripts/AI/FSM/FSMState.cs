@@ -2,52 +2,74 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public enum TransitionCondition { NULL_ID };
-
-[System.Serializable]
-public class Transition
-{
-    [SerializeField]
-    string name;
-
-    [SerializeField]
-    FSMState toState;
-
-    [SerializeField]
-    TransitionCondition condition;
-
-    public Transition(FSMState _toState, TransitionCondition _condition)
-    {
-        toState = _toState;
-        condition = _condition;
-    }
-
-    public FSMState ToState
-    {
-        get { return toState; }
-    }
-
-    public TransitionCondition Condition
-    {
-        get { return condition; }
-    }
-
-}
 
 public abstract class FSMState : MonoBehaviour
 {
+    #region Variables
+
     public bool isInitialState = false;
 
     [SerializeField]
-    List<Transition> transitions;
+    List<FSMTransition> transitions;
 
     List<TransitionCondition> conditions;
 
+    #endregion
+
+
+    #region UnityFunctions
+
     protected virtual void Awake()
     {
-        List<Transition> toDelete = new List<Transition>();
+        CheckForReflectiveTransitions();
 
-        foreach (Transition t in transitions)
+        CheckInitialState();
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+        conditions = new List<TransitionCondition>();
+
+        foreach (FSMTransition t in transitions)
+        {
+            conditions.Add(t.Condition);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        Reason();
+    }
+
+    // Update is called once per frame
+    protected virtual void Update()
+    {
+        //Reason();
+        Act();
+    }
+
+    #endregion
+
+
+    #region AbstractFunctions
+
+    public abstract void DoBeforeEntering();
+
+    protected abstract void DoBeforeLeaving();
+
+    protected abstract void Act();
+
+    #endregion
+
+
+    #region Functions
+
+    void CheckForReflectiveTransitions()
+    {
+        List<FSMTransition> toDelete = new List<FSMTransition>();
+
+        foreach (FSMTransition t in transitions)
         {
             if (t.ToState == this || t.ToState.GetType() == this.GetType())
             {
@@ -58,7 +80,10 @@ public abstract class FSMState : MonoBehaviour
             Debug.Log("Found " + toDelete.Count + " reflective transition" + (toDelete.Count == 1 ? "." : "s."));
 
         transitions.RemoveAll(x => toDelete.Contains(x));
+    }
 
+    void CheckInitialState()
+    {
         if (!isInitialState)
             this.enabled = false;
         else
@@ -82,46 +107,6 @@ public abstract class FSMState : MonoBehaviour
         }
     }
 
-	// Use this for initialization
-	void Start ()
-    {
-        conditions = new List<TransitionCondition>();
-
-        foreach (Transition t in transitions)
-        {
-            conditions.Add(t.Condition);
-        }
-	}
-
-    void FixedUpdate()
-    {
-        Reason();
-    }
-
-	// Update is called once per frame
-	protected virtual void Update ()
-    {
-        //Reason();
-        Act();
-	}
-
-    public abstract void DoBeforeEntering();
-
-    protected abstract void DoBeforeLeaving();
-
-    void ExecuteTransition(FSMState toState)
-    {
-        DoBeforeLeaving();
-
-        toState.enabled = true;
-
-        toState.DoBeforeEntering();
-
-        this.enabled = false;
-    }
-
-
-
     protected virtual void Reason()
     {
         if (conditions != null)
@@ -138,8 +123,18 @@ public abstract class FSMState : MonoBehaviour
             }
         }
         //Debug.Log("REASONING");
+    }    
+    
+    void ExecuteTransition(FSMState toState)
+    {
+        DoBeforeLeaving();
+
+        toState.enabled = true;
+
+        toState.DoBeforeEntering();
+
+        this.enabled = false;
     }
-
-    protected abstract void Act();
-
+    
+    #endregion
 }
