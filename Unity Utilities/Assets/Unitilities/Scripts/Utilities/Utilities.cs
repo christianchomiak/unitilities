@@ -495,7 +495,41 @@ public class Utilities
 
 
 
+    #region Trigonometry
 
+    /// <summary>
+    /// Calculates a position over a sphere
+    /// </summary>
+    /// <param name="center">Position of the center of the sphere</param>
+    /// <param name="radius">Radius of the sphere</param>
+    /// <param name="angleInAxisX">Angle of Axis X</param>
+    /// <param name="angleInAxisY">Angle of Axis Y</param>
+    /// <param name="anglesInRadians">True: the angles are in radians. False: the angles are in degrees</param>
+    /// <returns>A position on the sphere</returns>
+    public static Vector3 PointOverSphere(Vector3 center, float radius, float angleInAxisX, float angleInAxisY, bool anglesInRadians = false)
+    {
+        float x, y, z;
+        float angleX = 0f, angleY = 0f;
+
+        if (!anglesInRadians)
+        {
+            angleX = angleInAxisX * Mathf.Deg2Rad;
+            angleY = angleInAxisY * Mathf.Deg2Rad;
+        }
+        else
+        {
+            angleX = angleInAxisX;
+            angleY = angleInAxisY;
+        }
+
+        x = center.x + Mathf.Cos(angleY) * radius * Mathf.Cos(angleX);
+        y = center.y + Mathf.Sin(angleX) * radius;
+        z = center.z + Mathf.Sin(angleY) * radius * Mathf.Cos(angleX);
+
+        return new Vector3(x, y, z);
+    }
+
+    #endregion
 
 
 
@@ -607,20 +641,6 @@ public class Utilities
 
     #endregion
 
-    public static Vector3 V3SetX(Vector3 v, float x)
-    {
-        return new Vector3(x, v.y, v.z);
-    }
-
-    public static Vector3 V3SetY(Vector3 v, float y)
-    {
-        return new Vector3(v.x, y, v.z);
-    }
-
-    public static Vector3 V3SetZ(Vector3 v, float z)
-    {
-        return new Vector3(v.x, v.y, z);
-    }
 
     public static int CalculateFontSize(int _desiredSize) //35
     {
@@ -633,16 +653,5 @@ public class Utilities
     {
         return CalculateFontSize(35);
     }
-
-
-    public static float WrapValue(float value, float min, float max)
-    {
-        if (value > max)
-            return (value - max) + min;
-        if (value < min)
-            return max - (min - value);
-        return value;
-    }
-
-
+    
 }

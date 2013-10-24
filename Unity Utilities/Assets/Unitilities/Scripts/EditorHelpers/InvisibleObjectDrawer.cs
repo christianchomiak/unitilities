@@ -22,4 +22,5 @@ public class InvisibleObjectDrawer : MonoBehaviour
         Gizmos.color = this.color;
         Gizmos.DrawWireSphere(this.transform.position, this.radius);
     }
+
 }
