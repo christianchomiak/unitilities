@@ -18,7 +18,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
                 if (instance == null)
                 {
-                    Debug.LogError("An instance of " + typeof(T) + " is needed in the scene, but there is none. Generated automatically.");
+                    Debug.LogWarning("An instance of " + typeof(T) + " is needed in the scene, but there is none. Generated automatically.");
 
                     GameObject obj = new GameObject("Singleton_" + typeof(T));
                     instance = obj.AddComponent(typeof(T)) as T;
@@ -48,7 +48,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             instance = gameObject.GetComponent<T>(); // AddComponent(typeof(T)) as T;
         }
-
     }
 
     public virtual void OnDestroy()
