@@ -4,33 +4,27 @@ using System.Collections;
 //TO-DO: customize the GUI Style of the displayed text
 public class ObjectTextDrawer : MonoBehaviour
 {
-    enum ObjectTextOptions { Name, Position, CustomText };
+    public enum ObjectTextOptions { Name, Position, CustomText };
 
-    [SerializeField]
-    bool isEnabled = true;
+    public bool isEnabled = true;
 
-    [SerializeField]
-    ObjectTextOptions write;
+    public ObjectTextOptions write;
 
-    [SerializeField]
-    string customText;
+    public string customText;
 
-    [SerializeField]
-    [Range(15, 50)]
-    int textSize = 25;
+    //[Range(15, 50)]
+    public int textSize;
 
-    [SerializeField]
-    bool boldText;
+    public bool boldText;
 
-    [SerializeField]
-    bool italicText;
+    public bool italicText;
 
-    [SerializeField]
-    Color textColor;
+    public Color textColor;
 
-    [SerializeField]
-    Color backgroundColor;
+    public Color backgroundColor;
 
+    /*[SerializeField]
+    Vector3 textPosition;*/
 
     void Awake()
     {
@@ -57,9 +51,7 @@ public class ObjectTextDrawer : MonoBehaviour
         GUIStyle gs = new GUIStyle();
         gs.normal.textColor = textColor;
         gs.fontSize = textSize;
-
-        gs.onHover. textColor = Color.magenta;
-
+        
         if (boldText && italicText)
             gs.fontStyle = FontStyle.BoldAndItalic;
         else if (boldText)

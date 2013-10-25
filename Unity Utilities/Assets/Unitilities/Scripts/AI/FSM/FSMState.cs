@@ -107,6 +107,17 @@ public abstract class FSMState : MonoBehaviour
         }
     }
 
+    void ExecuteTransition(FSMState toState)
+    {
+        DoBeforeLeaving();
+
+        toState.enabled = true;
+
+        toState.DoBeforeEntering();
+
+        this.enabled = false;
+    }
+
     protected virtual void Reason()
     {
         if (conditions != null)
@@ -124,17 +135,6 @@ public abstract class FSMState : MonoBehaviour
         }
         //Debug.Log("REASONING");
     }    
-    
-    void ExecuteTransition(FSMState toState)
-    {
-        DoBeforeLeaving();
-
-        toState.enabled = true;
-
-        toState.DoBeforeEntering();
-
-        this.enabled = false;
-    }
     
     #endregion
 }

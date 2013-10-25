@@ -2,16 +2,16 @@
 
 public class InvisibleObjectDrawer : MonoBehaviour
 {
-    [SerializeField]
-    float radius = 1f;
+    public bool isEnabled;
+
+    public float radius = 1f;
     
-    [SerializeField]
-    Color color = Color.white;
+    public Color color = Color.white;
 
     void Awake()
     {
-        if (radius <= 0f)
-            radius = 1f;
+        if (!Utilities.PlatformIsEditor())
+            DestroyImmediate(this);
     }
 
     /// <summary>
@@ -19,6 +19,9 @@ public class InvisibleObjectDrawer : MonoBehaviour
     /// </summary>
     void OnDrawGizmos()
     {
+        if (!isEnabled)
+            return;
+
         Gizmos.color = this.color;
         Gizmos.DrawWireSphere(this.transform.position, this.radius);
     }
