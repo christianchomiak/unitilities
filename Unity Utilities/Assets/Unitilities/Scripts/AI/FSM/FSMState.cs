@@ -134,7 +134,7 @@ public abstract class FSMState : MonoBehaviour
             }
         }
         //Debug.Log("REASONING");
-    }    
+    }
     
     #endregion
 }
