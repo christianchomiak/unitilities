@@ -52,17 +52,17 @@ public class PlayerPrefsValue
     }
 
     public PlayerPrefsValue(string _keyName, PlayerPrefsTypes _type, int _value)
-        : this(_keyName, _type, _value, float.NaN, null)
+        : this(_keyName, _type, _value, 0f, "")
     {
     }
 
     public PlayerPrefsValue(string _keyName, PlayerPrefsTypes _type, float _value)
-        : this(_keyName, _type, -1, _value, null)
+        : this(_keyName, _type, -1, _value, "")
     {
     }
 
     public PlayerPrefsValue(string _keyName, PlayerPrefsTypes _type, string _value)
-        : this(_keyName, _type, -1, float.NaN, _value)
+        : this(_keyName, _type, -1, 0f, _value)
     {
     }
 
@@ -97,5 +97,6 @@ public class PlayerPrefsValue
                 break;
         }
     }
+
 
 }

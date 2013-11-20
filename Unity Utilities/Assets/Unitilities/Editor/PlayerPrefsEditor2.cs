@@ -44,6 +44,20 @@ public class PlayerPrefsEditor2 : EditorWindow
     private int maxUpdatesPerSecond = 1;
 
     private bool autoRefresh = false;
+    bool foldout = true;
+
+    bool createNewPref = false;
+
+    PlayerPrefsValue newPlayerPref = null;
+    bool incorrectKeyName = false;
+    bool duplicateKeyName = false;
+
+    /*private string[] sortingOptions = new string[] { "Sort (A-Z)", "Rev. Sort (Z-A)" };
+    private int selectedSortingOption = 0;
+    private int prevSelectedSortingOption = 0;*/
+
+    private bool sortIsAZ = true;
+    private int prevKeyNameSize = 0;
 
     // Add menu named "My Window" to the Window menu
     [MenuItem("Window/PlayerPrefs Editor (2)")]
@@ -51,7 +65,7 @@ public class PlayerPrefsEditor2 : EditorWindow
     {
         // Get existing open window or if none, make a new one:
         PlayerPrefsEditor2 window = (PlayerPrefsEditor2) EditorWindow.GetWindow(typeof(PlayerPrefsEditor2));
-
+        //window.Show();
         //window.somethingWasDeleted = false;
     }
 
@@ -113,8 +127,72 @@ public class PlayerPrefsEditor2 : EditorWindow
         }*/
     }
 
+    void SortAZ()
+    {
+        playerPrefs.Sort(delegate(PlayerPrefsValue a, PlayerPrefsValue b)
+                            {
+                                return a.keyName.CompareTo(b.keyName);
+                            }
+                        );
+        sortIsAZ = true;
+    }
+
+    void SortZA()
+    {
+        SortAZ();
+        playerPrefs.Reverse();
+        sortIsAZ = false;
+    }
+
+    void DeleteAll()
+    {
+        PlayerPrefs.DeleteAll();
+        RefreshPlayerPrefs();
+    }
+    
+    void DeleteSelected()
+    {
+       foreach(PlayerPrefsValue ppv in playerPrefs)
+       {
+           if (ppv.isSelected)
+           {
+               PlayerPrefs.DeleteKey(ppv.keyName);
+           }
+       }
+       RefreshPlayerPrefs();
+    }
+
+    void SelectAll()
+    {
+        foreach (PlayerPrefsValue ppv in playerPrefs)
+        {
+            ppv.isSelected = true;
+        }
+    }
+
+    void DeselectAll()
+    {
+        foreach (PlayerPrefsValue ppv in playerPrefs)
+        {
+            ppv.isSelected = false;
+        }
+    }
+
+    void InverseSelection()
+    {
+        foreach (PlayerPrefsValue ppv in playerPrefs)
+        {
+            ppv.isSelected = !ppv.isSelected;
+        }
+    }
+
     void OnGUI()
     {
+        /*if (!Application.isPlaying)
+            Debug.Log("Editor");
+        else //if (!Application.isPlaying)
+            Debug.Log("Playing");*/
+
         if (playerPrefs == null)
             RefreshPlayerPrefs();
 
@@ -122,45 +200,6 @@ public class PlayerPrefsEditor2 : EditorWindow
             toBeDeleted = new List<PlayerPrefsValue>();
         else
             toBeDeleted.Clear();
-
-
-        GUILayout.BeginHorizontal(GUI.skin.FindStyle("Toolbar"));
-
-        //GUILayout.FlexibleSpace();
-
-        if (GUILayout.Button(new GUIContent("Delete All"), EditorStyles.toolbarButton, GUILayout.Width(64)))
-        {
-            PlayerPrefs.DeleteAll();
-            RefreshPlayerPrefs();
-            return;
-        }
-
-        sortingType = (SortingType)EditorGUILayout.EnumPopup(sortingType, EditorStyles.toolbarDropDown, GUILayout.MaxWidth(80));
-        //sortingType = (SortingType)EditorGUILayout.EnumPopup(sortingType, EditorStyles.toolbarPopup, GUILayout.MaxWidth(80));
-        //EditorGUILayout.Popup((int)sortingType, Enum.GetNames(typeof(SortingType)));
-        GUILayout.FlexibleSpace();
-        searchString = GUILayout.TextField(searchString, GUI.skin.FindStyle("ToolbarSeachTextField"), GUILayout.MaxWidth(100));
-        if (GUILayout.Button("", GUI.skin.FindStyle("ToolbarSeachCancelButton")))
-        {
-            // Remove focus if cleared
-            searchString = "";
-            GUI.FocusControl(null);
-        }
-        
-        autoRefresh = GUILayout.Toggle(autoRefresh, "Auto-refresh");
-
-        if (GUILayout.Button(new GUIContent("Force Refresh"), EditorStyles.toolbarButton, GUILayout.Width(80)))
-        {
-            RefreshPlayerPrefs();
-            return;
-        }
-
-        /*if (GUILayout.Button(new GUIContent("Force Refresh"), EditorStyles.toolbarButton, GUILayout.Width(64)))
-        {
-            RefreshPlayerPrefs();
-            return;
-        }*/
-        GUILayout.EndHorizontal();
 
         if (undoTexture == null)
         {
@@ -174,120 +213,355 @@ public class PlayerPrefsEditor2 : EditorWindow
         {
             saveTexture = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorIcons/save.png", typeof(Texture2D)) as Texture2D;
         }
+        
+        #region Toolbar
 
+        GUILayout.BeginHorizontal(GUI.skin.FindStyle("Toolbar"));
 
-        GUILayout.Label("Player Preferences", EditorStyles.boldLabel);
+        /*string[] options = new string[]{ "New Pref",  "Delete All" };
+        optionsIndex = EditorGUILayout.Popup("Options", optionsIndex, options, EditorStyles.toolbarPopup);
+        if (GUILayout.Button("Options"))
+            Debug.Log("Opcion: " + optionsIndex);*/
+        /*EditorGUILayout.Popup(0, options);
+        )*/
 
-        scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-
-        if (playerPrefs.Count == 0)
+        /*if (GUILayout.Button(new GUIContent("Delete All"), EditorStyles.toolbarButton, GUILayout.Width(64)))
         {
-            //GUILayout.Label("Currently there are no PlayerPrefs", EditorStyles.miniLabel);
-            EditorGUILayout.HelpBox("No Player Preferences found", MessageType.Info);
+            PlayerPrefs.DeleteAll();
+            RefreshPlayerPrefs();
+            return;
+        }*/
+
+        if (GUILayout.Button(new GUIContent("New Pref"), EditorStyles.toolbarButton, GUILayout.Width(64)))
+        {
+            newPlayerPref = new PlayerPrefsValue("", PlayerPrefsTypes.Int, 0);
+            createNewPref = true;
+            incorrectKeyName = false;
         }
+
+        GenericMenu menu = new GenericMenu();
+        menu.AddItem(new GUIContent("Sort (A-Z)"), sortIsAZ, new GenericMenu.MenuFunction(SortAZ));
+        menu.AddItem(new GUIContent("Reverse Sort (Z-A)"), !sortIsAZ, new GenericMenu.MenuFunction(SortZA));
+        //menu.ShowAsContext();
+
+        if (GUILayout.Button("Sort", EditorStyles.toolbarDropDown))
+        {
+            menu.ShowAsContext();
+        }
+
+        menu = new GenericMenu();
+        menu.AddItem(new GUIContent("All"), false, new GenericMenu.MenuFunction(SelectAll));
+        menu.AddItem(new GUIContent("None"), false, new GenericMenu.MenuFunction(DeselectAll));
+        menu.AddItem(new GUIContent("Inverse"), false, new GenericMenu.MenuFunction(InverseSelection));
+        //menu.ShowAsContext();
+
+        if (GUILayout.Button("Select", EditorStyles.toolbarDropDown))
+        {
+            menu.ShowAsContext();
+        }
+
+        menu = new GenericMenu();
+        menu.AddItem(new GUIContent("Selected"), false, new GenericMenu.MenuFunction(DeleteSelected));
+        menu.AddItem(new GUIContent("All"), false, new GenericMenu.MenuFunction(DeleteAll));
+        //menu.ShowAsContext();
+
+        if (GUILayout.Button("Delete", EditorStyles.toolbarDropDown))
+        {
+            menu.ShowAsContext();
+        }
+
+        //selectedSortingOption = EditorGUILayout.Popup(selectedSortingOption, sortingOptions, EditorStyles.toolbarPopup, GUILayout.MaxWidth(100));
+        //sortingType = (SortingType)EditorGUILayout.EnumPopup(sortingType, EditorStyles.toolbarDropDown, GUILayout.MaxWidth(80));
+
+        GUILayout.FlexibleSpace();
+        searchString = GUILayout.TextField(searchString, GUI.skin.FindStyle("ToolbarSeachTextField"), GUILayout.MaxWidth(100));
+        if (GUILayout.Button("", GUI.skin.FindStyle("ToolbarSeachCancelButton")))
+        {
+            // Remove focus if cleared
+            searchString = "";
+            GUI.FocusControl(null);
+        }
+
+        if (Application.isPlaying)
+            autoRefresh = GUILayout.Toggle(autoRefresh, "Auto-refresh");
         else
+            autoRefresh = false;
+
+
+        if (GUILayout.Button(new GUIContent("Refresh"), EditorStyles.toolbarButton, GUILayout.Width(56)))
         {
-
-            if (sortingType != prevSortingType)
-            {
-                if (sortingType == SortingType.Ascending)
-                {
-                    playerPrefs.Sort(delegate(PlayerPrefsValue a, PlayerPrefsValue b)
-                        {
-                            return a.keyName.CompareTo(b.keyName);    
-                        }
-                    );
-                }
-                else
-                {
-                    playerPrefs.Sort(delegate(PlayerPrefsValue a, PlayerPrefsValue b)
-                    {
-                        return a.keyName.CompareTo(b.keyName);
-                    }
-                    );
-                    playerPrefs.Reverse();
-                }
-            }
-            prevSortingType = sortingType;
-
-            foreach(PlayerPrefsValue pref in playerPrefs)
-            {
-                if (!pref.keyName.ToLowerInvariant().Contains(searchString))
-                    continue;
-
-                GUILayout.BeginHorizontal();
-                
-                pref.isSelected = EditorGUILayout.Toggle(pref.isSelected, GUILayout.MaxWidth(16));
-
-                //GUILayout.Label(pref.keyName, GUILayout.MinWidth(75), GUILayout.MaxWidth(100));
-
-                if (pref.IsDifferent(originalPrefs[pref]))
-                    GUI.skin.font = EditorStyles.boldFont;
-                else
-                    GUI.skin.font = EditorStyles.standardFont;
-
-                pref.keyName = GUILayout.TextField(pref.keyName, GUILayout.MinWidth(75), GUILayout.MaxWidth(100));
-
-                switch (pref.valueType)
-                {
-                    case PlayerPrefsTypes.Int:
-                        pref.intValue = EditorGUILayout.IntField(pref.intValue, EditorStyles.textField, GUILayout.MaxWidth(150));
-                        break;
-                    case PlayerPrefsTypes.Float:
-                        pref.floatValue = EditorGUILayout.FloatField(pref.floatValue, EditorStyles.textField, GUILayout.MaxWidth(150));
-                        break;
-                    case PlayerPrefsTypes.String:
-                        pref.stringValue = EditorGUILayout.TextField(pref.stringValue, EditorStyles.textField, GUILayout.MaxWidth(150));
-                        break;
-                    default:
-                        pref.stringValue = EditorGUILayout.TextField(pref.stringValue, EditorStyles.textField, GUILayout.MaxWidth(150));
-                        break;
-                }
-                
-                if (GUILayout.Button(new GUIContent(saveTexture, "Save this preference"), GUILayout.MaxHeight(24), GUILayout.Width(24)))
-                {
-                    originalPrefs[pref].CopyFrom(pref);
-                    GUI.FocusControl(null);
-                    Debug.Log("Saved!!");
-                }
-                else if (GUILayout.Button(new GUIContent(undoTexture, "Revert this preference"), GUILayout.MaxHeight(24), GUILayout.Width(24)))
-                {
-                    //revertThisPref = pref;
-                    pref.CopyFrom(originalPrefs[pref]);
-                    GUI.FocusControl(null);
-                    Debug.Log("Restored!!");
-                }
-                else if (GUILayout.Button(new GUIContent(deleteTexture, "Delete this preference"), GUILayout.MaxHeight(24), GUILayout.Width(24)))
-                {
-                    pref.toBeDeleted = true;
-                    toBeDeleted.Add(pref);
-                    somethingWasDeleted = true;
-                }
-
-                GUILayout.EndHorizontal();
-                GUI.skin.font = EditorStyles.standardFont;
-            }
-
-            foreach(PlayerPrefsValue pref in toBeDeleted)
-            {
-                if (pref.toBeDeleted)
-                {
-                    playerPrefs.Remove(pref);
-                    originalPrefs.Remove(pref);
-                    PlayerPrefs.DeleteKey(pref.keyName);
-                }
-            }
-            /*if (toBeDeleted.Count != 0)
-            {
-                SavePlayerPrefs();
-            }*/
-
-
-            /*if (GUI.changed)
-            {
-                EditorUtility.SetDirty(this);
-            }*/
+            RefreshPlayerPrefs();
+            return;
         }
+
+        GUILayout.EndHorizontal();
+        
+        #endregion
+
+
+        #region NewPref
+
+        if (createNewPref && newPlayerPref != null)
+        {
+            GUI.skin.font = EditorStyles.boldFont;
+            EditorGUILayout.LabelField("New Preference", EditorStyles.boldLabel); //, EditorStyles.boldLabel);
+            GUI.skin.font = EditorStyles.standardFont;
+
+            EditorGUILayout.BeginVertical();
+
+                EditorGUILayout.BeginHorizontal();                
+                    GUILayout.Space(25);
+                    EditorGUILayout.LabelField("Key", GUILayout.MaxWidth(36));
+                    newPlayerPref.keyName = EditorGUILayout.TextField(newPlayerPref.keyName, GUILayout.MaxWidth(128)); //, GUILayout.MinWidth(75), GUILayout.MaxWidth(100));
+                EditorGUILayout.EndHorizontal();
+
+                if (newPlayerPref.keyName == "")
+                {
+                    incorrectKeyName = true;
+                }
+                else
+                {
+                    incorrectKeyName = false;
+
+                    if (prevKeyNameSize != newPlayerPref.keyName.Length)
+                    {
+                        duplicateKeyName = false;
+                        //Debug.Log("Chequeo duplicados");
+                        foreach (PlayerPrefsValue ppv in playerPrefs)
+                        {
+                            if (ppv.keyName == newPlayerPref.keyName)
+                            {
+                                duplicateKeyName = true;
+                                break;
+                            }
+                        }
+                        prevKeyNameSize = newPlayerPref.keyName.Length;
+                    }                  
+                }
+
+                EditorGUILayout.BeginHorizontal();
+                    GUILayout.Space(25);
+                    EditorGUILayout.LabelField("Value", GUILayout.MaxWidth(36));
+                    switch (newPlayerPref.valueType)
+                    {
+                        case PlayerPrefsTypes.Int:
+                            newPlayerPref.intValue = EditorGUILayout.IntField(newPlayerPref.intValue, EditorStyles.textField, GUILayout.MaxWidth(128));
+                            break;
+                        case PlayerPrefsTypes.Float:
+                            newPlayerPref.floatValue = EditorGUILayout.FloatField(newPlayerPref.floatValue, EditorStyles.textField, GUILayout.MaxWidth(128));
+                            break;
+                        case PlayerPrefsTypes.String:
+                            newPlayerPref.stringValue = EditorGUILayout.TextField(newPlayerPref.stringValue, EditorStyles.textField, GUILayout.MaxWidth(128));
+                            break;
+                        default:
+                            newPlayerPref.stringValue = EditorGUILayout.TextField(newPlayerPref.stringValue, EditorStyles.textField, GUILayout.MaxWidth(128));
+                            break;
+                    }
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+                    GUILayout.Space(25);
+                    EditorGUILayout.LabelField("Type", GUILayout.MaxWidth(36));
+                    newPlayerPref.valueType = (PlayerPrefsTypes)EditorGUILayout.EnumPopup(newPlayerPref.valueType, EditorStyles.toolbarPopup, GUILayout.MaxWidth(128));
+                EditorGUILayout.EndHorizontal();
+
+                GUILayout.Space(10);
+                if (incorrectKeyName)
+                    EditorGUILayout.HelpBox("Error: Invalid name", MessageType.Error, true);
+                else if (duplicateKeyName)
+                    EditorGUILayout.HelpBox("Warning: Duplicate name found. 'Create' will overwrite the existing key.", MessageType.Warning, true);
+            
+                EditorGUILayout.BeginHorizontal();
+                if (!incorrectKeyName && GUILayout.Button(new GUIContent("Create"))) //, GUILayout.MaxHeight(24), GUILayout.Width(24)))
+                {    
+                    incorrectKeyName = false;
+                    
+                    newPlayerPref.SaveToRealPrefs();
+                    RefreshPlayerPrefs();
+                    /*playerPrefs.Add(newPlayerPref);
+                    RefreshPlayerPrefs();*/
+
+                    createNewPref = false;
+                    newPlayerPref = null;
+                    GUI.FocusControl(null);
+                    return;
+
+                    /*originalPrefs[pref].CopyFrom(pref);
+                    GUI.FocusControl(null);
+                    Debug.Log("Saved!!");*/
+
+                }
+                if (GUILayout.Button(new GUIContent("Cancel"))) //, GUILayout.MaxHeight(24), GUILayout.Width(24)))
+                {
+                    createNewPref = false;
+                    newPlayerPref = null;
+                    GUI.FocusControl(null);
+                }
+                EditorGUILayout.EndHorizontal();
+                GUILayout.Space(16);
+
+                //sortingType = (SortingType)EditorGUILayout.EnumPopup(sortingType, EditorStyles.toolbarDropDown, GUILayout.MaxWidth(80));
+
+                EditorGUILayout.EndVertical();
+
+        }
+
+        #endregion
+
+
+        #region PreferencesList
+
+        GUI.skin.font = EditorStyles.boldFont;
+        foldout = EditorGUILayout.Foldout(foldout, "Player Preferences"); //, EditorStyles.boldLabel);
+        GUI.skin.font = EditorStyles.standardFont;
+        
+        if (foldout)
+        {
+            //GUILayout.Label("Player Preferences", EditorStyles.boldLabel);
+
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition);
+
+            if (playerPrefs.Count == 0)
+            {
+                //GUILayout.Label("Currently there are no PlayerPrefs", EditorStyles.miniLabel);
+                EditorGUILayout.HelpBox("No Player Preferences found", MessageType.Info);
+            }
+            else
+            {
+                /*if (prevSelectedSortingOption != selectedSortingOption)
+                {
+                    playerPrefs.Sort(delegate(PlayerPrefsValue a, PlayerPrefsValue b)
+                                        {
+                                            return a.keyName.CompareTo(b.keyName);
+                                        }
+                     );
+
+                    if (selectedSortingOption != 0)
+                    {
+                        playerPrefs.Reverse();
+                    }
+                }
+                prevSelectedSortingOption = selectedSortingOption;*/
+
+                /*if (sortingType != prevSortingType)
+                {
+                    if (sortingType == SortingType.Ascending)
+                    {
+                        playerPrefs.Sort(delegate(PlayerPrefsValue a, PlayerPrefsValue b)
+                        {
+                            return a.keyName.CompareTo(b.keyName);
+                        }
+                        );
+                    }
+                    else
+                    {
+                        playerPrefs.Sort(delegate(PlayerPrefsValue a, PlayerPrefsValue b)
+                        {
+                            return a.keyName.CompareTo(b.keyName);
+                        }
+                        );
+                        playerPrefs.Reverse();
+                    }
+                }
+                prevSortingType = sortingType;*/
+
+                foreach (PlayerPrefsValue pref in playerPrefs)
+                {
+                    if (!pref.keyName.ToLowerInvariant().Contains(searchString))
+                        continue;
+
+                    GUILayout.BeginHorizontal();
+
+                    pref.isSelected = EditorGUILayout.Toggle(pref.isSelected, GUILayout.MaxWidth(16));
+
+                    //GUILayout.Label(pref.keyName, GUILayout.MinWidth(75), GUILayout.MaxWidth(100));
+
+                    if (pref.IsDifferent(originalPrefs[pref]))
+                        GUI.skin.font = EditorStyles.boldFont;
+                    else
+                        GUI.skin.font = EditorStyles.standardFont;
+
+                    pref.keyName = GUILayout.TextField(pref.keyName, GUILayout.MinWidth(75), GUILayout.MaxWidth(100));
+
+                    switch (pref.valueType)
+                    {
+                        case PlayerPrefsTypes.Int:
+                            pref.intValue = EditorGUILayout.IntField(pref.intValue, EditorStyles.textField, GUILayout.MaxWidth(150));
+                            break;
+                        case PlayerPrefsTypes.Float:
+                            pref.floatValue = EditorGUILayout.FloatField(pref.floatValue, EditorStyles.textField, GUILayout.MaxWidth(150));
+                            break;
+                        case PlayerPrefsTypes.String:
+                            pref.stringValue = EditorGUILayout.TextField(pref.stringValue, EditorStyles.textField, GUILayout.MaxWidth(150));
+                            break;
+                        default:
+                            pref.stringValue = EditorGUILayout.TextField(pref.stringValue, EditorStyles.textField, GUILayout.MaxWidth(150));
+                            break;
+                    }
+
+                    pref.valueType = (PlayerPrefsTypes)EditorGUILayout.EnumPopup(pref.valueType, EditorStyles.toolbarPopup, GUILayout.MaxWidth(64));
+
+                    int iconSize = 28;
+
+                    GUILayout.Space(8);
+
+                    if (GUILayout.Button(new GUIContent(saveTexture, "Save this preference"), EditorStyles.toolbarButton, GUILayout.Height(iconSize), GUILayout.Width(iconSize)))
+                    {
+                        if (pref.keyName != originalPrefs[pref].keyName)
+                        {
+                            PlayerPrefs.DeleteKey(originalPrefs[pref].keyName);
+                        }
+
+                        originalPrefs[pref].CopyFrom(pref);
+                        GUI.FocusControl(null);
+
+                        pref.SaveToRealPrefs();
+                        //Debug.Log("Saved!!");
+                    }
+                    else if (GUILayout.Button(new GUIContent(undoTexture, "Revert this preference"), EditorStyles.toolbarButton, GUILayout.Height(iconSize), GUILayout.Width(iconSize)))
+                    {
+                        //revertThisPref = pref;
+                        pref.CopyFrom(originalPrefs[pref]);
+                        GUI.FocusControl(null);
+                        //Debug.Log("Restored!!");
+                    }
+                    else if (GUILayout.Button(new GUIContent(deleteTexture, "Delete this preference"), EditorStyles.toolbarButton, GUILayout.Height(iconSize), GUILayout.Width(iconSize)))
+                    {
+                        pref.toBeDeleted = true;
+                        toBeDeleted.Add(pref);
+                        //somethingWasDeleted = true;
+                    }
+
+                    GUILayout.EndHorizontal();
+                    GUI.skin.font = EditorStyles.standardFont;
+                }
+
+                foreach (PlayerPrefsValue pref in toBeDeleted)
+                {
+                    if (pref.toBeDeleted)
+                    {
+                        playerPrefs.Remove(pref);
+                        originalPrefs.Remove(pref);
+                        PlayerPrefs.DeleteKey(pref.keyName);
+                    }
+                }
+                /*if (toBeDeleted.Count != 0)
+                {
+                    SavePlayerPrefs();
+                }*/
+
+
+                /*if (GUI.changed)
+                {
+                    EditorUtility.SetDirty(this);
+                }*/
+            }
+            GUILayout.EndScrollView();
+
+        }
+        #endregion
+
+
 
         /*GUILayout.Label("Base Settings", EditorStyles.boldLabel);
         myString = EditorGUILayout.TextField("Text Field", myString);
@@ -297,7 +571,6 @@ public class PlayerPrefsEditor2 : EditorWindow
         myFloat = EditorGUILayout.Slider("Slider", myFloat, -3, 3);
         EditorGUILayout.EndToggleGroup();*/
 
-        GUILayout.EndScrollView();
     }
 
     void RefreshPlayerPrefs()
@@ -323,6 +596,11 @@ public class PlayerPrefsEditor2 : EditorWindow
         {
             Debug.Log("Coming soon");
         }
+
+        if (sortIsAZ)
+            SortAZ();
+        else
+            SortZA();
     }
 
     void GetPlayerPrefsWindows()
