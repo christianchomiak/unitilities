@@ -13,42 +13,27 @@ using Microsoft.Win32;
 //using System.IO;
 //using System.Xml;
 
-public enum SortingType { Ascending, Descending };
-
-public class PlayerPrefsEditor2 : EditorWindow
+public class PlayerPrefsEditor : EditorWindow
 {
-    string myString = "Hello World";
-    bool groupEnabled;
-    bool myBool = true;
-    
-    float myFloat = 1.23f;
-
-    List<PlayerPrefsValue> playerPrefs;
-    Dictionary<PlayerPrefsValue, PlayerPrefsValue> originalPrefs;
+    List<PlayerPrefsDataType> playerPrefs;
+    Dictionary<PlayerPrefsDataType, PlayerPrefsDataType> originalPrefs;
 
     private Vector2 scrollPosition;
 
-    private bool somethingWasDeleted;
     private string searchString = "";
-    private SortingType sortingType = SortingType.Ascending;
-    private SortingType prevSortingType;
 
     private Texture2D undoTexture, saveTexture, deleteTexture;
 
-    private List<PlayerPrefsValue> toBeDeleted;
+    private List<PlayerPrefsDataType> toBeDeleted;
 
-    private int updateFactor = 100;
     private int currentFrame = 0;
-
-    private int currentNumberOfUpdates = 0;
-    private int maxUpdatesPerSecond = 1;
 
     private bool autoRefresh = false;
     bool foldout = true;
 
     bool createNewPref = false;
 
-    PlayerPrefsValue newPlayerPref = null;
+    PlayerPrefsDataType newPlayerPref = null;
     bool incorrectKeyName = false;
     bool duplicateKeyName = false;
 
@@ -57,36 +42,33 @@ public class PlayerPrefsEditor2 : EditorWindow
     private int prevSelectedSortingOption = 0;*/
 
     private bool sortIsAZ = true;
-    private int prevKeyNameSize = 0;
 
     // Add menu named "My Window" to the Window menu
-    [MenuItem("Window/PlayerPrefs Editor (2)")]
+    [MenuItem("Window/Unitilities/PlayerPrefs Editor")]
     static void Init()
     {
         // Get existing open window or if none, make a new one:
-        PlayerPrefsEditor2 window = (PlayerPrefsEditor2) EditorWindow.GetWindow(typeof(PlayerPrefsEditor2));
-        //window.Show();
+        PlayerPrefsEditor window = (PlayerPrefsEditor) EditorWindow.GetWindow(typeof(PlayerPrefsEditor));
+        window.title = "PlayerPrefs";
         //window.somethingWasDeleted = false;
     }
 
-    void OnEnable()
-    {
-    }
 
-    void OnDisable()
+    void OnLostFocus()
     {
-        //EditorPrefs.SetBool("myBool", myBool);
-        //Debug.Log("Salvando: " + EditorPrefs.GetBool("myBool"));
+        if (!IsEditor)
+            Repaint();
     }
 
     void OnDestroy()
     {
+        //RefreshPlayerPrefs();
     }
 
     void SavePlayerPrefs()
     {
         PlayerPrefs.DeleteAll();
-        foreach (PlayerPrefsValue pref in playerPrefs)
+        foreach (PlayerPrefsDataType pref in playerPrefs)
             pref.SaveToRealPrefs();
         
         RefreshPlayerPrefs();
@@ -99,37 +81,22 @@ public class PlayerPrefsEditor2 : EditorWindow
             if (currentFrame == 0)
             {
                 RefreshPlayerPrefs();
-                Debug.Log("Updated");
+                //Debug.Log("Updated");
             }
-            Debug.Log("Current: " + currentFrame);
 
             currentFrame++;
             currentFrame %= 10;
-
-            /*if (currentFrame >= updateFactor)
-            {
-                RefreshPlayerPrefs();
-                Debug.Log("Update :D " + currentFrame);
-                currentFrame = 0;
-            }*/
         }
+        Repaint();
     }
 
     void Update()
     {
-        /*currentFrame++;
-
-        if (currentFrame >= updateFactor)
-        {
-            RefreshPlayerPrefs();
-            Debug.Log("Update :D " + currentFrame);
-            currentFrame = 0;
-        }*/
     }
 
     void SortAZ()
     {
-        playerPrefs.Sort(delegate(PlayerPrefsValue a, PlayerPrefsValue b)
+        playerPrefs.Sort(delegate(PlayerPrefsDataType a, PlayerPrefsDataType b)
                             {
                                 return a.keyName.CompareTo(b.keyName);
                             }
@@ -152,8 +119,8 @@ public class PlayerPrefsEditor2 : EditorWindow
     
     void DeleteSelected()
     {
-       List<PlayerPrefsValue> toBeDeleted = new List<PlayerPrefsValue>();
-       foreach(PlayerPrefsValue ppv in playerPrefs)
+       //List<PlayerPrefsDataType> toBeDeleted = new List<PlayerPrefsDataType>();
+       foreach(PlayerPrefsDataType ppv in playerPrefs)
        {
            if (ppv.isSelected)
            {
@@ -168,7 +135,7 @@ public class PlayerPrefsEditor2 : EditorWindow
 
     void SelectAll()
     {
-        foreach (PlayerPrefsValue ppv in playerPrefs)
+        foreach (PlayerPrefsDataType ppv in playerPrefs)
         {
             ppv.isSelected = true;
         }
@@ -176,7 +143,7 @@ public class PlayerPrefsEditor2 : EditorWindow
 
     void DeselectAll()
     {
-        foreach (PlayerPrefsValue ppv in playerPrefs)
+        foreach (PlayerPrefsDataType ppv in playerPrefs)
         {
             ppv.isSelected = false;
         }
@@ -184,7 +151,7 @@ public class PlayerPrefsEditor2 : EditorWindow
 
     void InverseSelection()
     {
-        foreach (PlayerPrefsValue ppv in playerPrefs)
+        foreach (PlayerPrefsDataType ppv in playerPrefs)
         {
             ppv.isSelected = !ppv.isSelected;
         }
@@ -192,7 +159,7 @@ public class PlayerPrefsEditor2 : EditorWindow
 
     void UndoSelected()
     {
-        foreach (PlayerPrefsValue ppv in playerPrefs)
+        foreach (PlayerPrefsDataType ppv in playerPrefs)
         {
             if (ppv.isSelected)
             {
@@ -205,7 +172,7 @@ public class PlayerPrefsEditor2 : EditorWindow
 
     void UndoAll()
     {
-        foreach (PlayerPrefsValue ppv in playerPrefs)
+        foreach (PlayerPrefsDataType ppv in playerPrefs)
         {
             ppv.CopyFrom(originalPrefs[ppv]);
             ppv.isSelected = false;
@@ -215,7 +182,7 @@ public class PlayerPrefsEditor2 : EditorWindow
 
     void SaveAll()
     {
-        foreach (PlayerPrefsValue ppv in playerPrefs)
+        foreach (PlayerPrefsDataType ppv in playerPrefs)
         {
             ppv.SaveToRealPrefs();
             ppv.isSelected = false;
@@ -225,7 +192,7 @@ public class PlayerPrefsEditor2 : EditorWindow
 
     void SaveSelected()
     {
-        foreach (PlayerPrefsValue ppv in playerPrefs)
+        foreach (PlayerPrefsDataType ppv in playerPrefs)
         {
             if (ppv.isSelected)
             {
@@ -235,13 +202,13 @@ public class PlayerPrefsEditor2 : EditorWindow
         }
     }
 
-    bool CheckDuplicates(PlayerPrefsValue ppv)
+    bool CheckDuplicates(PlayerPrefsDataType ppv)
     {
         if (ppv.prevKeyNameLength != ppv.keyName.Length)
         {
             //duplicateKeyName = false;
             //Debug.Log("Chequeo duplicados");
-            foreach (PlayerPrefsValue otherPPV in playerPrefs)
+            foreach (PlayerPrefsDataType otherPPV in playerPrefs)
             {
                 if (ppv == otherPPV)
                     continue;
@@ -274,21 +241,21 @@ public class PlayerPrefsEditor2 : EditorWindow
             RefreshPlayerPrefs();
 
         if (toBeDeleted == null)
-            toBeDeleted = new List<PlayerPrefsValue>();
+            toBeDeleted = new List<PlayerPrefsDataType>();
         else
             toBeDeleted.Clear();
 
         if (undoTexture == null)
         {
-            undoTexture = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorIcons/undo.png", typeof(Texture2D)) as Texture2D;
+            undoTexture = AssetDatabase.LoadAssetAtPath("Assets/Unitilities/Editor/EditorIcons/undo.png", typeof(Texture2D)) as Texture2D;
         }
         if (deleteTexture == null)
         {
-            deleteTexture = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorIcons/delete.png", typeof(Texture2D)) as Texture2D;
+            deleteTexture = AssetDatabase.LoadAssetAtPath("Assets/Unitilities/Editor/EditorIcons/delete.png", typeof(Texture2D)) as Texture2D;
         }
         if (saveTexture == null)
         {
-            saveTexture = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorIcons/save.png", typeof(Texture2D)) as Texture2D;
+            saveTexture = AssetDatabase.LoadAssetAtPath("Assets/Unitilities/Editor/EditorIcons/save.png", typeof(Texture2D)) as Texture2D;
         }
         
         #region Toolbar
@@ -313,7 +280,7 @@ public class PlayerPrefsEditor2 : EditorWindow
         {
             if (GUILayout.Button(new GUIContent("New Pref"), EditorStyles.toolbarButton, GUILayout.Width(64)))
             {
-                newPlayerPref = new PlayerPrefsValue("", PlayerPrefsTypes.Int, 0);
+                newPlayerPref = new PlayerPrefsDataType("", PlayerPrefsType.Int, 0);
                 createNewPref = true;
                 incorrectKeyName = false;
             }
@@ -389,12 +356,12 @@ public class PlayerPrefsEditor2 : EditorWindow
 
 
         if (!IsEditor)
-            autoRefresh = GUILayout.Toggle(autoRefresh, "Auto-refresh");
+            autoRefresh = GUILayout.Toggle(autoRefresh, "Auto-refresh", EditorStyles.miniButton);
         else
             autoRefresh = false;
         
 
-        if (GUILayout.Button(new GUIContent("Reload"), EditorStyles.toolbarButton, GUILayout.Width(56)))
+        if (GUILayout.Button(new GUIContent("Refresh"), EditorStyles.toolbarButton, GUILayout.Width(56)))
         {
             RefreshPlayerPrefs();
             return;
@@ -433,7 +400,7 @@ public class PlayerPrefsEditor2 : EditorWindow
                     {
                         duplicateKeyName = false;
                         //Debug.Log("Chequeo duplicados");
-                        foreach (PlayerPrefsValue ppv in playerPrefs)
+                        foreach (PlayerPrefsDataType ppv in playerPrefs)
                         {
                             if (ppv.keyName == newPlayerPref.keyName)
                             {
@@ -452,13 +419,13 @@ public class PlayerPrefsEditor2 : EditorWindow
                     EditorGUILayout.LabelField("Value", GUILayout.MaxWidth(36));
                     switch (newPlayerPref.valueType)
                     {
-                        case PlayerPrefsTypes.Int:
+                        case PlayerPrefsType.Int:
                             newPlayerPref.intValue = EditorGUILayout.IntField(newPlayerPref.intValue, EditorStyles.textField, GUILayout.MaxWidth(128));
                             break;
-                        case PlayerPrefsTypes.Float:
+                        case PlayerPrefsType.Float:
                             newPlayerPref.floatValue = EditorGUILayout.FloatField(newPlayerPref.floatValue, EditorStyles.textField, GUILayout.MaxWidth(128));
                             break;
-                        case PlayerPrefsTypes.String:
+                        case PlayerPrefsType.String:
                             newPlayerPref.stringValue = EditorGUILayout.TextField(newPlayerPref.stringValue, EditorStyles.textField, GUILayout.MaxWidth(128));
                             break;
                         default:
@@ -470,7 +437,7 @@ public class PlayerPrefsEditor2 : EditorWindow
                 EditorGUILayout.BeginHorizontal();
                     GUILayout.Space(25);
                     EditorGUILayout.LabelField("Type", GUILayout.MaxWidth(36));
-                    newPlayerPref.valueType = (PlayerPrefsTypes)EditorGUILayout.EnumPopup(newPlayerPref.valueType, EditorStyles.toolbarPopup, GUILayout.MaxWidth(128));
+                    newPlayerPref.valueType = (PlayerPrefsType)EditorGUILayout.EnumPopup(newPlayerPref.valueType, EditorStyles.toolbarPopup, GUILayout.MaxWidth(128));
                 EditorGUILayout.EndHorizontal();
 
                 GUILayout.Space(10);
@@ -541,7 +508,7 @@ public class PlayerPrefsEditor2 : EditorWindow
             {
                 /*if (prevSelectedSortingOption != selectedSortingOption)
                 {
-                    playerPrefs.Sort(delegate(PlayerPrefsValue a, PlayerPrefsValue b)
+                    playerPrefs.Sort(delegate(PlayerPrefsDataType a, PlayerPrefsDataType b)
                                         {
                                             return a.keyName.CompareTo(b.keyName);
                                         }
@@ -558,7 +525,7 @@ public class PlayerPrefsEditor2 : EditorWindow
                 {
                     if (sortingType == SortingType.Ascending)
                     {
-                        playerPrefs.Sort(delegate(PlayerPrefsValue a, PlayerPrefsValue b)
+                        playerPrefs.Sort(delegate(PlayerPrefsDataType a, PlayerPrefsDataType b)
                         {
                             return a.keyName.CompareTo(b.keyName);
                         }
@@ -566,7 +533,7 @@ public class PlayerPrefsEditor2 : EditorWindow
                     }
                     else
                     {
-                        playerPrefs.Sort(delegate(PlayerPrefsValue a, PlayerPrefsValue b)
+                        playerPrefs.Sort(delegate(PlayerPrefsDataType a, PlayerPrefsDataType b)
                         {
                             return a.keyName.CompareTo(b.keyName);
                         }
@@ -577,9 +544,9 @@ public class PlayerPrefsEditor2 : EditorWindow
                 prevSortingType = sortingType;*/
 
                 bool atLeastOneSearchMatched = false;
-                foreach (PlayerPrefsValue pref in playerPrefs)
+                foreach (PlayerPrefsDataType pref in playerPrefs)
                 {
-                    if (!pref.keyName.ToLowerInvariant().Contains(searchString))
+                    if (!pref.keyName.ToLowerInvariant().Contains(searchString.ToLowerInvariant()))
                         continue;
 
                     atLeastOneSearchMatched = true;
@@ -601,19 +568,19 @@ public class PlayerPrefsEditor2 : EditorWindow
 
                     switch (pref.valueType)
                     {
-                        case PlayerPrefsTypes.Int:
+                        case PlayerPrefsType.Int:
                             if (IsEditor)
                                 pref.intValue = EditorGUILayout.IntField(pref.intValue, EditorStyles.textField, GUILayout.MaxWidth(150));
                             else
                                 GUILayout.Label(pref.intValue.ToString(), EditorStyles.textField, GUILayout.MinWidth(75), GUILayout.MaxWidth(100));
                             break;
-                        case PlayerPrefsTypes.Float:
+                        case PlayerPrefsType.Float:
                             if (IsEditor)
                                 pref.floatValue = EditorGUILayout.FloatField(pref.floatValue, EditorStyles.textField, GUILayout.MaxWidth(150));
                             else
                                 GUILayout.Label(pref.floatValue.ToString(), EditorStyles.textField, GUILayout.MinWidth(75), GUILayout.MaxWidth(100));
                             break;
-                        case PlayerPrefsTypes.String:
+                        case PlayerPrefsType.String:
                             if (IsEditor)
                                 pref.stringValue = EditorGUILayout.TextField(pref.stringValue, EditorStyles.textField, GUILayout.MaxWidth(150));
                             else
@@ -628,18 +595,15 @@ public class PlayerPrefsEditor2 : EditorWindow
                     }
 
                     if (IsEditor)
-                        pref.valueType = (PlayerPrefsTypes)EditorGUILayout.EnumPopup(pref.valueType, EditorStyles.toolbarPopup, GUILayout.MaxWidth(64));
+                        pref.valueType = (PlayerPrefsType)EditorGUILayout.EnumPopup(pref.valueType, EditorStyles.toolbarPopup, GUILayout.MaxWidth(64));
                     else
                         GUILayout.Label(pref.valueType.ToString(), EditorStyles.textField, GUILayout.MinWidth(75), GUILayout.MaxWidth(100));
 
                     int iconSize = 28;
 
                     GUILayout.Space(8);
-
-                    if (IsEditor)
-                    {
-
-                        GUI.enabled = pref.keyName.Length != 0 && !CheckDuplicates(pref);
+                 
+                        GUI.enabled = IsEditor && pref.keyName.Length != 0 && !CheckDuplicates(pref);
                         if (GUILayout.Button(new GUIContent(saveTexture, "Save this preference"), EditorStyles.toolbarButton, GUILayout.Height(iconSize), GUILayout.Width(iconSize)))
                         {
                             if (pref.keyName != originalPrefs[pref].keyName)
@@ -655,6 +619,7 @@ public class PlayerPrefsEditor2 : EditorWindow
                         }
                         GUI.enabled = true;
 
+                        GUI.enabled = IsEditor;
                         if (GUILayout.Button(new GUIContent(undoTexture, "Revert this preference"), EditorStyles.toolbarButton, GUILayout.Height(iconSize), GUILayout.Width(iconSize)))
                         {
                             //revertThisPref = pref;
@@ -664,11 +629,11 @@ public class PlayerPrefsEditor2 : EditorWindow
                         }
                         else if (GUILayout.Button(new GUIContent(deleteTexture, "Delete this preference"), EditorStyles.toolbarButton, GUILayout.Height(iconSize), GUILayout.Width(iconSize)))
                         {
-                            pref.toBeDeleted = true;
+                            //pref.toBeDeleted = true;
                             toBeDeleted.Add(pref);
                             //somethingWasDeleted = true;
                         }
-                    }
+                        GUI.enabled = true;
                     GUILayout.EndHorizontal();
                     GUI.skin.font = EditorStyles.standardFont;
                 }
@@ -677,14 +642,14 @@ public class PlayerPrefsEditor2 : EditorWindow
                     EditorGUILayout.HelpBox("No matches for that search.", MessageType.Info);                     
                 }
 
-                foreach (PlayerPrefsValue pref in toBeDeleted)
+                foreach (PlayerPrefsDataType pref in toBeDeleted)
                 {
-                    if (pref.toBeDeleted)
-                    {
+                    //if (pref.toBeDeleted)
+                    //{
                         playerPrefs.Remove(pref);
                         originalPrefs.Remove(pref);
                         PlayerPrefs.DeleteKey(pref.keyName);
-                    }
+                    //}
                 }
                 /*if (toBeDeleted.Count != 0)
                 {
@@ -716,15 +681,13 @@ public class PlayerPrefsEditor2 : EditorWindow
 
     void RefreshPlayerPrefs()
     {
-        somethingWasDeleted = false;
-
         if (playerPrefs == null)
-            playerPrefs = new List<PlayerPrefsValue>();
+            playerPrefs = new List<PlayerPrefsDataType>();
         else
             playerPrefs.Clear();
 
         if (originalPrefs == null)
-            originalPrefs = new Dictionary<PlayerPrefsValue, PlayerPrefsValue>();
+            originalPrefs = new Dictionary<PlayerPrefsDataType, PlayerPrefsDataType>();
         else
             originalPrefs.Clear();
 
@@ -767,21 +730,21 @@ public class PlayerPrefsEditor2 : EditorWindow
 
             if (!float.IsNaN(PlayerPrefs.GetFloat(keyName, float.NaN)))
             {
-                PlayerPrefsValue newPref = new PlayerPrefsValue(keyName, PlayerPrefsTypes.Float, PlayerPrefs.GetFloat(keyName));
+                PlayerPrefsDataType newPref = new PlayerPrefsDataType(keyName, PlayerPrefsType.Float, PlayerPrefs.GetFloat(keyName));
                 playerPrefs.Add(newPref);
-                originalPrefs.Add(newPref, new PlayerPrefsValue(keyName, PlayerPrefsTypes.Float, PlayerPrefs.GetFloat(keyName))); 
+                originalPrefs.Add(newPref, new PlayerPrefsDataType(keyName, PlayerPrefsType.Float, PlayerPrefs.GetFloat(keyName))); 
             }
             else if (couldBeInt && (PlayerPrefs.GetInt(keyName, testInt - 10) == testInt))
             {
-                PlayerPrefsValue newPref = new PlayerPrefsValue(keyName, PlayerPrefsTypes.Int, PlayerPrefs.GetInt(keyName));
+                PlayerPrefsDataType newPref = new PlayerPrefsDataType(keyName, PlayerPrefsType.Int, PlayerPrefs.GetInt(keyName));
                 playerPrefs.Add(newPref);
-                originalPrefs.Add(newPref, new PlayerPrefsValue(keyName, PlayerPrefsTypes.Int, PlayerPrefs.GetInt(keyName)));
+                originalPrefs.Add(newPref, new PlayerPrefsDataType(keyName, PlayerPrefsType.Int, PlayerPrefs.GetInt(keyName)));
             }
             else
             {
-                PlayerPrefsValue newPref = new PlayerPrefsValue(keyName, PlayerPrefsTypes.String, PlayerPrefs.GetString(keyName));
+                PlayerPrefsDataType newPref = new PlayerPrefsDataType(keyName, PlayerPrefsType.String, PlayerPrefs.GetString(keyName));
                 playerPrefs.Add(newPref);
-                originalPrefs.Add(newPref, new PlayerPrefsValue(keyName, PlayerPrefsTypes.String, PlayerPrefs.GetString(keyName)));
+                originalPrefs.Add(newPref, new PlayerPrefsDataType(keyName, PlayerPrefsType.String, PlayerPrefs.GetString(keyName)));
             }
         }
     }

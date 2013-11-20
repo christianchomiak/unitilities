@@ -6,6 +6,8 @@ using System.Collections;
 /// </summary>
 public class TestScript : MonoBehaviour
 {
+    int a = 0;
+
 
 	// Use this for initialization
 	void Start () 
@@ -16,6 +18,17 @@ public class TestScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            a++;
+            Debug.Log("A: " + a);
+            PlayerPrefs.SetInt("A", a);
+        }
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            PlayerPrefs.Save();
+        }
+
         /*ScreenInput s = InputManager.Instance.TouchInput(0);
 
         if (s != null)

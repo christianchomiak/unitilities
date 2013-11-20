@@ -127,7 +127,7 @@ public class ManagedTimer : Timer
     public void Update()
     {
         Update(Time.deltaTime);
-    }
+    } 
 
     protected void Trigger()
     {
