@@ -15,6 +15,8 @@ public class PlayerPrefsValue
     public bool isSelected;
     public string keyName;
 
+    public int prevKeyNameLength;
+
     public void CopyFrom(PlayerPrefsValue p)
     {
         keyName = p.keyName;
