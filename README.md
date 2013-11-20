@@ -12,6 +12,7 @@ Currently, it includes:
   * Strings
   * Colors
   * Date/Time
+* PlayerPrefs window to view and modify preferences inside the Unity Editor.
 * A Timer and ManagedTimer type, useful to do things after a certain time.
 * Definition of type Tuple (Tuple-2, Tuple-3 and Tuple-4) for generic types (Tuple&lt;int, string&gt; or Tuple&lt;MyClass, GameObject&gt;, for example).
 * Gizmo-helpers for the Editor.
