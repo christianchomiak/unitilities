@@ -5,6 +5,12 @@ using System.Collections.Generic;
 
 public static class GeneralExtensions
 {
+    /// <summary>
+    /// Applies an Action to each element of a list
+    /// </summary>
+    /// <typeparam name="T">Type of each element of the list</typeparam>
+    /// <param name="list">Elements to aplly the action on</param>
+    /// <param name="action">Action to be performed on each element</param>
     public static void ForEachElement<T>(this List<T> list, Action<T> action)
     {
         for (int i = 0; i < list.Count; i++)
@@ -52,7 +58,9 @@ public static class GeneralExtensions
     public static T GetRandom<T>(this T[] array)
     {
         if (array.Length == 0)
-            Debug.LogError("Empty list");
+            throw new System.ArgumentException("Array is empty", "array"); 
+        //Debug.LogException(new Exception("Empty list"));
+            //Debug.LogError("Empty list");
 
         return array[UnityEngine.Random.Range(0, array.Length)];
     }
@@ -66,7 +74,9 @@ public static class GeneralExtensions
     public static T GetRandom<T>(this List<T> list)
     {
         if (list.Count == 0)
-            Debug.LogError("Empty list");
+            throw new System.ArgumentException("List is empty", "list");
+        
+        //Debug.LogError("Empty list");
 
         return list[UnityEngine.Random.Range(0, list.Count)];
     }

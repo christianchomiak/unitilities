@@ -79,6 +79,11 @@ public class Timer
         get { return isPaused; }
     }
 
+    public bool HasEnded
+    {
+        get { return finished; }
+    }
+
     public TimerState CurrentState
     {
         get
@@ -119,10 +124,10 @@ public class Timer
 
     #region Functions
 
-    public bool HasFinished()
+    /*public bool HasFinished()
     {
         return finished;
-    }
+    }*/
 
     public void Pause()
     {

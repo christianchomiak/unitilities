@@ -2,7 +2,7 @@
 //Source 2: https://gist.github.com/michaelbartnett/5652076
 
 /// <summary>
-/// Tuple class of 2 elements
+/// Tuple class of 2 generic elements
 /// </summary>
 /// <typeparam name="T1">First element type</typeparam>
 /// <typeparam name="T2">Second element type</typeparam>
@@ -58,7 +58,7 @@ public class Tuple<T1, T2>
 }
 
 /// <summary>
-/// Tuple class of 3 elements
+/// Tuple class of 3 generic elements
 /// </summary>
 /// <typeparam name="T1">First element type</typeparam>
 /// <typeparam name="T2">Second element type</typeparam>
@@ -123,7 +123,7 @@ public class Tuple3<T1, T2, T3>
 }
 
 /// <summary>
-/// Tuple class of 4 elements
+/// Tuple class of 4 generic elements
 /// </summary>
 /// <typeparam name="T1">First element type</typeparam>
 /// <typeparam name="T2">Second element type</typeparam>
@@ -220,7 +220,11 @@ public static class Tuple
 }
 
 
-
+/// <summary>
+/// Tuple class of 2 float
+/// </summary>
+/// <typeparam name="First">First float</typeparam>
+/// <typeparam name="Second">Second float</typeparam>
 [System.Serializable]
 public class TupleF : Tuple<float, float>
 {
@@ -235,6 +239,11 @@ public class TupleF : Tuple<float, float>
     }
 }
 
+/// <summary>
+/// Tuple class of 2 int
+/// </summary>
+/// <typeparam name="First">First int</typeparam>
+/// <typeparam name="Second">Second int</typeparam>
 [System.Serializable]
 public class TupleI : Tuple<int, int>
 {
@@ -249,6 +258,12 @@ public class TupleI : Tuple<int, int>
     }
 }
 
+/// <summary>
+/// Tuple class of 3 int
+/// </summary>
+/// <typeparam name="First">First float</typeparam>
+/// <typeparam name="Second">Second float</typeparam>
+/// <typeparam name="Third">Third int</typeparam>
 [System.Serializable]
 public class Tuple3I : Tuple3<int, int, int>
 {

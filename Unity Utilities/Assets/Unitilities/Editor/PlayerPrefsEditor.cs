@@ -1,6 +1,7 @@
 ﻿/*
  * PlayerPrefs Editor and Reader.
  * Based on this original code: http://www.quickfingers.net/quick-bites-03-player-prefs-editor/
+ * 
  */
 
 using UnityEngine;
@@ -94,11 +95,7 @@ public class PlayerPrefsEditor : EditorWindow
         Repaint();
     }
 
-    void Update()
-    {
-    }
-
-    void SortAZ()
+     void SortAZ()
     {
         playerPrefs.Sort(delegate(PlayerPrefsDataType a, PlayerPrefsDataType b)
                             {

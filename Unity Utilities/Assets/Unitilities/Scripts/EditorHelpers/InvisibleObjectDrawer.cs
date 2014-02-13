@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Script that shows the location of a GameObject (only works in the Editor)
+/// </summary>
 public class InvisibleObjectDrawer : MonoBehaviour
 {
     public bool isEnabled;

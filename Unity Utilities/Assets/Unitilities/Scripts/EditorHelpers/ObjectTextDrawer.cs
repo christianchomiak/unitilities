@@ -2,6 +2,9 @@
 using System.Collections;
 
 //TO-DO: customize the GUI Style of the displayed text
+/// <summary>
+/// Script that shows info on screen above a GameObject (only works in the Editor)
+/// </summary>
 public class ObjectTextDrawer : MonoBehaviour
 {
     public enum ObjectTextOptions { Name, Position, CustomText };
@@ -19,7 +22,7 @@ public class ObjectTextDrawer : MonoBehaviour
 
     public bool italicText;
 
-    public Color textColor;
+    public Color textColor = Color.black;
 
     public Color backgroundColor;
 
@@ -30,6 +33,7 @@ public class ObjectTextDrawer : MonoBehaviour
     {
         if (!Utilities.PlatformIsEditor())
             Destroy(this);
+
     }
 	
     #if UNITY_EDITOR
@@ -45,8 +49,8 @@ public class ObjectTextDrawer : MonoBehaviour
         if (textColor.a < 0.05f)
             Debug.LogWarning("Text color of text in " + gameObject.name + " may not be totally visible. Check its alpha channel in the color picker.");
 
-        if (backgroundColor.a < 0.05f)
-            Debug.LogWarning("Background color of text in " + gameObject.name + " may not be totally visible. Check its alpha channel in the color picker.");
+        /*if (backgroundColor.a < 0.05f)
+            Debug.LogWarning("Background color of text in " + gameObject.name + " may not be totally visible. Check its alpha channel in the color picker.");*/
 
         GUIStyle gs = new GUIStyle();
         gs.normal.textColor = textColor;
