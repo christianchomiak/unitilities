@@ -17,7 +17,7 @@ Currently, it includes:
 * Definition of type Tuple (Tuple-2, Tuple-3 and Tuple-4) for generic types (Tuple&lt;int, string&gt; or Tuple&lt;MyClass, GameObject&gt;, for example).
 * Gizmo-helpers for the Editor.
 * Various helpful functions, like calculation of positions over a sphere and HSV-defined (Hue, Saturation, Value) color, among others.
+
+Work in progress:
 * A FSM (Finite-state Machine) system that takes advantage of Unity's scripting engine.
-
-
-Examples of usage will be included in future updates.
+* Abstraction of user input (mouse/touch).
