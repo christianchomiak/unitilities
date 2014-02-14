@@ -394,115 +394,7 @@ public class Utilities
 
     #endregion
 
-    /*
-    #region ColorGeneration
-
-    public static Color GenerateColorWithHue(float _hue, float alpha  = 1.0f) // 0.5, 0.95
-    {
-        return HSVToRGB(_hue, Random.Range(0.45f, 0.75f), Random.Range(0.5f, 0.95f), alpha);
-    }
-
-    public static Color GenerateColorWithHSV(float value, bool useGoldenRation = false) // 0.5, 0.95
-    {
-        return GenerateColorWithHSV(Random.value, value, useGoldenRation);
-    }
-
-    public static Color GenerateColorWithHSV(bool useGoldenRation = false) // 0.5, 0.95
-    {
-        return GenerateColorWithHSV(Random.value, Random.value, useGoldenRation);
-    }
-
-    public static Color GenerateColorWithHSV(float _saturation, float _value, bool useGoldenRation = false)
-    {
-        //Rangos: 0 - 0.16667 - 0.33337 - 0.5 - 0.66667 - 0.83337 - 1
-        float hueValue = Random.value; // Random.Range(0.0f, 1.0f); 
-
-        if (useGoldenRation)
-        {
-            float goldenRadioConj = 0.618033988749895f;
-            hueValue += goldenRadioConj;
-            hueValue %= 1;
-        }
-
-        return Utilities.HSVToRGB(hueValue, _saturation, _value);
-    }
-
-    public static Color GenerateRandomPastelColor()
-    {
-        return Utilities.GenerateColorWithHSV(Random.Range(0.45f, 0.75f), Random.Range(0.5f, 0.95f), false);
-    }
-
-    //Based on http://wiki.unity3d.com/index.php?title=HSBColor
-    public static Color HSVToRGB(float hue, float saturation, float value, float alpha = 1.0f) //value = brightness
-    { 
-        float r = value;
-        float g = value;
-        float b = value;
-        if (saturation != 0)
-        {
-            float max = value;
-            float dif = value * saturation;
-            float min = value - dif;
-
-            float h = hue * 360f;
-
-            if (h < 60f)
-            {
-                r = max;
-                g = h * dif / 60f + min;
-                b = min;
-            }
-            else if (h < 120f)
-            {
-                r = -(h - 120f) * dif / 60f + min;
-                g = max;
-                b = min;
-            }
-            else if (h < 180f)
-            {
-                r = min;
-                g = max;
-                b = (h - 120f) * dif / 60f + min;
-            }
-            else if (h < 240f)
-            {
-                r = min;
-                g = -(h - 240f) * dif / 60f + min;
-                b = max;
-            }
-            else if (h < 300f)
-            {
-                r = (h - 240f) * dif / 60f + min;
-                g = min;
-                b = max;
-            }
-            else if (h <= 360f)
-            {
-                r = max;
-                g = min;
-                b = -(h - 360f) * dif / 60 + min;
-            }
-            else
-            {
-                r = 0;
-                g = 0;
-                b = 0;
-            }
-        }
-
-        return new Color(Mathf.Clamp01(r), Mathf.Clamp01(g), Mathf.Clamp01(b), alpha);
-    }
-
-    public static Color GenerateColor()
-    {
-        return new Color(Random.value, Random.value, Random.value); //(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
-    }
-
-    #endregion
-    */
-
-
-
+ 
     #region Trigonometry
 
     /// <summary>
@@ -552,89 +444,6 @@ public class Utilities
 
     #endregion
 
-
-    #region Instances
-
-    public static GameObject CreateInstance(GameObject _original)
-    {
-        if (_original == null)
-        {
-            Debug.LogError("Original Game Object is null and cannot be cloned.");
-            return null;
-        }
-
-        return CreateInstance(_original, null, Vector3.zero, _original.name);
-    }
-
-    public static GameObject CreateInstance(GameObject _original, Vector3 _position)
-    {
-        if (_original == null)
-        {
-            Debug.LogError("Original Game Object is null and cannot be cloned.");
-            return null;
-        }
-
-        return CreateInstance(_original, null, _position, _original.name);
-    }
-
-    public static GameObject CreateInstance(GameObject _original, Transform _parent)
-    {
-        if (_original == null)
-        {
-            Debug.LogError("Original Game Object is null and cannot be cloned.");
-            return null;
-        }
-
-        return CreateInstance(_original, _parent, Vector3.zero, _original.name);
-    }
-
-    public static GameObject CreateInstance(GameObject _original, Transform _parent, Vector3 _position)
-    {
-        if (_original == null)
-        {
-            Debug.LogError("Original Game Object is null and cannot be cloned.");
-            return null;
-        }
-
-        return CreateInstance(_original, _parent, _position, _original.name);
-    }
-
-    public static GameObject CreateInstance(GameObject _original, string _name)
-    {
-        return CreateInstance(_original, null, Vector3.zero, _name);
-    }
-
-    public static GameObject CreateInstance(GameObject _original, Vector3 _position, string _name)
-    {
-        return CreateInstance(_original, null, _position, _name);
-    }
-
-    public static GameObject CreateInstance(GameObject _original, Transform _parent, string _name)
-    {
-        return CreateInstance(_original, _parent, Vector3.zero, _name);
-    }
-
-
-    //leParent == null to put the object at the root
-    public static GameObject CreateInstance(GameObject _original, Transform _parent, Vector3 _position, string _name) //, Quaternion rotation)
-    {
-        if (_original == null)
-        {
-            Debug.LogError("Game Object \'" + _original.name + "\' is null and cannot be cloned.");
-            return null;
-        }
-
-        GameObject newGameObject = GameObject.Instantiate(_original) as GameObject;
-
-        newGameObject.name = _name; //_original.name;
-        newGameObject.transform.parent = _parent;
-        newGameObject.transform.position = _position;
-
-        return newGameObject;
-    }
-
-    #endregion
-
     #region Indexes
 
     //Left-to-right
@@ -660,7 +469,6 @@ public class Utilities
     }
 
     #endregion
-
 
     public static int CalculateFontSize(int _desiredSize) //35
     {
