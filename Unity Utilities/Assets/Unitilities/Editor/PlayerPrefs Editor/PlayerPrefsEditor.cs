@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Microsoft.Win32;
+using System.IO;
 
 
 //using System;
@@ -77,6 +78,24 @@ public class PlayerPrefsEditor : EditorWindow
             pref.SaveToRealPrefs();
         
         RefreshPlayerPrefs();
+    }
+
+    string FolderPath()
+    {
+        var script = MonoScript.FromScriptableObject(this);
+        var path = AssetDatabase.GetAssetPath(script);
+        string folderPath;
+
+
+        FileInfo fi = new FileInfo(path);
+        folderPath = fi.Directory.ToString();
+        folderPath.Replace('\\', '/');
+
+        folderPath = folderPath.Substring(folderPath.IndexOf("Assets"));
+
+        folderPath += "/";
+
+        return folderPath;
     }
 
     void OnInspectorUpdate()
@@ -248,15 +267,15 @@ public class PlayerPrefsEditor : EditorWindow
 
         if (undoTexture == null)
         {
-            undoTexture = AssetDatabase.LoadAssetAtPath("Assets/Unitilities/Editor/EditorIcons/undo.png", typeof(Texture2D)) as Texture2D;
+            undoTexture = AssetDatabase.LoadAssetAtPath(FolderPath() + "undo.png", typeof(Texture2D)) as Texture2D;
         }
         if (deleteTexture == null)
         {
-            deleteTexture = AssetDatabase.LoadAssetAtPath("Assets/Unitilities/Editor/EditorIcons/delete.png", typeof(Texture2D)) as Texture2D;
+            deleteTexture = AssetDatabase.LoadAssetAtPath(FolderPath() + "delete.png", typeof(Texture2D)) as Texture2D;
         }
         if (saveTexture == null)
         {
-            saveTexture = AssetDatabase.LoadAssetAtPath("Assets/Unitilities/Editor/EditorIcons/save.png", typeof(Texture2D)) as Texture2D;
+            saveTexture = AssetDatabase.LoadAssetAtPath(FolderPath() + "save.png", typeof(Texture2D)) as Texture2D;
         }
         
         #region Toolbar
