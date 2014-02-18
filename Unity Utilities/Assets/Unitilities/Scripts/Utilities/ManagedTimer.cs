@@ -9,7 +9,7 @@ public class ManagedTimer : Timer
 {
     /// <summary>
     /// Delegate so other classes can set matching functions as listeners.
-    /// Parameter 'item' will be a reference to the object that received the input
+    /// Parameter 'timer' will be a reference to the timer that executed the trigger.
     /// </summary>
     public delegate void TimerEventListener(ManagedTimer timer);
 
@@ -124,11 +124,6 @@ public class ManagedTimer : Timer
     #region Functions
 
 
-    public void Update()
-    {
-        Update(Time.deltaTime);
-    } 
-
     protected void Trigger()
     {
         numberOfTimesTriggered++;
@@ -136,6 +131,20 @@ public class ManagedTimer : Timer
         CallListeners(this.onFinishListeners);
     }
 
+
+    /// <summary>
+    /// Updates the Timer with the current delta of time
+    /// </summary>
+    /// <returns>The state of the Timer after the update</returns>
+    public void Update()
+    {
+        Update(Time.deltaTime);
+    } 
+
+    /// <summary>
+    /// Updates the Timer with a custom amount of seconds
+    /// </summary>
+    /// <returns>The state of the Timer after the update</returns>
     public void Update(float seconds)
     {
         if (finished)

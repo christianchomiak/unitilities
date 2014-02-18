@@ -11,6 +11,8 @@ public class Timer
 {
     protected float startingTime, currentTime, targetTime;
 
+    protected bool startsPaused;
+
     protected bool forward;
     protected bool isPaused;
     protected bool finished;
@@ -48,6 +50,16 @@ public class Timer
     }
 
     /// <summary>
+    /// Creates a k-seconds timer that doesn't loop
+    /// </summary>
+    /// <param name="_targetTime">Number of seconds</param>
+    /// <param name="_startPaused">True: The timer start paused</param>
+    public Timer(float _targetTime, bool _startPaused)
+        : this(0, _targetTime, false, _startPaused)
+    {
+    }
+
+    /// <summary>
     /// Creates a k-seconds timer.
     /// </summary>
     /// <param name="_initialTime">Starting time in seconds</param>
@@ -60,7 +72,10 @@ public class Timer
         startingTime = _initialTime;
         targetTime = _targetTime;
         forward = _initialTime < targetTime;
-        isPaused = _startPaused;
+
+        startsPaused = _startPaused;
+        isPaused = startsPaused;
+
         finished = false;
         looped = _loop;
     }
@@ -69,21 +84,33 @@ public class Timer
 
     #region Properties
 
+    /// <summary>
+    /// The length (in seconds) of the Timer
+    /// </summary>
     public float Length
     {
         get { return Mathf.Abs(targetTime - startingTime); }
     }
 
+    /// <summary>
+    /// Is the Timer paused?
+    /// </summary>
     public bool IsPaused
     {
         get { return isPaused; }
     }
 
+    /// <summary>
+    /// Has the Timer ended?
+    /// </summary>
     public bool HasEnded
     {
         get { return finished; }
     }
 
+    /// <summary>
+    /// Current state of the Timer: Finished, Paused or Ongoing
+    /// </summary>
     public TimerState CurrentState
     {
         get
@@ -98,11 +125,17 @@ public class Timer
         }
     }
 
+    /// <summary>
+    /// Number of seconds until the timer ends
+    /// </summary>
     public float RemainingTime
     {
         get { return Mathf.Abs(targetTime - currentTime); }
     }
 
+    /// <summary>
+    /// The current value of the timer
+    /// </summary>
     public float CurrentTime
     {
         protected set { currentTime = value; }
@@ -115,6 +148,9 @@ public class Timer
         get { return looped; }
     }
 
+    /// <summary>
+    /// Completion percentage of the timer. 100% == 1f
+    /// </summary>
     public float PercentageRemaining
     {
         get { return RemainingTime / Length; }
@@ -129,6 +165,9 @@ public class Timer
         return finished;
     }*/
 
+    /// <summary>
+    /// Pauses an ongoing timer.
+    /// </summary>
     public void Pause()
     {
         if (isPaused || finished)
@@ -137,6 +176,9 @@ public class Timer
         isPaused = true;
     }
 
+    /// <summary>
+    /// Unpauses a paused the timer
+    /// </summary>
     public void Resume()
     {
         if (!isPaused || finished)
@@ -145,23 +187,38 @@ public class Timer
         isPaused = false;
     }
 
-    protected void Reset()
+    /// <summary>
+    /// Starts over a running timer (paused if created that way)
+    /// </summary>
+    public void Reset()
     {
         currentTime = startingTime;
+        isPaused = startsPaused; //isPaused = false;
     }
 
+    /// <summary>
+    /// Starts over a finished timer
+    /// </summary>
     public void Restart()
     {
         Reset();
         finished = false;
-        isPaused = false;
     }
 
+    /// <summary>
+    /// Updates the Timer with the current delta of time
+    /// </summary>
+    /// <returns>The state of the Timer after the update</returns>
     public TimerState Update()
     {
         return Update(Time.deltaTime);
     }
 
+    /// <summary>
+    /// Updates the Timer with a custom number of seconds
+    /// </summary>
+    /// <param name="seconds"></param>
+    /// <returns>The state of the Timer after the update</returns>
     public TimerState Update(float seconds)
     {
         finished = false;

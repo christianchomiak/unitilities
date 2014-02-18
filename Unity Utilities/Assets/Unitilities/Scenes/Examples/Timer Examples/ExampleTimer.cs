@@ -34,12 +34,20 @@ public class ExampleTimer : MonoBehaviour
                 timer.Restart();
         }
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (timer.CurrentState == TimerState.ONGOING)
+                timer.Reset();
+        }
+
         if (ts == TimerState.PAUSED)
         {
             Debug.Log("Timer PAUSED. Press P to resume.");
         }
         else if (ts == TimerState.ONGOING)
+        {
             Debug.Log("Timer is RUNNING. Current time: " + timer.CurrentTime + ". Remains: " + timer.RemainingTime + ". Remains (percentage): " + (timer.PercentageRemaining * 100) + "%");
+        }
         else if (ts == TimerState.FINISHED)
         {
             Debug.Log("Timer FINISHED. Press S to restart.");
