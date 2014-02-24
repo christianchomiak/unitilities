@@ -56,6 +56,11 @@ public static class VectorExtensions
         return new Vector3(v.x, v.y, z);
     }
 
+    public static Vector2 ToVector2(this Vector3 v)
+    {
+        return new Vector2(v.x, v.y);
+    }
+
     #endregion
 
 
@@ -99,6 +104,11 @@ public static class VectorExtensions
     public static Vector4 WithW(this Vector4 v, float w)
     {
         return new Vector4(v.x, v.y, v.z, w);
+    }
+
+    public static Vector3 ToVector3(this Vector4 v)
+    {
+        return new Vector3(v.x, v.y, v.z);
     }
 
     #endregion

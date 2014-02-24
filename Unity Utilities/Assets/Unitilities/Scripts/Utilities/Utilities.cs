@@ -106,6 +106,15 @@ public class Utilities
         return randomVector.normalized;
     }
 
+    /// <summary>
+    /// Generates a random RGB color
+    /// </summary>
+    /// <returns>RGB color</returns>
+    public static Color RandomColor()
+    {
+        return new Color(Random.value, Random.value, Random.value);
+    }
+
     #endregion
 
 
@@ -124,118 +133,6 @@ public class Utilities
 
         return 0;
     }
-
-    #endregion
-
-
-    #region Strings
-
-    public static string FillNumberWithLeftZeros(int number, int maxDigits)
-    {
-        string filledNumber = number.ToString();
-        int zerosToAdd = maxDigits - filledNumber.Length;
-        for (int i = 0; i < zerosToAdd; i++)
-        {
-            filledNumber = "0" + filledNumber;
-        }
-
-        return filledNumber;
-    }
-
-    #endregion
-
-
-    #region ColorGeneration
-
-    /// <summary>
-    /// Generates a RGB color using random hue, saturation, value (brightness)
-    /// </summary>
-    /// <param name="useGoldenRation">'True': the golden ration will be used to better randomize the hue</param>
-    /// <returns>RGB color</returns>
-    public static Color HSV_RandomColor(bool useGoldenRation = false) // 0.5, 0.95
-    {
-        return HSV_RandomColorWithSV(Random.value, Random.value, useGoldenRation);
-    }
-
-    /// <summary>
-    /// Generates a RGB color using random hue and saturation, and specified value (brightness)
-    /// </summary>
-    /// <param name="value">Brightness of the color</param>
-    /// <param name="useGoldenRation">'True': the golden ration will be used to better randomize the hue</param>
-    /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithValue(float value, bool useGoldenRation = false) // 0.5, 0.95
-    {
-        return HSV_RandomColorWithSV(Random.value, value, useGoldenRation);
-    }
-
-    /// <summary>
-    /// Generates a RGB color using random hue and value (brightness), and specified saturation
-    /// </summary>
-    /// <param name="saturation">Saturation of the color</param>
-    /// <param name="useGoldenRation">'True': the golden ration will be used to better randomize the hue</param>
-    /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithSaturation(float saturation, bool useGoldenRation = false) // 0.5, 0.95
-    {
-        return HSV_RandomColorWithSV(saturation, Random.value, useGoldenRation);
-    }
-
-    /// <summary>
-    /// Generates a RGB color using random hue and specified saturation and value (brightness)
-    /// </summary>
-    /// <param name="saturation">Saturation of the color</param>
-    /// <param name="value">Brightness of the color</param>
-    /// <param name="useGoldenRation">'True': the golden ration will be used to better randomize the hue</param>
-    /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithSV(float saturation, float value, bool useGoldenRation = false)
-    {
-        //Rangos: 0 - 0.16667 - 0.33337 - 0.5 - 0.66667 - 0.83337 - 1
-        float hueValue = Random.value;
-
-        if (useGoldenRation)
-        {
-            float goldenRadioConj = 0.618033988749895f;
-            hueValue += goldenRadioConj;
-            hueValue %= 1;
-        }
-
-        return Utilities.HSVToRGB(hueValue, saturation, value);
-    }
-
-    /// <summary>
-    /// Generates a RGB color using random saturation and value (brightness) and specified hue and alpha
-    /// </summary>
-    /// <param name="hue">Hue of the color</param>
-    /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
-    /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithHue(float hue, float alpha = 1f)
-    {
-        return HSVToRGB(hue, Random.value, Random.value, alpha);
-    }
-
-    /// <summary>
-    /// Generates a RGB color using random saturation and value (brightness) and specified hue and alpha
-    /// </summary>
-    /// <param name="hue">Hue of the color</param>
-    /// <param name="saturation">Saturation of the color</param>
-    /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
-    /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithHS(float hue, float saturation, float alpha = 1)
-    {
-        return HSVToRGB(hue, saturation, Random.value, alpha);
-    }
-
-    /// <summary>
-    /// Generates a RGB color using random saturation and value (brightness) and specified hue and alpha
-    /// </summary>
-    /// <param name="hue">Hue of the color</param>
-    /// <param name="value">Brightness of the color</param>
-    /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
-    /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithHV(float hue, float value, float alpha = 1)
-    {
-        return HSVToRGB(hue, Random.value, value, alpha);
-    }
-
 
     public static Color HSVToRGB(Vector4 hsv)
     {
@@ -378,13 +275,115 @@ public class Utilities
         return new Vector3(h, s, v);*/
     }
 
-    /// <summary>
-    /// Generates a random RGB color
-    /// </summary>
-    /// <returns>RGB color</returns>
-    public static Color GenerateColor()
+    #endregion
+
+
+    #region Strings
+
+    public static string FillNumberWithLeftZeros(int number, int maxDigits)
     {
-        return new Color(Random.value, Random.value, Random.value);
+        string filledNumber = number.ToString();
+        int zerosToAdd = maxDigits - filledNumber.Length;
+        for (int i = 0; i < zerosToAdd; i++)
+        {
+            filledNumber = "0" + filledNumber;
+        }
+
+        return filledNumber;
+    }
+
+    #endregion
+
+
+    #region ColorGeneration
+
+    /// <summary>
+    /// Generates a RGB color using random hue, saturation, value (brightness)
+    /// </summary>
+    /// <param name="useGoldenRation">'True': the golden ration will be used to better randomize the hue</param>
+    /// <returns>RGB color</returns>
+    public static Color HSV_RandomColor(bool useGoldenRation = false) // 0.5, 0.95
+    {
+        return HSV_RandomColorWithSV(Random.value, Random.value, useGoldenRation);
+    }
+
+    /// <summary>
+    /// Generates a RGB color using random hue and saturation, and specified value (brightness)
+    /// </summary>
+    /// <param name="value">Brightness of the color</param>
+    /// <param name="useGoldenRation">'True': the golden ration will be used to better randomize the hue</param>
+    /// <returns>RGB color</returns>
+    public static Color HSV_RandomColorWithValue(float value, bool useGoldenRation = false) // 0.5, 0.95
+    {
+        return HSV_RandomColorWithSV(Random.value, value, useGoldenRation);
+    }
+
+    /// <summary>
+    /// Generates a RGB color using random hue and value (brightness), and specified saturation
+    /// </summary>
+    /// <param name="saturation">Saturation of the color</param>
+    /// <param name="useGoldenRation">'True': the golden ration will be used to better randomize the hue</param>
+    /// <returns>RGB color</returns>
+    public static Color HSV_RandomColorWithSaturation(float saturation, bool useGoldenRation = false) // 0.5, 0.95
+    {
+        return HSV_RandomColorWithSV(saturation, Random.value, useGoldenRation);
+    }
+
+    /// <summary>
+    /// Generates a RGB color using random hue and specified saturation and value (brightness)
+    /// </summary>
+    /// <param name="saturation">Saturation of the color</param>
+    /// <param name="value">Brightness of the color</param>
+    /// <param name="useGoldenRation">'True': the golden ration will be used to better randomize the hue</param>
+    /// <returns>RGB color</returns>
+    public static Color HSV_RandomColorWithSV(float saturation, float value, bool useGoldenRation = false)
+    {
+        //Rangos: 0 - 0.16667 - 0.33337 - 0.5 - 0.66667 - 0.83337 - 1
+        float hueValue = Random.value;
+
+        if (useGoldenRation)
+        {
+            float goldenRadioConj = 0.618033988749895f;
+            hueValue += goldenRadioConj;
+            hueValue %= 1;
+        }
+
+        return Utilities.HSVToRGB(hueValue, saturation, value);
+    }
+
+    /// <summary>
+    /// Generates a RGB color using random saturation and value (brightness) and specified hue and alpha
+    /// </summary>
+    /// <param name="hue">Hue of the color</param>
+    /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
+    /// <returns>RGB color</returns>
+    public static Color HSV_RandomColorWithHue(float hue, float alpha = 1f)
+    {
+        return HSVToRGB(hue, Random.value, Random.value, alpha);
+    }
+
+    /// <summary>
+    /// Generates a RGB color using random saturation and value (brightness) and specified hue and alpha
+    /// </summary>
+    /// <param name="hue">Hue of the color</param>
+    /// <param name="saturation">Saturation of the color</param>
+    /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
+    /// <returns>RGB color</returns>
+    public static Color HSV_RandomColorWithHS(float hue, float saturation, float alpha = 1)
+    {
+        return HSVToRGB(hue, saturation, Random.value, alpha);
+    }
+
+    /// <summary>
+    /// Generates a RGB color using random saturation and value (brightness) and specified hue and alpha
+    /// </summary>
+    /// <param name="hue">Hue of the color</param>
+    /// <param name="value">Brightness of the color</param>
+    /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
+    /// <returns>RGB color</returns>
+    public static Color HSV_RandomColorWithHV(float hue, float value, float alpha = 1)
+    {
+        return HSVToRGB(hue, Random.value, value, alpha);
     }
 
     public static Color GenerateRandomPastelColor()
