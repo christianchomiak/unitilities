@@ -20,15 +20,15 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     void LateUpdate()
     {
-        if (Utilities.PlatformIsDesktop())
+        if (ApplicationHelper.PlatformIsDesktop)
             previousMousePosition = Input.mousePosition;
     }
 
     public ScreenInput TouchInput(int _buttonNumber)
     {
         int buttonNumber = 0;
-        
-        if (Utilities.PlatformIsMobile())
+
+        if (ApplicationHelper.PlatformIsMobile)
         {
             if (Input.touchCount > 0)
             {
@@ -41,7 +41,7 @@ public class InputManager : Singleton<InputManager>
                 return new ScreenInput(Input.GetTouch(buttonNumber));
             }
         }
-        else if (Utilities.PlatformIsDesktop())
+        else if (ApplicationHelper.PlatformIsDesktop)
         {
             if (!_buttonNumber.Between(0, 2))
             {

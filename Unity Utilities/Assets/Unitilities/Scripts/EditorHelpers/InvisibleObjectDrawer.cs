@@ -13,7 +13,7 @@ public class InvisibleObjectDrawer : MonoBehaviour
 
     void Awake()
     {
-        if (!Utilities.PlatformIsEditor())
+        if (!ApplicationHelper.PlatformIsEditor)
             DestroyImmediate(this);
     }
 

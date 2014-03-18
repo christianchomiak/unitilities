@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Remember to call base.Awake() in each new Singleton
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     protected static T instance;

@@ -31,7 +31,7 @@ public class ObjectTextDrawer : MonoBehaviour
 
     void Awake()
     {
-        if (!Utilities.PlatformIsEditor())
+        if (!ApplicationHelper.PlatformIsEditor)
             Destroy(this);
 
     }
