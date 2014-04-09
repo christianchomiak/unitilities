@@ -247,7 +247,15 @@ public class PlayerPrefsEditor : EditorWindow
 
     private bool IsEditor
     {
-        get { return !Application.isPlaying; }
+        get 
+        {
+            if (!ApplicationHelper.PlatformIsEditor)
+                return false;
+
+            return !EditorApplication.isPlaying || EditorApplication.isPaused; 
+        }
+
+        //get { return !Application.isPlaying; }
     }
 
     void OnGUI()

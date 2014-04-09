@@ -31,8 +31,10 @@ public class ApplicationHelper
     {
         get
         {
-            return Application.platform == RuntimePlatform.WindowsEditor ||
-               Application.platform == RuntimePlatform.OSXEditor;
+            return Application.isEditor;
+
+            /*return Application.platform == RuntimePlatform.WindowsEditor ||
+               Application.platform == RuntimePlatform.OSXEditor;*/
         }
     }
 
