@@ -61,23 +61,24 @@ public class MathHelper
     #region Indexes
 
     //Left-to-right
-    public static int IndexFrom2DTo1D(int x, int y, int width)
+
+    public static int LinearIndex(int column, int row, int width)
     {
-        return x + (y * width);
+        return column + (row * width);
     }
 
     //Top-to-bottom
-    public static int IndexFrom2DTo1D_Alt(int x, int y, int height)
+    public static int LinearIndexAlt(int column, int row, int height)
     {
-        return y + (x * height);
+        return row + (column * height);
     }
 
-    public static TupleI IndexesFrom1DTo2D_W(int index, int width)
+    public static TupleI GridIndexes(int index, int width)
     {
         return new TupleI(index % width, index / width);
     }
 
-    public static TupleI IndexesFrom1DTo2D_H(int index, int height)
+    public static TupleI GridIndexesAlt(int index, int height)
     {
         return new TupleI(index / height, index % height);
     }

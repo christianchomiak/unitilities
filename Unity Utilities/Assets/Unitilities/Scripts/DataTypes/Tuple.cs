@@ -1,6 +1,10 @@
 ﻿//Source 1: http://stackoverflow.com/questions/7120845/equivalent-of-tuple-net-4-for-net-framework-3-5
 //Source 2: https://gist.github.com/michaelbartnett/5652076
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
 /// <summary>
 /// Tuple class of 2 generic elements
 /// </summary>
@@ -12,11 +16,25 @@ public class Tuple<T1, T2>
     public T1 first;
     public T2 second;
 
-    public Tuple(T1 _first, T2 _second) //origanlly was _internal_
+    private static readonly IEqualityComparer<T1> Item1Comparer = EqualityComparer<T1>.Default;
+    private static readonly IEqualityComparer<T2> Item2Comparer = EqualityComparer<T2>.Default;
+
+    public Tuple(T1 _first, T2 _second) //originally was _internal_
     {
         first = _first;
         second = _second;
     }
+
+
+    /*public T Max<T>() where T : IComparable<T>
+    {
+        if (first > column)
+        if (first.CompareTo(second) >= 0)
+            return first;
+        else
+            return second;
+    }*/
+
 
     public override string ToString()
     {
@@ -25,6 +43,15 @@ public class Tuple<T1, T2>
 
     public static bool operator ==(Tuple<T1, T2> a, Tuple<T1, T2> b)
     {
+        if (Tuple<T1, T2>.IsNull(a) && !Tuple<T1, T2>.IsNull(b))
+            return false;
+
+        if (!Tuple<T1, T2>.IsNull(a) && Tuple<T1, T2>.IsNull(b))
+            return false;
+
+        if (Tuple<T1, T2>.IsNull(a) && Tuple<T1, T2>.IsNull(b))
+            return true;
+
         return
             a.first.Equals(b.first) &&
             a.second.Equals(b.second);
@@ -35,7 +62,7 @@ public class Tuple<T1, T2>
         return !(a == b);
     }
 
-    public override bool Equals(object o)
+    /*public override bool Equals(object o)
     {
         if (o.GetType() != typeof(Tuple<T1, T2>))
         {
@@ -45,7 +72,7 @@ public class Tuple<T1, T2>
         var other = (Tuple<T1, T2>)o;
 
         return this == other;
-    }
+    }*/
 
     public override int GetHashCode()
     {
@@ -55,6 +82,29 @@ public class Tuple<T1, T2>
         return hash;
     }
 
+    /*public override int GetHashCode()
+    {
+        var hc = 0;
+        if (!object.ReferenceEquals(first, null))
+            hc = Item1Comparer.GetHashCode(first);
+        if (!object.ReferenceEquals(second, null))
+            hc = (hc << 3) ^ Item2Comparer.GetHashCode(second);
+        return hc;
+    }*/
+
+    public override bool Equals(object obj)
+    {
+        var other = obj as Tuple<T1, T2>;
+        if (object.ReferenceEquals(other, null))
+            return false;
+        else
+            return Item1Comparer.Equals(first, other.first) && Item2Comparer.Equals(second, other.second);
+    }
+
+    private static bool IsNull(object obj)
+    {
+        return object.ReferenceEquals(obj, null);
+    }
 }
 
 /// <summary>
@@ -70,11 +120,17 @@ public class Tuple3<T1, T2, T3>
     public T2 second;
     public T3 third;
 
+
+    private static readonly IEqualityComparer<T1> Item1Comparer = EqualityComparer<T1>.Default;
+    private static readonly IEqualityComparer<T2> Item2Comparer = EqualityComparer<T2>.Default;
+    private static readonly IEqualityComparer<T3> Item3Comparer = EqualityComparer<T3>.Default;
+
+
     public Tuple3(Tuple<T1, T2> _tuple2, T3 _third)
         : this(_tuple2.first, _tuple2.second, _third)
     { }
 
-    public Tuple3(T1 _first, T2 _second, T3 _third) //origanlly was _internal_
+    public Tuple3(T1 _first, T2 _second, T3 _third) //originally was _internal_
     {
         first = _first;
         second = _second;
@@ -88,6 +144,15 @@ public class Tuple3<T1, T2, T3>
 
     public static bool operator ==(Tuple3<T1, T2, T3> a, Tuple3<T1, T2, T3> b)
     {
+        if (Tuple3<T1, T2, T3>.IsNull(a) && !Tuple3<T1, T2, T3>.IsNull(b))
+            return false;
+
+        if (!Tuple3<T1, T2, T3>.IsNull(a) && Tuple3<T1, T2, T3>.IsNull(b))
+            return false;
+
+        if (Tuple3<T1, T2, T3>.IsNull(a) && Tuple3<T1, T2, T3>.IsNull(b))
+            return true;
+
         return
             a.first.Equals(b.first) &&
             a.second.Equals(b.second) &&
@@ -99,7 +164,7 @@ public class Tuple3<T1, T2, T3>
         return !(a == b);
     }
 
-    public override bool Equals(object o)
+    /*public override bool Equals(object o)
     {
         if (o.GetType() != typeof(Tuple3<T1, T2, T3>))
         {
@@ -109,7 +174,7 @@ public class Tuple3<T1, T2, T3>
         var other = (Tuple3<T1, T2, T3>)o;
 
         return this == other;
-    }
+    }*/
 
     public override int GetHashCode()
     {
@@ -120,6 +185,19 @@ public class Tuple3<T1, T2, T3>
         return hash;
     }
 
+    public override bool Equals(object obj)
+    {
+        var other = obj as Tuple3<T1, T2, T3>;
+        if (object.ReferenceEquals(other, null))
+            return false;
+        else
+            return Item1Comparer.Equals(first, other.first) && Item2Comparer.Equals(second, other.second) && Item3Comparer.Equals(third, other.third);
+    }
+
+    private static bool IsNull(object obj)
+    {
+        return object.ReferenceEquals(obj, null);
+    }
 }
 
 /// <summary>
@@ -137,6 +215,11 @@ public class Tuple4<T1, T2, T3, T4>
     public T3 third;
     public T4 fourth;
 
+    private static readonly IEqualityComparer<T1> Item1Comparer = EqualityComparer<T1>.Default;
+    private static readonly IEqualityComparer<T2> Item2Comparer = EqualityComparer<T2>.Default;
+    private static readonly IEqualityComparer<T3> Item3Comparer = EqualityComparer<T3>.Default;
+    private static readonly IEqualityComparer<T4> Item4Comparer = EqualityComparer<T4>.Default;
+
     public Tuple4(Tuple<T1, T2> _tuple2, T3 _third, T4 _fourth)
         : this(_tuple2.first, _tuple2.second, _third, _fourth)
     { }
@@ -145,7 +228,7 @@ public class Tuple4<T1, T2, T3, T4>
         : this(_tuple3.first, _tuple3.second, _tuple3.third, _fourth)
     { }
 
-    public Tuple4(T1 _first, T2 _second, T3 _third, T4 _fourth) //origanlly was _internal_
+    public Tuple4(T1 _first, T2 _second, T3 _third, T4 _fourth) //originally was _internal_
     {
         first = _first;
         second = _second;
@@ -160,6 +243,15 @@ public class Tuple4<T1, T2, T3, T4>
 
     public static bool operator ==(Tuple4<T1, T2, T3, T4> a, Tuple4<T1, T2, T3, T4> b)
     {
+        if (Tuple4<T1, T2, T3, T4>.IsNull(a) && !Tuple4<T1, T2, T3, T4>.IsNull(b))
+            return false;
+
+        if (!Tuple4<T1, T2, T3, T4>.IsNull(a) && Tuple4<T1, T2, T3, T4>.IsNull(b))
+            return false;
+
+        if (Tuple4<T1, T2, T3, T4>.IsNull(a) && Tuple4<T1, T2, T3, T4>.IsNull(b))
+            return true;
+
         return
             a.first.Equals(b.first) &&
             a.second.Equals(b.second) &&
@@ -172,7 +264,7 @@ public class Tuple4<T1, T2, T3, T4>
         return !(a == b);
     }
 
-    public override bool Equals(object o)
+    /*public override bool Equals(object o)
     {
         if (o.GetType() != typeof(Tuple4<T1, T2, T3, T4>))
         {
@@ -182,7 +274,7 @@ public class Tuple4<T1, T2, T3, T4>
         var other = (Tuple4<T1, T2, T3, T4>)o;
 
         return this == other;
-    }
+    }*/
 
     public override int GetHashCode()
     {
@@ -194,6 +286,19 @@ public class Tuple4<T1, T2, T3, T4>
         return hash;
     }
 
+    public override bool Equals(object obj)
+    {
+        var other = obj as Tuple4<T1, T2, T3, T4>;
+        if (object.ReferenceEquals(other, null))
+            return false;
+        else
+            return Item1Comparer.Equals(first, other.first) && Item2Comparer.Equals(second, other.second) && Item3Comparer.Equals(third, other.third) && Item4Comparer.Equals(fourth, other.fourth);
+    }
+
+    private static bool IsNull(object obj)
+    {
+        return object.ReferenceEquals(obj, null);
+    }
 }
 
 

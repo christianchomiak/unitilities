@@ -149,7 +149,7 @@ public class PlayerPrefsEditor : EditorWindow
                //originalPrefs.Remove(ppv);
            }
        }
-       //playerPrefs.RemoveAll(x => toBeDeleted.Contains(x));
+       //playerPrefs.RemoveAll(column => toBeDeleted.Contains(column));
        RefreshPlayerPrefs();
     }
 

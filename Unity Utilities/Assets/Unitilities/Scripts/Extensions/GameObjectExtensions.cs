@@ -192,8 +192,8 @@ public static class GameObjectExtensions
     /// Sets the position of a Game Object
     /// </summary>
     /// <param name="gObj"></param>
-    /// <param name="x">X field</param>
-    /// <param name="y">Y field</param>
+    /// <param name="column">X field</param>
+    /// <param name="row">Y field</param>
     /// <param name="z">Z field</param>
     public static void SetPosition(this GameObject gObj, float x, float y, float z)
     {
@@ -204,7 +204,7 @@ public static class GameObjectExtensions
     /// Sets the X position of a Game Object
     /// </summary>
     /// <param name="gObj"></param>
-    /// <param name="x">X field</param>
+    /// <param name="column">X field</param>
     public static void SetX(this GameObject gObj, float x)
     {
         gObj.transform.position = new Vector3(x, gObj.transform.position.y, gObj.transform.position.z);
@@ -214,7 +214,7 @@ public static class GameObjectExtensions
     /// Sets the Y position of a Game Object
     /// </summary>
     /// <param name="gObj"></param>
-    /// <param name="y">Y field</param>
+    /// <param name="row">Y field</param>
     public static void SetY(this GameObject gObj, float y)
     {
         gObj.transform.position = new Vector3(gObj.transform.position.x, y, gObj.transform.position.z);

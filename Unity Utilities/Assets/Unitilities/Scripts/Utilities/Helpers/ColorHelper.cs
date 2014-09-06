@@ -180,14 +180,14 @@ public class ColorHelper
     /// <summary>
     /// Returns the HSV values of a RGB color
     /// </summary>
-    /// <param name="r">'Red' component</param>
+    /// <param name="row">'Red' component</param>
     /// <param name="g">'Green' component</param>
     /// <param name="b">'Blue' component</param>
     /// <returns></returns>
     public static Vector3 RGBToHSV(float r, float g, float b)
     {
         return (new Color(r, g, b)).GetHSV();
-        //return RGBToHSV(new Color(r, g, b));
+        //return RGBToHSV(new Color(row, g, b));
     }
 
     /// <summary>
@@ -201,8 +201,8 @@ public class ColorHelper
 
         /*float h, s, v;
 
-        float min = Mathf.Min(Mathf.Min(color.r, color.g), color.b);
-        float max = Mathf.Max(Mathf.Max(color.r, color.g), color.b);
+        float min = Mathf.Min(Mathf.Min(color.row, color.g), color.b);
+        float max = Mathf.Max(Mathf.Max(color.row, color.g), color.b);
         float delta = max - min;
 
         // value is our max color
@@ -229,12 +229,12 @@ public class ColorHelper
         }
 
         // hue depends which color is max (this creates a rainbow effect)
-        if (color.r == max)
+        if (color.row == max)
             h = (color.g - color.b) / delta;            // between yellow & magenta
         else if (color.g == max)
-            h = 2 + (color.b - color.r) / delta;                // between cyan & yellow
+            h = 2 + (color.b - color.row) / delta;                // between cyan & yellow
         else
-            h = 4 + (color.r - color.g) / delta;                // between magenta & cyan
+            h = 4 + (color.row - color.g) / delta;                // between magenta & cyan
 
         // turn hue into 0-360 degrees
         h *= 60;
