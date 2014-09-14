@@ -136,7 +136,7 @@ public class ManagedTimer : Timer
     /// Updates the Timer with the current delta of time
     /// </summary>
     /// <returns>The state of the Timer after the update</returns>
-    public void Update()
+    new public void Update()
     {
         Update(Time.deltaTime);
     } 
@@ -145,7 +145,7 @@ public class ManagedTimer : Timer
     /// Updates the Timer with a custom amount of seconds
     /// </summary>
     /// <returns>The state of the Timer after the update</returns>
-    public void Update(float seconds)
+    new public void Update(float seconds)
     {
         if (finished)
             return;
