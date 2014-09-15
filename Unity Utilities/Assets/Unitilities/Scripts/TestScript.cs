@@ -7,10 +7,11 @@ using System.Collections.Generic;
 /// </summary>
 public class TestScript : MonoBehaviour
 {
+
 	// Use this for initialization
 	void Start () 
     {
-        Pool<TestScript> p = new Pool<TestScript>(this);
+        //Pool<TestScript> p = new Pool<TestScript>(this);
 	}
 	
 	// Update is called once per frame

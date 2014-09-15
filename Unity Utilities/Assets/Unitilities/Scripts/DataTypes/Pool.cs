@@ -7,13 +7,13 @@ using System.Collections.Generic;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [System.Serializable]
-public class Pool<T> where T : MonoBehaviour
+public class Pool
 {
     /// <summary>
     /// Template that will be used to create new elements
     /// </summary>
     [SerializeField]
-    T prefab;
+    GameObject prefab;
 
     /// <summary>
     /// Whether the pool should have previously created elements at the start of the game
@@ -27,17 +27,21 @@ public class Pool<T> where T : MonoBehaviour
     [SerializeField]
     int prefillQuantity = 1;
 
+    [SerializeField]
+    Transform spawnedParent;
+
+
     /// <summary>
     /// References of all spawned elements
     /// </summary>
-    protected List<T> spawned;
+    protected List<GameObject> spawned;
 
     /// <summary>
     /// Elements ready to be spawned
     /// </summary>
-    Stack<T> availablePool;
+    Stack<GameObject> availablePool;
 
-    public T Prefab
+    public GameObject Prefab
     {
         get
         {
@@ -45,28 +49,67 @@ public class Pool<T> where T : MonoBehaviour
         }
     }
 
-    public Pool(T prefab)
+    public List<GameObject> Spawned
+    {
+        get
+        {
+            return spawned;
+        }
+    }
+
+    public Pool(GameObject prefab)
+        : this(prefab, null, false, 0)
+    {
+    }
+
+    public Pool(GameObject prefab, Transform parentTransform)
+        : this(prefab, parentTransform, false, 0)
+    {
+    }
+
+    public Pool(GameObject prefab, bool prefill, int prefillQuantity)
+        : this(prefab, null, prefill, prefillQuantity)
+    {
+    }
+
+    public Pool(GameObject prefab, Transform parentTransform, bool prefill, int prefillQuantity)
     {
         this.prefab = prefab;
-        //this.probability = probability;
 
-        this.spawned = new List<T>();
-        this.availablePool = new Stack<T>();
+        this.spawned = new List<GameObject>();
+        this.availablePool = new Stack<GameObject>();
+
+        this.prefillPool = prefill;
+        this.prefillQuantity = prefillQuantity;
+
+        this.spawnedParent = parentTransform;
+
+        Init();
     }
+
 
     /// <summary>
     /// Prefills the pool
     /// </summary>
-    /// <param name="parent">Parent object of all spawned elements</param>
-    public void Init(Transform parent = null)
+    public void Init()
     {
-        this.spawned = new List<T>();
-        this.availablePool = new Stack<T>();
+        /*this.spawned = new List<GameObject>();
+        this.availablePool = new Stack<GameObject>();*/
 
         if (this.prefillPool)
         {
-            FillPool(prefillQuantity, parent);
+            FillPool(this.prefillQuantity); //, this.spawnedParent);
         }
+    }
+
+    public virtual GameObject Spawn(Vector3 position)
+    {
+        return Spawn(position, Quaternion.Euler(Vector3.zero));
+    }
+
+    public virtual GameObject Spawn(Quaternion rotation)
+    {
+        return Spawn(Vector3.zero, rotation);
     }
 
     /// <summary>
@@ -76,15 +119,15 @@ public class Pool<T> where T : MonoBehaviour
     /// <param name="position">Desired spawn position</param>
     /// <param name="parent">Desired gameobject parent</param>
     /// <returns></returns>
-    public virtual T Spawn(Vector3 position, Transform parent = null)
+    public virtual GameObject Spawn(Vector3 position, Quaternion rotation, Transform parent = null)
     {
-        T candidate = null;
+        GameObject candidate = null;
 
         if (availablePool.Count == 0)
         {
-            candidate = GameObject.Instantiate(prefab, position, Quaternion.Euler(0, 0, 0)) as T; //prefab.Clone(position, parent);
+            candidate = GameObject.Instantiate(prefab, position, rotation) as GameObject; //prefab.Clone(position, parent);
 
-            candidate.transform.parent = parent;
+            //candidate.transform.parent = parent;
             candidate.transform.position = position;
         }
         else
@@ -93,6 +136,11 @@ public class Pool<T> where T : MonoBehaviour
             candidate.gameObject.SetPosition(position);
             candidate.gameObject.SetActive(true);
         }
+
+        if (parent == null)
+            candidate.transform.parent = this.spawnedParent;
+        else
+            candidate.transform.parent = parent;
 
         this.spawned.Add(candidate);
 
@@ -104,13 +152,13 @@ public class Pool<T> where T : MonoBehaviour
     /// </summary>
     /// <param name="quantity">Number of elements to fill the pool with</param>
     /// <param name="parent"></param>
-    public void FillPool(int quantity, Transform parent = null)
+    public void FillPool(int quantity) //, Transform parent = null)
     {
         for (int i = 0; i < quantity; i++)
         {
-            T o = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(0, 0, 0)) as T; //prefab.Clone(Vector3.zero, EnemyFactory.Instance.transform);
+            GameObject o = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(0, 0, 0)) as GameObject; //prefab.Clone(Vector3.zero, EnemyFactory.Instance.transform);
 
-            o.transform.parent = parent;
+            o.transform.parent = this.spawnedParent;
 
             o.gameObject.SetActive(false);
             availablePool.Push(o);
@@ -121,7 +169,7 @@ public class Pool<T> where T : MonoBehaviour
     /// Removes an element from the game and stores it the pool
     /// </summary>
     /// <param name="e">Element to remove</param>
-    public void Withdraw(T e)
+    public void Recycle(GameObject e)
     {
         if (!spawned.Contains(e))
             return;
