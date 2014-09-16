@@ -18,7 +18,7 @@ public class ExampleExtensions : MonoBehaviour
 
         if (parentOfNewClone == null)
         {
-            Debug.Log("No parent was specified, the clone will be at the root of the scene.");
+            Debug.Log("No customParent was specified, the clone will be at the root of the scene.");
         }
 
 	}

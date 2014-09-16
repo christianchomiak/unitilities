@@ -7,6 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public class TestScript : MonoBehaviour
 {
+    public GameObject p;
 
 	// Use this for initialization
 	void Start () 
@@ -17,6 +18,11 @@ public class TestScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //PoolManager.Instance.Spawn(p, this.transform);
+            p.Spawn(this.transform);
+            
+        }
 	}
 }

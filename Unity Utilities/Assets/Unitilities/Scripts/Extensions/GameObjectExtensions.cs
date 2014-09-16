@@ -236,7 +236,7 @@ public static class GameObjectExtensions
     #region Clone
 
     /// <summary>
-    /// Creates a new instance of a Game Object
+    /// Creates a new instance of the Game Object
     /// </summary>
     /// <param name="original">Original object to clone from.</param>
     /// <param name="copyName">Does the new instance will have the same name from the original?</param>
@@ -250,7 +250,7 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Creates a new instance of a Game Object
+    /// Creates a new instance of the Game Object
     /// </summary>
     /// <param name="original">Original object to clone from.</param>
     /// <param name="position">Position of the new instance.</param>
@@ -261,7 +261,7 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Creates a new instance of a Game Object
+    /// Creates a new instance of the Game Object
     /// </summary>
     /// <param name="original">Original object to clone from.</param>
     /// <param name="name">Name of the new instance.</param>
@@ -272,10 +272,10 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Creates a new instance of a Game Object
+    /// Creates a new instance of the Game Object
     /// </summary>
     /// <param name="original">Original object to clone from.</param>
-    /// <param name="parent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
+    /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
     /// <returns>A clone of the Game Object</returns>
     public static GameObject Clone(this GameObject original, Transform parent)
     {
@@ -283,11 +283,11 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Creates a new instance of a Game Object
+    /// Creates a new instance of the Game Object
     /// </summary>
     /// <param name="original">Original object to clone from.</param>
     /// <param name="position">Position of the new instance.</param>
-    /// <param name="parent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
+    /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
     /// <returns>A clone of the Game Object</returns>
     public static GameObject Clone(this GameObject original, Vector3 position, Transform parent)
     {
@@ -295,10 +295,10 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Creates a new instance of a Game Object
+    /// Creates a new instance of the Game Object
     /// </summary>
     /// <param name="original">Original object to clone from.</param>
-    /// <param name="parent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
+    /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
     /// <param name="name">Name of the new instance.</param>
     /// <returns>A clone of the Game Object</returns>
     public static GameObject Clone(this GameObject original, Transform parent, string name)
@@ -307,11 +307,11 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Creates a new instance of a Game Object
+    /// Creates a new instance of the Game Object
     /// </summary>
     /// <param name="original">Original object to clone from.</param>
     /// <param name="position">Position of the new instance.</param>
-    /// <param name="parent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
+    /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
     /// <param name="name">Name of the new instance.</param>
     /// <returns>A clone of the Game Object</returns>
     public static GameObject Clone(this GameObject original, Vector3 position, Transform parent, string name)
@@ -320,7 +320,7 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Creates a new instance of a Game Object
+    /// Creates a new instance of the Game Object
     /// </summary>
     /// <param name="original">Original object to clone from.</param>
     /// <param name="position">Position of the new instance.</param>
@@ -332,12 +332,12 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Creates a new instance of a Game Object
+    /// Creates a new instance of the Game Object
     /// </summary>
     /// <param name="original">Original object to clone from.</param>
     /// <param name="position">Position of the new instance.</param>
     /// <param name="rotation">Rotation of the new instance.</param>
-    /// <param name="parent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
+    /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
     /// <param name="name">Name of the new instance.</param>
     /// <returns>A clone of the Game Object</returns>
     public static GameObject Clone(this GameObject original, Vector3 position, Quaternion rotation, Transform parent, string name)
