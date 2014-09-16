@@ -114,7 +114,7 @@ public class PlayerPrefsEditor : EditorWindow
         Repaint();
     }
 
-     void SortAZ()
+    void SortAZ()
     {
         playerPrefs.Sort(delegate(PlayerPrefsDataType a, PlayerPrefsDataType b)
                             {
@@ -218,8 +218,10 @@ public class PlayerPrefsEditor : EditorWindow
             {
                 ppv.SaveToRealPrefs();
                 ppv.isSelected = false;
+                originalPrefs[ppv].CopyFrom(ppv);
             }
         }
+        //RefreshPlayerPrefs();
     }
 
     bool CheckDuplicates(PlayerPrefsDataType ppv)

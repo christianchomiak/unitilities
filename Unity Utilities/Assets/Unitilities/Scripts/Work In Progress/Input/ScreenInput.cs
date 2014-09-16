@@ -2,7 +2,7 @@
 using System.Collections;
 
 /// <summary>
-/// Created with the purpose of merge mouse input and device touch input 
+/// Created with the purpose of merging mouse input and device touch input 
 /// on a single input type
 /// </summary>
 public class ScreenInput
