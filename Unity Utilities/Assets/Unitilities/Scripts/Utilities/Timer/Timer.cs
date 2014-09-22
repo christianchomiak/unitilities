@@ -68,6 +68,15 @@ public class Timer
     /// <param name="_startPaused">True: The timer start paused</param>
     public Timer(float _initialTime, float _targetTime, bool _loop, bool _startPaused)
     {
+        _initialTime = Mathf.Abs(_initialTime);
+        _targetTime = Mathf.Abs(_targetTime);
+
+        if (_targetTime == 0f)
+        {
+            Debug.LogError("Timer cannot have a target time of 0. A default of 1 will be used.");
+            _targetTime = 1f;
+        }
+
         currentTime = _initialTime;
         startingTime = _initialTime;
         targetTime = _targetTime;
@@ -233,11 +242,23 @@ public class Timer
 
         if (forward)
         {
+            if (seconds < 0f)
+            {
+                Debug.LogError("Timer is set to move forward but the number of seconds is negative. Timer will not be updated.");
+                return TimerState.ONGOING;
+            }
+
             currentTime += seconds;
             timeReached = currentTime >= targetTime;
         }
         else
         {
+            if (seconds > 0f)
+            {
+                Debug.LogError("Timer is set to move backwards but the number of seconds is positive. Timer will not be updated.");
+                return TimerState.ONGOING;
+            }
+
             currentTime -= seconds;
             timeReached = currentTime <= targetTime;
         }
