@@ -12,7 +12,7 @@ public class ExampleTimer : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        timer = new Timer(targetTime, repeatTimer, startsPaused);
+        timer = new Timer(targetTime, repeatTimer, startsPaused);        
 	}
 	
 	// Update is called once per frame

@@ -50,13 +50,20 @@ public class PlayerPrefsEditor : EditorWindow
     private bool sortIsAZ = true;
 
     // Add menu named "My Window" to the Window menu
-    [MenuItem("Window/Unitilities/PlayerPrefs Editor")]
+    [MenuItem("Window/Unitilities/PlayerPrefs/Manage")]
     static void Init()
     {
         // Get existing open window or if none, make a new one:
         PlayerPrefsEditor window = (PlayerPrefsEditor) EditorWindow.GetWindow(typeof(PlayerPrefsEditor));
-        window.title = "PlayerPrefs";
+        window.title = "PlayerPrefs Editor";
         //window.somethingWasDeleted = false;
+    }
+
+    // Add menu named "My Window" to the Window menu
+    [MenuItem("Window/Unitilities/PlayerPrefs/Delete All")]
+    static void DeleteAllPlayerPrefsMenuShortcut()
+    {
+        PlayerPrefs.DeleteAll();
     }
 
 

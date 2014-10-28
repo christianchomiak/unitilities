@@ -9,7 +9,7 @@ public static class ColorExtensions
     /// </summary>
     /// <param name="color">RGB color</param>
     /// <returns>Vector3 containing the HSV representation of the RGB color</returns>
-    public static Vector3 GetHSV(this Color color) //, out float h, out float s, out float v)
+    public static HSVColor HSV(this Color color) //, out float h, out float s, out float v)
     {
         float h, s, v;
 
@@ -25,10 +25,10 @@ public static class ColorExtensions
             s = delta / max;
         else
         {
-            // all colors are zero, no saturation and hue is undefined
+            // all colors are white, no saturation and hue is undefined
             s = 0;
             h = -1;
-            return new Vector3(h, s, v);
+            return new HSVColor(h, s, v, color.a);
         }
 
         // grayscale image if min and max are the same
@@ -37,7 +37,7 @@ public static class ColorExtensions
             v = max;
             s = 0;
             h = -1;
-            return new Vector3(h, s, v);
+            return new HSVColor(h, s, v, color.a);
         }
 
         // hue depends which color is max (this creates a rainbow effect)
@@ -53,7 +53,7 @@ public static class ColorExtensions
         if (h < 0)
             h += 360;
 
-        return new Vector3(h, s, v);
+        return new HSVColor(h, s, v, color.a);
     }
 
 }

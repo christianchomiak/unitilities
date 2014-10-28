@@ -11,7 +11,7 @@ public class ColorHelper
     /// <returns>RGB color</returns>
     public static Color HSV_RandomColor(bool useGoldenRation = false) // 0.5, 0.95
     {
-        return HSV_RandomColorWithSV(Random.value, Random.value, useGoldenRation);
+        return RandomColorWithSV(Random.value, Random.value, useGoldenRation);
     }
 
     /// <summary>
@@ -20,9 +20,9 @@ public class ColorHelper
     /// <param name="value">Brightness of the color</param>
     /// <param name="useGoldenRation">'True': the golden ration will be used to better randomize the hue</param>
     /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithValue(float value, bool useGoldenRation = false) // 0.5, 0.95
+    public static Color RandomColorWithValue(float value, bool useGoldenRation = false) // 0.5, 0.95
     {
-        return HSV_RandomColorWithSV(Random.value, value, useGoldenRation);
+        return RandomColorWithSV(Random.value, value, useGoldenRation);
     }
 
     /// <summary>
@@ -31,9 +31,9 @@ public class ColorHelper
     /// <param name="saturation">Saturation of the color</param>
     /// <param name="useGoldenRation">'True': the golden ration will be used to better randomize the hue</param>
     /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithSaturation(float saturation, bool useGoldenRation = false) // 0.5, 0.95
+    public static Color RandomColorWithSaturation(float saturation, bool useGoldenRation = false) // 0.5, 0.95
     {
-        return HSV_RandomColorWithSV(saturation, Random.value, useGoldenRation);
+        return RandomColorWithSV(saturation, Random.value, useGoldenRation);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class ColorHelper
     /// <param name="value">Brightness of the color</param>
     /// <param name="useGoldenRation">'True': the golden ration will be used to better randomize the hue</param>
     /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithSV(float saturation, float value, bool useGoldenRation = false)
+    public static Color RandomColorWithSV(float saturation, float value, bool useGoldenRation = false)
     {
         //Rangos: 0 - 0.16667 - 0.33337 - 0.5 - 0.66667 - 0.83337 - 1
         float hueValue = Random.value;
@@ -64,7 +64,7 @@ public class ColorHelper
     /// <param name="hue">Hue of the color</param>
     /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
     /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithHue(float hue, float alpha = 1f)
+    public static Color RandomColorWithHue(float hue, float alpha = 1f)
     {
         return HSVToRGB(hue, Random.value, Random.value, alpha);
     }
@@ -76,7 +76,7 @@ public class ColorHelper
     /// <param name="saturation">Saturation of the color</param>
     /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
     /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithHS(float hue, float saturation, float alpha = 1)
+    public static Color RandomColorWithHS(float hue, float saturation, float alpha = 1)
     {
         return HSVToRGB(hue, saturation, Random.value, alpha);
     }
@@ -88,24 +88,28 @@ public class ColorHelper
     /// <param name="value">Brightness of the color</param>
     /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
     /// <returns>RGB color</returns>
-    public static Color HSV_RandomColorWithHV(float hue, float value, float alpha = 1)
+    public static Color RandomColorWithHV(float hue, float value, float alpha = 1)
     {
         return HSVToRGB(hue, Random.value, value, alpha);
     }
 
-    public static Color GenerateRandomPastelColor()
+    /*public static Color GenerateRandomPastelColor()
     {
-        return ColorHelper.HSV_RandomColorWithSV(Random.Range(0.45f, 0.75f), Random.Range(0.5f, 0.95f), false);
-    }
+        return ColorHelper.RandomColorWithSV(Random.Range(0.45f, 0.75f), Random.Range(0.5f, 0.95f), false);
+    }*/
 
     #endregion
 
     #region Conversions
 
-
-    public static Color HSVToRGB(Vector4 hsv)
+    /// <summary>
+    /// Generates a RGB color using the HSV system
+    /// </summary>
+    /// <param name="hsv">Color in the HSV system</param>
+    /// <returns>RGB color</returns>
+    public static Color HSVToRGB(HSVColor hsv)
     {
-        return HSVToRGB(hsv.x, hsv.y, hsv.z, hsv.w);
+        return HSVToRGB(hsv.Hue, hsv.Saturation, hsv.Value, hsv.Alpha);
     }
 
     //Based on http://wiki.unity3d.com/index.php?title=HSBColor
@@ -184,9 +188,9 @@ public class ColorHelper
     /// <param name="g">'Green' component</param>
     /// <param name="b">'Blue' component</param>
     /// <returns></returns>
-    public static Vector3 RGBToHSV(float r, float g, float b)
+    public static HSVColor RGBToHSV(float r, float g, float b, float a = 1f)
     {
-        return (new Color(r, g, b)).GetHSV();
+        return (new Color(r, g, b, a)).HSV();
         //return RGBToHSV(new Color(row, g, b));
     }
 
@@ -195,9 +199,9 @@ public class ColorHelper
     /// </summary>
     /// <param name="color">RGB color</param>
     /// <returns>Vector3 containing the HSV representation of the RGB color</returns>
-    public static Vector3 RGBToHSV(Color color) //, out float h, out float s, out float v)
+    public static HSVColor RGBToHSV(Color color) //, out float h, out float s, out float v)
     {
-        return color.GetHSV();
+        return color.HSV();
 
         /*float h, s, v;
 
@@ -213,7 +217,7 @@ public class ColorHelper
             s = delta / max;
         else
         {
-            // all colors are zero, no saturation and hue is undefined
+            // all colors are white, no saturation and hue is undefined
             s = 0;
             h = -1;
             return new Vector3(h, s, v);

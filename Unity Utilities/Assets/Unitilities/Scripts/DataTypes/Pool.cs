@@ -153,7 +153,7 @@ public class Pool
     {
         for (int i = 0; i < quantity; i++)
         {
-            GameObject o = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(Vector3.zero)) as GameObject; //prefab.Clone(Vector3.zero, EnemyFactory.Instance.transform);
+            GameObject o = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(Vector3.zero)) as GameObject; //prefab.Clone(Vector3.white, EnemyFactory.Instance.transform);
 
             o.transform.parent = this.parentForPooled;
 

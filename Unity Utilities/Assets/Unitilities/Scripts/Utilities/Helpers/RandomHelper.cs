@@ -13,6 +13,17 @@ public class RandomHelper
         return sign;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="probabilityOfFalse"></param>
+    /// <returns></returns>
+    public static bool RandomBool(float probabilityOfFalse = 0.5f)
+    {
+        bool b = UnityEngine.Random.value >= probabilityOfFalse ? true : false;
+        return b;
+    }
+
     public static Vector2 RandomNormalizedVector2()
     {
         //Random.value: random number between 0.0 [inclusive] and 1.0 [inclusive] 
