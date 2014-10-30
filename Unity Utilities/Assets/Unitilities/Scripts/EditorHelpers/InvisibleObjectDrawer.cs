@@ -5,11 +5,19 @@
 /// </summary>
 public class InvisibleObjectDrawer : MonoBehaviour
 {
+    public enum Shape { SPHERE, CUBE };
+
     public bool isEnabled;
 
+    public Shape shape = Shape.SPHERE;
+
     public float radius = 1f;
-    
+
+    public Vector3 position;
+    public Vector3 scale;
+
     public Color color = Color.white;
+
 
     void Awake()
     {
@@ -26,7 +34,18 @@ public class InvisibleObjectDrawer : MonoBehaviour
             return;
 
         Gizmos.color = this.color;
-        Gizmos.DrawWireSphere(this.transform.position, this.radius);
+
+        if (shape == Shape.SPHERE)
+            Gizmos.DrawWireSphere(this.transform.position, this.radius);
+        else
+        {
+            Vector3 newScale = this.transform.localScale;
+            newScale = newScale.MultiplyX(scale.x);
+            newScale = newScale.MultiplyY(scale.y);
+            newScale = newScale.MultiplyZ(scale.z);
+
+            Gizmos.DrawWireCube(position + this.transform.position, newScale);
+        }
     }
 
 }

@@ -9,6 +9,11 @@ public class ExampleExtensions : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
+        Vector2 p = Vector2.one;
+
+        Debug.Log("p: " + p.ToString());
+
+
         if (prefabToClone == null)
         {
             Debug.Log("Cannot clone null prefab");

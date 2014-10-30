@@ -48,6 +48,28 @@ public static class VectorExtensions
         return new Vector2(v.x, v.y + delta);
     }
 
+    /// <summary>
+    /// Returns a copy of a vector with the X field multiplied by delta
+    /// </summary>
+    /// <param name="v">Original vector</param>
+    /// <param name="delta">New factor for the X field</param>
+    /// <returns></returns>
+    public static Vector2 MultiplyX(this Vector2 v, float delta)
+    {
+        return new Vector2(v.x * delta, v.y);
+    }
+
+    /// <summary>
+    /// Returns a copy of a vector with the Y field multiplied by delta
+    /// </summary>
+    /// <param name="v">Original vector</param>
+    /// <param name="delta">New factor forthe Y field</param>
+    /// <returns></returns>
+    public static Vector2 MultiplyY(this Vector2 v, float delta)
+    {
+        return new Vector3(v.x, v.y * delta);
+    }
+
     #endregion
 
 
@@ -115,7 +137,40 @@ public static class VectorExtensions
     {
         return new Vector3(v.x, v.y, v.z + delta);
     }
-   
+
+
+    /// <summary>
+    /// Returns a copy of a vector with the X field multiplied by delta
+    /// </summary>
+    /// <param name="v">Original vector</param>
+    /// <param name="delta">New factor for the X field</param>
+    /// <returns></returns>
+    public static Vector3 MultiplyX(this Vector3 v, float delta)
+    {
+        return new Vector3(v.x * delta, v.y, v.z);
+    }
+
+    /// <summary>
+    /// Returns a copy of a vector with the Y field multiplied by delta
+    /// </summary>
+    /// <param name="v">Original vector</param>
+    /// <param name="delta">New factor for the Y field</param>
+    /// <returns></returns>
+    public static Vector3 MultiplyY(this Vector3 v, float delta)
+    {
+        return new Vector3(v.x, v.y * delta, v.z);
+    }
+
+    /// <summary>
+    /// Returns a copy of a vector with the Z field multiplied by delta
+    /// </summary>
+    /// <param name="v">Original vector</param>
+    /// <param name="delta">New factor for Z field</param>
+    /// <returns></returns>
+    public static Vector3 MultiplyZ(this Vector3 v, float delta)
+    {
+        return new Vector3(v.x, v.y, v.z * delta);
+    }
 
     /// <summary>
     /// Returts a Vector2 from a Vector3 by removing the Z field
@@ -187,7 +242,7 @@ public static class VectorExtensions
     /// Returns a copy of a vector with the Y field changed by delta
     /// </summary>
     /// <param name="v">Original vector</param>
-    /// <param name="delta">Difference in the X field</param>
+    /// <param name="delta">Difference in the Y field</param>
     /// <returns></returns>
     public static Vector4 AddY(this Vector4 v, float delta)
     {
@@ -198,7 +253,7 @@ public static class VectorExtensions
     /// Returns a copy of a vector with the Z field changed by delta
     /// </summary>
     /// <param name="v">Original vector</param>
-    /// <param name="delta">Difference in the X field</param>
+    /// <param name="delta">Difference in the Z field</param>
     /// <returns></returns>
     public static Vector4 AddZ(this Vector4 v, float delta)
     {
@@ -209,11 +264,55 @@ public static class VectorExtensions
     /// Returns a copy of a vector with the W field changed by delta
     /// </summary>
     /// <param name="v">Original vector</param>
-    /// <param name="delta">Difference in the X field</param>
+    /// <param name="delta">Difference in the W field</param>
     /// <returns></returns>
     public static Vector4 AddW(this Vector4 v, float delta)
     {
         return new Vector4(v.x, v.y, v.z, v.w + delta);
+    }
+
+    /// <summary>
+    /// Returns a copy of a vector with the X field multiplied by delta
+    /// </summary>
+    /// <param name="v">Original vector</param>
+    /// <param name="delta">New factor for the X field</param>
+    /// <returns></returns>
+    public static Vector4 MultiplyX(this Vector4 v, float delta)
+    {
+        return new Vector4(v.x * delta, v.y, v.z, v.w);
+    }
+
+    /// <summary>
+    /// Returns a copy of a vector with the Y field multiplied by delta
+    /// </summary>
+    /// <param name="v">Original vector</param>
+    /// <param name="delta">New factor for the Y field</param>
+    /// <returns></returns>
+    public static Vector4 MultiplyY(this Vector4 v, float delta)
+    {
+        return new Vector4(v.x, v.y * delta, v.z, v.w);
+    }
+
+    /// <summary>
+    /// Returns a copy of a vector with the Z field multiplied by delta
+    /// </summary>
+    /// <param name="v">Original vector</param>
+    /// <param name="delta">New factor for the Z field</param>
+    /// <returns></returns>
+    public static Vector4 MultiplyZ(this Vector4 v, float delta)
+    {
+        return new Vector4(v.x, v.y, v.z * delta, v.w);
+    }
+
+    /// <summary>
+    /// Returns a copy of a vector with the W field multiplied by delta
+    /// </summary>
+    /// <param name="v">Original vector</param>
+    /// <param name="delta">New factor for the W field</param>
+    /// <returns></returns>
+    public static Vector4 MultiplyW(this Vector4 v, float delta)
+    {
+        return new Vector4(v.x, v.y, v.z, v.w * delta);
     }
 
     /// <summary>

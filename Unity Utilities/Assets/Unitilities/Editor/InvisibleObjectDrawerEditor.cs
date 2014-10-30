@@ -3,8 +3,8 @@ using UnityEditor;
 using System.Collections;
 
 [CanEditMultipleObjects]
-[CustomEditor(typeof(InvisibleObjectDrawer))] 
-public class InvisibleObjectDrawerEditor : Editor 
+[CustomEditor(typeof(InvisibleObjectDrawer))]
+public class InvisibleObjectDrawerEditor : Editor
 {
 
     public override void OnInspectorGUI()
@@ -15,7 +15,16 @@ public class InvisibleObjectDrawerEditor : Editor
 
         if (item.isEnabled)
         {
-            item.radius = EditorGUILayout.FloatField("Radius", item.radius);
+            item.shape = (InvisibleObjectDrawer.Shape)EditorGUILayout.EnumPopup("Shape", item.shape);
+
+            if (item.shape == InvisibleObjectDrawer.Shape.SPHERE)
+                item.radius = EditorGUILayout.FloatField("Radius", item.radius);
+            else
+            {
+                item.position = EditorGUILayout.Vector3Field("Position offset", item.position);
+                item.scale = EditorGUILayout.Vector3Field("Scale", item.scale);
+            }
+
             item.color = EditorGUILayout.ColorField("Color", item.color);
         }
 

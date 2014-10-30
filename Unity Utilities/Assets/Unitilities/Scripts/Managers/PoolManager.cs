@@ -240,8 +240,12 @@ public class PoolManager : Singleton<PoolManager>
         pool = GetOrCreatePool(prefab, customParent, defaultPrefillQuantity);
 
         newObject = pool.Spawn(position, rotation, customParent);
-        relObjectPool.Add(newObject, pool);
 
+        if (relObjectPool.ContainsKey(newObject))
+            relObjectPool[newObject] = pool;
+        else
+            relObjectPool.Add(newObject, pool);
+        
         return newObject;
     }
     
