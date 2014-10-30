@@ -1,3 +1,8 @@
+###############
+## Local files
+###############
+/[Ll]ocal/
+
 # OS generated files #
 ######################
 .DS_Store
@@ -8,6 +13,7 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
 
 # Self #
 ######################
