@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TextureHelper
+public static class TextureHelper
 {
 
     public static Texture2D CreateBackgroundTexture(Color c)

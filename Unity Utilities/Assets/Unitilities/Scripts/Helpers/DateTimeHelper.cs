@@ -1,6 +1,6 @@
 ﻿using System;
 
-public static class DateTimeExtensions 
+public static class DateTimeHelper
 {
     /// <summary>
     /// Calculates the UNIX timestamp of a System.DateTime object
@@ -13,5 +13,4 @@ public static class DateTimeExtensions
 
         return (long) unixTimeSpan.TotalSeconds;
     }
-
 }

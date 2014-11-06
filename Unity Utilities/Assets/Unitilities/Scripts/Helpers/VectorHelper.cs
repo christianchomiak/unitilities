@@ -1,9 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public static class VectorExtensions
+public static class VectorHelper
 {
     #region Vector2
+
+    public static Vector2 Perpendicular(this Vector2 v)
+    {
+        return new Vector2(v.y, -v.x);
+    }
+
+
+    public static Vector2 RandomNormalizedVector2()
+    {
+        //Random.value: random number between 0.0 [inclusive] and 1.0 [inclusive] 
+        int signX = UnityEngine.Random.value > 0.5f ? 1 : -1;
+        int signY = UnityEngine.Random.value > 0.5f ? 1 : -1;
+        Vector2 randomVector = new Vector2(signX * UnityEngine.Random.value,
+                                            signY * UnityEngine.Random.value);
+        return randomVector.normalized;
+    }
 
     /// <summary>
     /// Returns a copy of a vector with a new X field
@@ -74,6 +90,19 @@ public static class VectorExtensions
 
 
     #region Vector3
+
+
+    public static Vector3 RandomNormalizedVector3()
+    {
+        //Random.value: random number between 0.0 [inclusive] and 1.0 [inclusive] 
+        int signX = UnityEngine.Random.value > 0.5f ? 1 : -1;
+        int signY = UnityEngine.Random.value > 0.5f ? 1 : -1;
+        int signZ = UnityEngine.Random.value > 0.5f ? 1 : -1;
+        Vector3 randomVector = new Vector3(signX * UnityEngine.Random.value,
+                                            signY * UnityEngine.Random.value,
+                                            signZ * UnityEngine.Random.value);
+        return randomVector.normalized;
+    }
 
     /// <summary>
     /// Returns a copy of a vector with a new X field

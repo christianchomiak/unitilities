@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public static class GameObjectExtensions
+public static class GameObjectHelper
 {
     #region Recursive Modifiers
 

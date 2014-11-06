@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ApplicationHelper
+public static class ApplicationHelper
 {
 
     #region Platforms

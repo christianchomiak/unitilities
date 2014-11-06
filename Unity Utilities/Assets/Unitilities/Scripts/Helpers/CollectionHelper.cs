@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public static class GeneralExtensions
+public static class CollectionHelper
 {
     /// <summary>
     /// Applies an Action to each element of a list
@@ -20,32 +20,21 @@ public static class GeneralExtensions
         }
     }
 
-    /// <summary>
-    /// Checks if the element is contained in a range (borders included)
-    /// </summary>
-    /// <typeparam name="T">Type of the element</typeparam>
-    /// <param name="actual">The element to be tested</param>
-    /// <param name="lower">The lower value of the range</param>
-    /// <param name="upper">The highest value of the range</param>
-    /// <returns></returns>
-    public static bool Between<T>(this T actual, T lower, T upper) where T : IComparable<T>
+    public static bool CheckBounds<T>(this List<T> list, int index)
     {
-        return actual.CompareTo(lower) >= 0 && actual.CompareTo(upper) <= 0;
+        if (list == null)
+        {
+            Debug.LogError("Trying to check bounds of a null list. The result will be false");
+            return false;
+        }
+
+        return index < list.Count && index >= 0;
     }
 
-    /// <summary>
-    /// Checks if the element is contained in a range (borders excluded)
-    /// </summary>
-    /// <typeparam name="T">Type of the element</typeparam>
-    /// <param name="actual">The element to be tested</param>
-    /// <param name="lower">The lower value of the range</param>
-    /// <param name="upper">The highest value of the range</param>
-    /// <returns></returns>
-    public static bool StrictlyBetween<T>(this T actual, T lower, T upper) where T : IComparable<T>
+    public static bool CheckBounds<T>(this T[] array, int index)
     {
-        return actual.CompareTo(lower) > 0 && actual.CompareTo(upper) < 0;
+        return index < array.Length && index >= 0;
     }
-
 
     #region Random
 
@@ -73,7 +62,7 @@ public static class GeneralExtensions
     /// <returns>A random element of the list</returns>
     public static T GetRandom<T>(this List<T> list)
     {
-        if (list.Count == 0)
+        if (list == null || list.Count == 0)
             throw new System.ArgumentException("List is empty", "list");
         
         //Debug.LogError("Empty list");
@@ -104,6 +93,9 @@ public static class GeneralExtensions
     /// <param name="list">The list to be shuffled</param>
     public static void Shuffle<T>(this List<T> list)
     {
+        if (list == null)
+            throw new System.ArgumentException("List is empty", "list");
+
         for (int i = list.Count - 1; i > 0; i--)
         {
             int j = UnityEngine.Random.Range(0, i + 1);
@@ -136,6 +128,9 @@ public static class GeneralExtensions
     /// <returns>A shuffled and shallow copy of the original list</returns>
     public static List<T> GetShuffledCopy<T>(this List<T> list)
     {
+        if (list == null)
+            throw new System.ArgumentException("List is empty", "list");
+
         List<T> copy = new List<T>(list);
 
         copy.Shuffle();

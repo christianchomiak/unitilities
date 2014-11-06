@@ -57,7 +57,7 @@ public class HSVColor : Tuple4<float, float, float, float>
         }
     }
 
-    public Color RGB
+    /*public Color RGB
     {
         get
         {
@@ -71,7 +71,7 @@ public class HSVColor : Tuple4<float, float, float, float>
         {
             return ColorHelper.HSVToRGB(this.first, this.second, this.third, this.fourth);
         }
-    }
+    }*/
 
 
     public static HSVColor white
@@ -87,7 +87,7 @@ public class HSVColor : Tuple4<float, float, float, float>
 
     public void CopyValuesFrom(Color c)
     {
-        HSVColor hsv = c.HSV();
+        HSVColor hsv = c.ToHSV();
         this.first = hsv.Hue;
         this.second = hsv.Saturation;
         this.third = hsv.Value;
@@ -97,5 +97,41 @@ public class HSVColor : Tuple4<float, float, float, float>
     public HSVColor(float h, float s, float v, float a = 1f)
         : base(h, s, v, a)
     {
+    }
+
+    public HSVColor(HSVColor original)
+        : base(original.first, original.second, original.third, original.fourth)
+    {
+
+    }
+
+    public static HSVColor Lerp(HSVColor start, HSVColor end, float amount)
+    {
+        if (amount >= 1f)
+            return new HSVColor(end);
+        else if (amount <= 0f)
+            return new HSVColor(start);
+
+        return new HSVColor(start.first + (end.first - start.first) * amount,
+                            start.second + (end.second - start.second) * amount,
+                            start.third + (end.third - start.third) * amount,
+                            start.fourth + (end.fourth - start.fourth) * amount
+                            );
+    }
+
+
+    public Vector3 ToVector3()
+    {
+        return new Vector3(this.first, this.second, this.third);
+    }
+
+    public Vector4 ToVector4()
+    {
+        return new Vector4(this.first, this.second, this.third, this.fourth);
+    }
+
+    public override string ToString()
+    {
+        return string.Format("HSV({0}, {1}, {2}, {3})", first, second, third, fourth);
     }
 }
