@@ -2,22 +2,28 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class TestScript : MonoBehaviour {
 
-    public Color x, y;
+    Dictionary<HSVColor, int> h;
 
 	// Use this for initialization
 	void Start ()
     {
-        Color a = Color.yellow;
-        Color b = Color.blue;
-	}
+        h = new Dictionary<HSVColor, int>();
+
+        HSVColor c = new HSVColor(Color.green);
+
+        Debug.Log("Contains: " + c.RGB.ToString());
+
+        //c += c; // new HSVColor(Color.yellow);
+
+        Debug.Log("Contains: " + c.RGB.ToString());
+    }
 	
 	// Update is called once per frame
 	void Update () 
     {
-        y = x.ToHSV().ToRGB();
-        Debug.Log("x: " + x.ToString());
-        Debug.Log("y: " + x.ToHSV().ToString());
     }
+
 }
