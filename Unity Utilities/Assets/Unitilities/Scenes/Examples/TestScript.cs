@@ -18,6 +18,8 @@ public class TestScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
+        HSVColor c = HSVColor.black;
+        c.GetHex();
     }
 
     /*string FloatToHex(float f)

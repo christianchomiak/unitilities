@@ -23,6 +23,16 @@ public static class ColorHelper
     {
         return ColorHelper.RGBToHSV(color);
     }
+
+    public static string GetHex(this Color color, bool includeAlpha = false)
+    {
+        return ColorToHex(color, includeAlpha);
+    }
+
+    public static string GetHex(this HSVColor color, bool includeAlpha = false)
+    {
+        return ColorToHex(color.RGB, includeAlpha);
+    }
     
     #endregion
 

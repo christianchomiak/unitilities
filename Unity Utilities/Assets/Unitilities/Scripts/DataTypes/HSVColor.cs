@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 [System.Serializable]
 public struct HSVColor // : Tuple4<float, float, float, float>
 {
@@ -19,14 +20,12 @@ public struct HSVColor // : Tuple4<float, float, float, float>
         {
             if (wasModified)
             {
-                Debug.Log("Caching");
                 rgb = this.ToRGB();
                 wasModified = false;
                 return rgb;
             }
             else
             {
-                Debug.Log("Cached");
                 return rgb;
             }
         }
@@ -41,7 +40,6 @@ public struct HSVColor // : Tuple4<float, float, float, float>
         {
             hue = value % 360f;
             wasModified = true;
-            Debug.Log("Modified");
         }
         get
         {
@@ -98,16 +96,14 @@ public struct HSVColor // : Tuple4<float, float, float, float>
     {
         get { return new HSVColor(0f, 0f, 0f, 1f); }
     }
-
-
-
-    public HSVColor(HSVColor original)
-        : this(original.hue, original.saturation, original.value, original.alpha)
+    
+    public HSVColor(Color c)
+        : this(c.ToHSV())
     {
     }
 
-    public HSVColor(Color c)
-        : this(c.ToHSV())
+    public HSVColor(HSVColor original)
+        : this(original.hue, original.saturation, original.value, original.alpha)
     {
     }
 
@@ -128,7 +124,7 @@ public struct HSVColor // : Tuple4<float, float, float, float>
         //this.wasModified = true;
     }
 
-    public void CopyValuesFrom(Color c)
+    public void CopyFrom(Color c)
     {
         HSVColor hsv = c.ToHSV();
         this.hue = hsv.Hue;
