@@ -251,6 +251,67 @@ public static class ColorHelper
         //s, v: [0, 1]
         return new HSVColor(h, s, v, a);
     }
+    
+
+    public static string ColorToHex(Color c, bool includeAlpha = false)
+    {
+        string hex = "";
+
+        int size = includeAlpha ? 4 : 3;
+
+        byte[] bytes = new byte[size];
+
+        for (int i = 0; i < size; i++)
+        {
+            bytes[i] = (byte)(c[i] * 255f);
+        }
+
+        hex = System.BitConverter.ToString(bytes);
+        hex = hex.Replace("-", "");
+        return hex;
+    }
+
+    public static Color ColorFromHex(string hex)
+    {
+        Color c = new Color();
+
+        byte[] hexBytes = StringToByteArrayFastest(hex);
+
+        for (int i = 0; i < hexBytes.Length && i < 4; i++)
+        {
+            c[i] = ((float)hexBytes[i]) / 255f;
+            Debug.Log(hexBytes[i].ToString());
+        }
+
+        return c;
+    }
+
+
+    private static byte[] StringToByteArrayFastest(string hex)
+    {
+        if (hex.Length % 2 == 1)
+            throw new System.ArgumentException("The binary key cannot have an odd number of digits");
+
+        byte[] arr = new byte[hex.Length >> 1];
+
+        for (int i = 0; i < hex.Length >> 1; ++i)
+        {
+            arr[i] = (byte)((GetHexVal(hex[i << 1]) << 4) + (GetHexVal(hex[(i << 1) + 1])));
+        }
+
+        return arr;
+    }
+
+    private static int GetHexVal(char hex)
+    {
+        int val = (int)hex;
+        //For uppercase A-F letters:
+        //return val - (val < 58 ? 48 : 55);
+        //For lowercase a-f letters:
+        //return val - (val < 58 ? 48 : 87);
+        //Or the two combined, but a bit slower:
+        return val - (val < 58 ? 48 : (val < 97 ? 55 : 87));
+    }
 
 
     #endregion
