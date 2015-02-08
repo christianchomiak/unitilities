@@ -9,8 +9,11 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     protected static T instance;
 
+    /// <summary>
+    /// If true, the singleton won't be destroyed on load
+    /// </summary>
     [SerializeField]
-    bool destroyOnLoad = true;
+    bool isPersistent = true;
     
     /// <summary>
     /// Returns the instance of this singleton.
@@ -55,7 +58,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             instance = gameObject.GetComponent<T>(); // AddComponent(typeof(T)) as T;
 
-            if (!destroyOnLoad)
+            if (!isPersistent)
                 DontDestroyOnLoad(gameObject);
         }
     }
