@@ -58,7 +58,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             instance = gameObject.GetComponent<T>(); // AddComponent(typeof(T)) as T;
 
-            if (!isPersistent)
+            if (isPersistent)
                 DontDestroyOnLoad(gameObject);
         }
     }
