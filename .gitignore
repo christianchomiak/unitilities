@@ -28,3 +28,6 @@ Thumbs.db
 *.user
 *.pidb
 *.userprefs
+
+**/UnityVS.meta
+**/UnityVS/**
