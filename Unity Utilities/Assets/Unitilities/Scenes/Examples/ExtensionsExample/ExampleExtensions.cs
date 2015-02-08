@@ -33,7 +33,7 @@ public class ExampleExtensions : MonoBehaviour
     {
 	    if (Input.GetKeyDown(KeyCode.Space))
         {
-            prefabToClone.Clone(parentOfNewClone, "Clone of " + prefabToClone.name);
+            prefabToClone.Clone("Clone of " + prefabToClone.name, parentOfNewClone);
         }
 	}
 }

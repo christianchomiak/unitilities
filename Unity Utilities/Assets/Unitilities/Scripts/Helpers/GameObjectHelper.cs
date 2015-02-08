@@ -257,7 +257,7 @@ public static class GameObjectHelper
     /// <returns>A clone of the Game Object</returns>
     public static GameObject Clone(this GameObject original, Vector3 position)
     {
-        return original.Clone(position, original.transform.rotation, original.transform.parent, original.name);
+        return original.Clone(position, original.transform.rotation, original.name, original.transform.parent);
     }
 
     /// <summary>
@@ -268,7 +268,7 @@ public static class GameObjectHelper
     /// <returns>A clone of the Game Object</returns>
     public static GameObject Clone(this GameObject original, string name)
     {
-        return original.Clone(original.transform.position, original.transform.rotation, original.transform.parent, name);
+        return original.Clone(original.transform.position, original.transform.rotation, name, original.transform.parent);
     }
 
     /// <summary>
@@ -276,34 +276,11 @@ public static class GameObjectHelper
     /// </summary>
     /// <param name="original">Original object to clone from.</param>
     /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
+    /// <param name="worldPositionStays">If true, the parent-relative position, scale and rotation is modified such that the object keeps the same world space position, rotation and scale as before.</param>
     /// <returns>A clone of the Game Object</returns>
-    public static GameObject Clone(this GameObject original, Transform parent)
+    public static GameObject Clone(this GameObject original, Transform parent, bool worldPositionStays = false)
     {
-        return original.Clone(original.transform.position, original.transform.rotation, parent, original.name);
-    }
-
-    /// <summary>
-    /// Creates a new instance of the Game Object
-    /// </summary>
-    /// <param name="original">Original object to clone from.</param>
-    /// <param name="position">Position of the new instance.</param>
-    /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
-    /// <returns>A clone of the Game Object</returns>
-    public static GameObject Clone(this GameObject original, Vector3 position, Transform parent)
-    {
-        return original.Clone(position, original.transform.rotation, parent, original.name);
-    }
-
-    /// <summary>
-    /// Creates a new instance of the Game Object
-    /// </summary>
-    /// <param name="original">Original object to clone from.</param>
-    /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
-    /// <param name="name">Name of the new instance.</param>
-    /// <returns>A clone of the Game Object</returns>
-    public static GameObject Clone(this GameObject original, Transform parent, string name)
-    {
-        return original.Clone(original.transform.position, original.transform.rotation, parent, name);
+        return original.Clone(original.transform.position, original.transform.rotation, original.name, parent, worldPositionStays);
     }
 
     /// <summary>
@@ -312,11 +289,38 @@ public static class GameObjectHelper
     /// <param name="original">Original object to clone from.</param>
     /// <param name="position">Position of the new instance.</param>
     /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
-    /// <param name="name">Name of the new instance.</param>
+    /// <param name="worldPositionStays">If true, the parent-relative position, scale and rotation is modified such that the object keeps the same world space position, rotation and scale as before.</param>
     /// <returns>A clone of the Game Object</returns>
-    public static GameObject Clone(this GameObject original, Vector3 position, Transform parent, string name)
+    public static GameObject Clone(this GameObject original, Vector3 position, Transform parent, bool worldPositionStays = false)
     {
-        return original.Clone(position, original.transform.rotation, parent, name);
+        return original.Clone(position, original.transform.rotation, original.name, parent, worldPositionStays);
+    }
+
+    /// <summary>
+    /// Creates a new instance of the Game Object
+    /// </summary>
+    /// <param name="original">Original object to clone from.</param>
+    /// <param name="name">Name of the new instance.</param>
+    /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
+    /// <param name="worldPositionStays">If true, the parent-relative position, scale and rotation is modified such that the object keeps the same world space position, rotation and scale as before.</param>
+    /// <returns>A clone of the Game Object</returns>
+    public static GameObject Clone(this GameObject original, string name, Transform parent, bool worldPositionStays = false)
+    {
+        return original.Clone(original.transform.position, original.transform.rotation, name, parent, worldPositionStays);
+    }
+
+    /// <summary>
+    /// Creates a new instance of the Game Object
+    /// </summary>
+    /// <param name="original">Original object to clone from.</param>
+    /// <param name="position">Position of the new instance.</param>
+    /// <param name="name">Name of the new instance.</param>
+    /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
+    /// <param name="worldPositionStays">If true, the parent-relative position, scale and rotation is modified such that the object keeps the same world space position, rotation and scale as before.</param>
+    /// <returns>A clone of the Game Object</returns>
+    public static GameObject Clone(this GameObject original, Vector3 position, string name, Transform parent, bool worldPositionStays = false)
+    {
+        return original.Clone(position, original.transform.rotation, name, parent, worldPositionStays);
     }
 
     /// <summary>
@@ -328,7 +332,7 @@ public static class GameObjectHelper
     /// <returns>A clone of the Game Object</returns>
     public static GameObject Clone(this GameObject original, Vector3 position, Quaternion rotation)
     {
-        return original.Clone(position, rotation, original.transform.parent, original.name);
+        return original.Clone(position, rotation, original.name, original.transform.parent);
     }
 
     /// <summary>
@@ -337,16 +341,17 @@ public static class GameObjectHelper
     /// <param name="original">Original object to clone from.</param>
     /// <param name="position">Position of the new instance.</param>
     /// <param name="rotation">Rotation of the new instance.</param>
-    /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
     /// <param name="name">Name of the new instance.</param>
+    /// <param name="customParent">Parent of the new instance (use 'null' to put the new instance at the root)</param>
+    /// <param name="worldPositionStays">If true, the parent-relative position, scale and rotation is modified such that the object keeps the same world space position, rotation and scale as before.</param>
     /// <returns>A clone of the Game Object</returns>
-    public static GameObject Clone(this GameObject original, Vector3 position, Quaternion rotation, Transform parent, string name)
+    public static GameObject Clone(this GameObject original, Vector3 position, Quaternion rotation, string name, Transform parent, bool worldPositionStays = false)
     {
         GameObject clone = GameObject.Instantiate(original, position, rotation) as GameObject;
 
-        clone.transform.parent = parent;
+        clone.transform.SetParent(parent, worldPositionStays);
         clone.name = name;
-
+        
         return clone;
     }
 
