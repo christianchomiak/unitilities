@@ -134,9 +134,9 @@ public class Pool
         }
 
         if (customParent != null)
-            candidate.transform.parent = customParent;
+            candidate.transform.SetParent(customParent, false);// parent = customParent;
         else 
-            candidate.transform.parent = parentForSpawned;
+            candidate.transform.SetParent(parentForSpawned, false);//parent = parentForSpawned;
 
 
         this.spawned.Add(candidate);
@@ -155,7 +155,7 @@ public class Pool
         {
             GameObject o = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(Vector3.zero)) as GameObject; //prefab.Clone(Vector3.white, EnemyFactory.Instance.transform);
 
-            o.transform.parent = this.parentForPooled;
+            o.transform.SetParent(this.parentForPooled, false); //parent = this.parentForPooled;
 
             o.gameObject.SetActive(false);
             stored.Push(o);
@@ -174,8 +174,13 @@ public class Pool
             return;
         }
 
+        e.transform.parent = null;
+        e.transform.position = prefab.transform.position;
+        e.transform.localScale = prefab.transform.localScale;
+        e.transform.rotation = prefab.transform.rotation;
+
         e.SetActive(false);
-        e.transform.parent = this.parentForPooled;
+        e.transform.SetParent(this.parentForPooled, false); // parent = this.parentForPooled;
 
         spawned.Remove(e);
         stored.Push(e);
