@@ -50,7 +50,7 @@ public class PlayerPrefsEditor : EditorWindow
     private bool sortIsAZ = true;
 
     // Add menu named "My Window" to the Window menu
-    [MenuItem("Window/Unitilities/PlayerPrefs/Manage")]
+    [MenuItem("Unitilities/PlayerPrefs/Manage")]
     static void Init()
     {
         // Get existing open window or if none, make a new one:
@@ -60,7 +60,7 @@ public class PlayerPrefsEditor : EditorWindow
     }
 
     // Add menu named "My Window" to the Window menu
-    [MenuItem("Window/Unitilities/PlayerPrefs/Delete All")]
+    [MenuItem("Unitilities/PlayerPrefs/Delete All")]
     static void DeleteAllPlayerPrefsMenuShortcut()
     {
         PlayerPrefs.DeleteAll();
