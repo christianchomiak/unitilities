@@ -9,9 +9,12 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     protected static T instance;
 
+    [Header("Singleton properties")]
+    
     /// <summary>
-    /// If true, the singleton won't be destroyed on load
+    /// If true, the singleton won't be destroyed when the scene changes
     /// </summary>
+    [Tooltip("If true, the singleton won't be destroyed when the scene changes")]
     [SerializeField]
     bool isPersistent = true;
     

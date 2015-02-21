@@ -4,24 +4,32 @@ using System.Collections.Generic;
 
 public class PoolManager : Singleton<PoolManager> 
 {
+    [Header("Pool Manager properties")]
+
     /// <summary>
     /// If true, when recycling an object also remove its association with the customParent pool.
     /// </summary>
+    [Tooltip("If true, when recycling an object also remove its association with the customParent pool")]
     [SerializeField]
     bool forceRecycleCleanup = false;
 
     /// <summary>
-    /// If true, creates a new empty child for each pool
+    /// If true, creates a new empty child for each pool inside this GameObject
     /// </summary>
+    [Tooltip("If true, creates a new empty child for each pool inside this GameObject")]
     [SerializeField]
     bool createChildForPools = true;
 
     /// <summary>
     /// Default amount of clones to pre-store when a new pool is created
     /// </summary>
+    [Tooltip("Default amount of clones to pre-store when a new pool is created")]
     [SerializeField]
     int defaultPrefillQuantity = 0;
-
+    
+    /// <summary>
+    /// List of all created pools
+    /// </summary>
     [SerializeField]
     List<Pool> pools;
     
