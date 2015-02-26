@@ -39,6 +39,8 @@ public class GUI3DObject : MonoBehaviour
 
     public Vector2 customRatio = Vector2.one;
 
+    OrthographicCameraSetup camera;
+
     public void SetBothSideRelation(TextAnchor _positionAnchor, AnchorBounds _anchorBounds, Vector2 _relativePosition, Vector2 _relativeSize)
     {
         useRelativeData = true;
@@ -82,18 +84,18 @@ public class GUI3DObject : MonoBehaviour
 
     void Awake()
     {
-        if (customRatio == Vector2.zero)
-        {
-            customRatio = new Vector2(Screen.width, Screen.height);
-        }
-
-        SetRelativeData();
     }
 
     // Use this for initialization
     void Start()
     {
         //Debug.Log("Aspect: " + Camera.main.aspect);
+        if (customRatio == Vector2.zero)
+        {
+            customRatio = new Vector2(Screen.width, Screen.height);
+        }
+
+        SetRelativeData();
     }
 
     /*void OnGUI() 
@@ -111,6 +113,7 @@ public class GUI3DObject : MonoBehaviour
         if (!useRelativeData)
             return;
 
+        camera = Camera.main.GetComponent<OrthographicCameraSetup>();
         SetRelativeSize();
         SetRelativePosition();
     }
@@ -128,10 +131,12 @@ public class GUI3DObject : MonoBehaviour
             float ratioY = 1f;
             float unit = relativeSingleSize;
 
+            float screenFactor = 1f;
             if (selectedAxis == ScreenAxis.X)
             {
                 ratioY = customRatio.y / customRatio.x;
                 unit *= Camera.main.aspect;
+                screenFactor = Screen.width;
                 //this.transform.localScale = new Vector3(relativeSize.x * Camera.main.aspect, relativeSize.y * Camera.main.aspect, transform.localScale.z);
                 //this.transform.position = new Vector3(relativePosition.x * Camera.main.aspect, relativePosition.y, relativePosition.z);
             }
@@ -139,10 +144,13 @@ public class GUI3DObject : MonoBehaviour
             {
                 ratioX = customRatio.x / customRatio.y;
                 unit *= 1;
+                screenFactor = Screen.height;
                 //this.transform.localScale = new Vector3(relativeSize.x, relativeSize.y, transform.localScale.z);
             };
-
-            this.transform.localScale = new Vector3(unit * ratioX, unit * ratioY, transform.localScale.z);
+            if (camera.matchRealScreenSize)
+                this.transform.localScale = new Vector3(unit * ratioX * screenFactor, unit * ratioY * screenFactor, transform.localScale.z);
+            else
+                this.transform.localScale = new Vector3(unit * ratioX, unit * ratioY, transform.localScale.z);
         }
     }
 
@@ -211,10 +219,14 @@ public class GUI3DObject : MonoBehaviour
         }
         else
         {
-            Debug.Log("Warning: GUI3DItem with invalid bound settings -> " + this.gameObject, this.gameObject);
+            Debug.LogWarning("Warning: GUI3DItem with invalid bound settings -> " + this.gameObject, this.gameObject);
         }
 
-        this.transform.position = new Vector3(relativePosition.x * Camera.main.aspect + offset.x, relativePosition.y + offset.y, this.transform.position.z);
+
+        if (camera.matchRealScreenSize)
+            this.transform.position = new Vector3(Screen.width * relativePosition.x + offset.x, Screen.height * relativePosition.y + offset.y, this.transform.position.z);
+        else
+            this.transform.position = new Vector3(relativePosition.x * Camera.main.aspect + offset.x, relativePosition.y + offset.y, this.transform.position.z);
 
     }
 
