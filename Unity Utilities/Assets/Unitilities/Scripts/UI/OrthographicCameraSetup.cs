@@ -8,11 +8,12 @@ public class OrthographicCameraSetup : MonoBehaviour
     /// Helps to run some functions at edition time (inside Unity Editor)
     /// Needs [ExecuteInEditMode] specified for the class
     /// </summary>
-    //public bool runInEdit = false;
+    public bool runInEdit = false;
 
     public bool matchRealScreenSize = false;
 
-    protected Camera oCamera;
+    [SerializeField]
+    Camera camera;
 
     public Vector2 CameraSize
     {
@@ -31,11 +32,9 @@ public class OrthographicCameraSetup : MonoBehaviour
 
     void Awake()
     {
-        oCamera = gameObject.camera;
-
-        if (oCamera == null)
+        if (camera == null)
         {
-
+            camera = Camera.main; // gameObject.GetComponent<Camera>();
         }
     }
 
@@ -47,7 +46,7 @@ public class OrthographicCameraSetup : MonoBehaviour
 
     void OnGUI()
     {
-        if (!Application.isPlaying) // && this.runInEdit)
+        if (!Application.isPlaying && this.runInEdit)
         {
             MatchCameraToScreen();
         }
@@ -67,14 +66,14 @@ public class OrthographicCameraSetup : MonoBehaviour
             float h = matchRealScreenSize ? Screen.height : 1f;
             float w = matchRealScreenSize ? Screen.width : 1f;
 
-            oCamera.orthographic = true;
-            oCamera.orthographicSize = h / 2; //0.5f;
-            oCamera.transform.position = new Vector3(0.5f * oCamera.aspect * w, 0.5f * h, -0.5f);
-            oCamera.transform.position = new Vector3(0.5f * (matchRealScreenSize ? 1f : oCamera.aspect) * w, 0.5f * h, -0.5f);
+            camera.orthographic = true;
+            camera.orthographicSize = h / 2; //0.5f;
+            camera.transform.position = new Vector3(0.5f * camera.aspect * w, 0.5f * h, -0.5f);
+            camera.transform.position = new Vector3(0.5f * (matchRealScreenSize ? 1f : camera.aspect) * w, 0.5f * h, -0.5f);
 
             //Verify first to avoid updating repeated values because the scene will see itself as unsaved
-            //this.oCamera.orthographicSize = Screen.height / 2;
-            //this.oCamera.transform.position = new Vector3(0, 0, this.oCamera.transform.position.z); // Screen.width / 2, Screen.height / 2, this.oCamera.transform.position.z);
+            //this.camera.orthographicSize = Screen.height / 2;
+            //this.camera.transform.position = new Vector3(0, 0, this.camera.transform.position.z); // Screen.width / 2, Screen.height / 2, this.camera.transform.position.z);
         }
     }
 
@@ -84,13 +83,13 @@ public class OrthographicCameraSetup : MonoBehaviour
     /// <returns>True if some parameters must be ajusted</returns>
     protected bool NeedToMatchCameraToScreen()
     {
-        /*        if (!Mathf.Approximately(this.oCamera.orthographicSize, Screen.height / 2)
-            || !Mathf.Approximately(this.oCamera.transform.position.x, Screen.width / 2)
-            || !Mathf.Approximately(this.oCamera.transform.position.y, Screen.height / 2))*/
+        /*        if (!Mathf.Approximately(this.camera.orthographicSize, Screen.height / 2)
+            || !Mathf.Approximately(this.camera.transform.position.x, Screen.width / 2)
+            || !Mathf.Approximately(this.camera.transform.position.y, Screen.height / 2))*/
 
-        if (!Mathf.Approximately(this.oCamera.orthographicSize, 0.5f)
-            || !Mathf.Approximately(this.oCamera.transform.position.x, 0.5f * oCamera.aspect)
-            || !Mathf.Approximately(this.oCamera.transform.position.y, 0.5f))
+        if (!Mathf.Approximately(this.camera.orthographicSize, 0.5f)
+            || !Mathf.Approximately(this.camera.transform.position.x, 0.5f * camera.aspect)
+            || !Mathf.Approximately(this.camera.transform.position.y, 0.5f))
         {
             return true;
         }
