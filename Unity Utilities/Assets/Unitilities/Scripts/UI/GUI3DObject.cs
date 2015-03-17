@@ -163,10 +163,10 @@ public class GUI3DObject : MonoBehaviour
         switch (this.anchorBounds)
         {
             case AnchorBounds.Renderer:
-                if (this.renderer) { mainBounds = this.renderer.bounds; }
+                if (this.GetComponent<Renderer>()) { mainBounds = this.GetComponent<Renderer>().bounds; }
                 break;
             case AnchorBounds.Collider:
-                if (this.collider) { mainBounds = this.collider.bounds; }
+                if (this.GetComponent<Collider>()) { mainBounds = this.GetComponent<Collider>().bounds; }
                 break;
             default:
                 break;
