@@ -5,7 +5,22 @@ public static class VectorHelper
 {
     #region Vector2
 
+    /// <summary>
+    /// Return a perpendicular vector (90 degrees rotation)
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
     public static Vector2 Perpendicular(this Vector2 v)
+    {
+        return new Vector2(-v.y, v.x);
+    }
+
+    /// <summary>
+    /// Return a perpendicular vector (-90 degrees rotation)
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    public static Vector2 PerpendicularRight(this Vector2 v)
     {
         return new Vector2(v.y, -v.x);
     }
@@ -84,6 +99,39 @@ public static class VectorHelper
     public static Vector2 MultiplyY(this Vector2 v, float delta)
     {
         return new Vector3(v.x, v.y * delta);
+    }
+
+    /// <summary>
+    /// Returns a Vector3 from a Vector2 by adding a Z field
+    /// </summary>
+    /// <param name="v"></param>
+    /// <param name="z">Optional 'z' parameter</param>
+    /// <returns></returns>
+    public static Vector3 ToVector3(this Vector2 v, float z = 0f)
+    {
+        return new Vector3(v.x, v.y, z);
+    }
+
+    /// <summary>
+    /// Returns a Vector4 from a Vector2 by adding a Z & W field
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    public static Vector4 ToVector4(this Vector2 v)
+    {
+        return new Vector4(v.x, v.y, 0f, 0f);
+    }
+
+    /// <summary>
+    /// Returns a Vector4 from a Vector2 by adding a Z & W field
+    /// </summary>
+    /// <param name="v"></param>
+    /// <param name="z">Optional 'z' parameter</param>
+    /// <param name="w">Optional 'w' parameter</param>
+    /// <returns></returns>
+    public static Vector4 ToVector4(this Vector2 v, float z, float w = 0f)
+    {
+        return new Vector4(v.x, v.y, z, w);
     }
 
     #endregion
@@ -202,13 +250,24 @@ public static class VectorHelper
     }
 
     /// <summary>
-    /// Returts a Vector2 from a Vector3 by removing the Z field
+    /// Returns a Vector2 from a Vector3 by removing the Z field
     /// </summary>
     /// <param name="v"></param>
     /// <returns></returns>
     public static Vector2 ToVector2(this Vector3 v)
     {
         return new Vector2(v.x, v.y);
+    }
+
+    /// <summary>
+    /// Returns a Vector4 from a Vector3 by adding a W field
+    /// </summary>
+    /// <param name="v"></param>
+    /// <param name="w">Optional 'w' parameter</param>
+    /// <returns></returns>
+    public static Vector4 ToVector4(this Vector3 v, float w = 0f)
+    {
+        return new Vector4(v.x, v.y, v.z, w);
     }
 
     #endregion
@@ -345,13 +404,23 @@ public static class VectorHelper
     }
 
     /// <summary>
-    /// Returts a Vector3 from a Vector2 by removing the W field
+    /// Returns a Vector3 from a Vector2 by removing the W field
     /// </summary>
     /// <param name="v"></param>
     /// <returns></returns>
     public static Vector3 ToVector3(this Vector4 v)
     {
         return new Vector3(v.x, v.y, v.z);
+    }
+
+    /// <summary>
+    /// Returns a Vector3 from a Vector2 by removing the W field
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    public static Vector2 ToVector2(this Vector4 v)
+    {
+        return new Vector2(v.x, v.y);
     }
 
     #endregion

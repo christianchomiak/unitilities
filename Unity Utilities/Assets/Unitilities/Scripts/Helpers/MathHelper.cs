@@ -91,7 +91,7 @@ public static class MathHelper
         }
 
         //Given the projection vector, we calculate the future rejection vector
-        Vector2 rejection = projection.Perpendicular(); // Perpendicular(projection);
+        Vector2 rejection = projection.PerpendicularRight(); // Perpendicular(projection);
 
         rejection *= distanceFromLine;
 
