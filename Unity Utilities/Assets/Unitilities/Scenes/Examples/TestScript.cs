@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Unitilities.Colors;
 
+using Unitilities;
 
 public class TestScript : MonoBehaviour {
 
@@ -12,14 +14,14 @@ public class TestScript : MonoBehaviour {
 	void Start ()
     {
         //col = ColorFromHex(myHex);
-        myHex = ColorHelper.ColorToHex(col);
+        myHex = col.ToHex();
     }
 	
 	// Update is called once per frame
 	void Update () 
     {
         HSVColor c = HSVColor.black;
-        c.GetHex();
+        c.ToHex();
     }
 
     /*string FloatToHex(float f)

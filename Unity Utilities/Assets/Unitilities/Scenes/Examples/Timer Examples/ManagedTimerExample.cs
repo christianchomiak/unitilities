@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Unitilities.Timers;
 
 public class ManagedTimerExample : MonoBehaviour 
 {
