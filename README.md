@@ -20,3 +20,12 @@ Currently, it includes:
   * Tuple (Tuple-2, Tuple-3 and Tuple-4) to hold and bind generic types.
 * PlayerPrefs window to view and modify preferences inside the Unity Editor.
 * Gizmo-helpers for the Editor.
+
+The project is currently divided into these namespaces:
+* Unitilities: for basic things. It's everything located under /Core.
+* Unitilities.Colors
+* Unitilities.Pools
+* Unitilities.Tuples
+* Unitilities.Debugging
+* Unitilities.EditorStuff
+* Unitilities.Timers
