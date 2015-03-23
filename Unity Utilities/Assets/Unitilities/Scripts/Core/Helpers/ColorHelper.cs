@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ColorHelper v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// ColorHelper v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions that facilitate the manipulation of Unitiy's Color.
 /// </summary>
@@ -11,19 +11,33 @@ namespace Unitilities
 {
     public class ColorHelper
     {
-        public static Color ColorFromHex(string hex)
+        /// <summary>
+        /// Get a color from an hex representation.
+        /// If the hex value doesn't account for an alpha, it'll be assumed as 100%.
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <param name="customAlpha">Use non-negative values to override the alpha value (if any).</param>
+        /// <returns></returns>
+        public static Color FromHex(string hex, float customAlpha = -1)
         {
-            Color c = new Color();
+            Color c = Color.black;
 
             byte[] hexBytes = StringToByteArrayFastest(hex);
 
             for (int i = 0; i < hexBytes.Length && i < 4; i++)
             {
                 c[i] = ((float) hexBytes[i]) / 255f;
-                Debug.Log(hexBytes[i].ToString());
             }
 
+            if (customAlpha >= 0)
+                c.a = Mathf.Clamp01(customAlpha);
+
             return c;
+        }
+
+        public static string ToHex(Color color, bool includeAlpha = false)
+        {
+            return color.ToHex(includeAlpha);
         }
 
         private static byte[] StringToByteArrayFastest(string hex)
@@ -54,15 +68,15 @@ namespace Unitilities
 
         //Based on http://wiki.unity3d.com/index.php?title=HSBColor
         /// <summary>
-        /// Generates a RGB hsvColor using specified hue, saturation, value (brightness) and  hue and alpha
+        /// Generates a RGB hsvColor using specified hue, saturation, value (brightness) and  hue and customAlpha
         /// </summary>
         /// <param name="hue"></param>
         /// <param name="saturation"></param>
         /// <param name="value"></param>
-        /// <param name="alpha"></param>
+        /// <param name="customAlpha"></param>
         /// <returns>RGB hsvColor</returns>
         /// //[Deprecated] This function uses h, s, v = [0, 1]
-        /*public static Color HSVToRGB2(float hue, float saturation, float value, float alpha = 1.0f) //value = brightness
+        /*public static Color HSVToRGB2(float hue, float saturation, float value, float customAlpha = 1.0f) //value = brightness
         {
             float r = value;
             float g = value;
@@ -120,7 +134,7 @@ namespace Unitilities
                 }
             }
 
-            return new Color(Mathf.Clamp01(r), Mathf.Clamp01(g), Mathf.Clamp01(b), alpha);
+            return new Color(Mathf.Clamp01(r), Mathf.Clamp01(g), Mathf.Clamp01(b), customAlpha);
         }*/
 
 
@@ -130,9 +144,9 @@ namespace Unitilities
         /// </summary>
         /// <param name="hsvColor">RGB hsvColor</param>
         /// <returns>Vector3 containing the ToHSV representation of the RGB hsvColor</returns>
-        /*public static HSVColor RGBToHSV(Color color) //, out float hue, out float s, out float v)
+        /*public static HSVColor RGBToHSV(Color rgb) //, out float hue, out float s, out float v)
         {
-            return HSVColor.FromRGB(color);
+            return HSVColor.FromRGB(rgb);
             //return RGBToHSV(hsvColor.r, hsvColor.g, hsvColor.b, hsvColor.a);
         }*/
     }

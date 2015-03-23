@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// HSVColor v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// HSVColor v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Struct to represent colors in the HSV (hue, saturation, value) system.
 /// Includes:
@@ -115,6 +115,7 @@ namespace Unitilities.Colors
         #region Public Functions
 
         //Should not be necessary as HSVColors are now structs and not classes
+        [System.Obsolete("CopyFrom() is deprecated, please use a direct assignment instead.")]
         public void CopyFrom(Color c)
         {
             HSVColor hsv = HSVColor.FromRGB(c);
@@ -181,6 +182,16 @@ namespace Unitilities.Colors
             return this.ToRGB().ToHex(includeAlpha);
         }
 
+        /// <summary>
+        /// Copy color values from an HEX color.
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <param name="customAlpha">Use non-negative values to override the alpha that could come from the hex</param>
+        public void FromHex(string hex, float customAlpha = -1)
+        {
+            this = ColorHelper.FromHex(hex, customAlpha);
+        }
+        
         public Vector3 ToVector3()
         {
             return new Vector3(this.hue, this.saturation, this.value);
@@ -227,6 +238,51 @@ namespace Unitilities.Colors
         public static HSVColor black
         {
             get { return new HSVColor(0f, 0f, 0f, 1f); }
+        }
+
+        public static HSVColor blue
+        {
+            get { return new HSVColor(240f, 1f, 1f, 1f); }
+        }
+
+        public static HSVColor clear
+        {
+            get { return new HSVColor(0f, 0f, 0f, 0f); }
+        }
+
+        public static HSVColor cyan
+        {
+            get { return new HSVColor(180f, 1f, 1f, 1f); }
+        }
+
+        public static HSVColor gray
+        {
+            get { return new HSVColor(0f, 0f, 50f, 1f); }
+        }
+
+        public static HSVColor green
+        {
+            get { return new HSVColor(120f, 1f, 1f, 1f); }
+        }
+
+        public static HSVColor grey
+        {
+            get { return HSVColor.gray; }
+        }
+
+        public static HSVColor magenta
+        {
+            get { return new HSVColor(300f, 1f, 1f, 1f); }
+        }
+
+        public static HSVColor red
+        {
+            get { return new HSVColor(0f, 1f, 1f, 1f); }
+        }
+
+        public static HSVColor yellow
+        {
+            get { return new HSVColor(60f, 1f, 1f, 1f); }
         }
 
         #endregion
@@ -320,12 +376,12 @@ namespace Unitilities.Colors
 
         //http://www.rapidtables.com/convert/hsvColor/rgb-to-hsv.htm
         /// <summary>
-        /// Generates a RGB hsvColor using specified hue, saturation, value (brightness) and  hue and alpha
+        /// Generates a RGB hsvColor using specified hue, saturation, value (brightness) and  hue and customAlpha
         /// </summary>
         /// <param name="hue">[0f, 360f] degrees</param>
         /// <param name="saturation">[0f, 1f]</param>
         /// <param name="value">[0f, 1f]</param>
-        /// <param name="alpha">[0f, 1f]</param>
+        /// <param name="customAlpha">[0f, 1f]</param>
         /// <returns>RGB hsvColor</returns>
         public static Color ToRGB(float hue, float saturation, float value, float alpha = 1.0f) //value = brightness
         {
@@ -381,7 +437,7 @@ namespace Unitilities.Colors
 
             return new HSVColor(a.hue + b.hue, a.saturation + b.saturation, a.value + b.value, a.alpha + b.alpha);
         }
-
+        
         public static HSVColor operator -(HSVColor a, HSVColor b)
         {
             /*if (IsNull(a) || IsNull(b))
@@ -418,6 +474,26 @@ namespace Unitilities.Colors
                 throw new System.ArgumentException("Fatal error: Cannot divide by 0");
 
             return new HSVColor(a.hue / factor, a.saturation / factor, a.value / factor, a.alpha / factor);
+        }
+        
+        public static implicit operator HSVColor(Color rgb)
+        {
+            return HSVColor.FromRGB(rgb);
+        }
+
+        public static implicit operator Color(HSVColor hsv)
+        {
+            return HSVColor.ToRGB(hsv);
+        }
+
+        public static implicit operator Vector3(HSVColor hsv)
+        {
+            return hsv.ToVector3();
+        }
+
+        public static implicit operator Vector4(HSVColor hsv)
+        {
+            return hsv.ToVector4();
         }
 
         /*private static bool IsNull(object obj)

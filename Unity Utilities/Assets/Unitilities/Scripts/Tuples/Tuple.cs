@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Tuples v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// Tuples v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Structure that holds a certain amount of elements.
 /// Similar to a Vector2/3/4 but more general.
@@ -334,12 +334,13 @@ namespace Unitilities.Tuples
 
     #region Custom Tuples
 
+    //Removed as it's basically the same as using Vector2
     /// <summary>
     /// Tuple class of 2 float
     /// </summary>
     /// <typeparam name="First">First float</typeparam>
     /// <typeparam name="Second">Second float</typeparam>
-    [System.Serializable]
+    /*[System.Serializable]
     public class TupleF : Tuple<float, float>
     {
         public static TupleF zero
@@ -351,7 +352,32 @@ namespace Unitilities.Tuples
             : base(a, b)
         {
         }
-    }
+
+        public static TupleF operator +(TupleF a, TupleF b)
+        {
+            return new TupleF(a.first + b.first, a.second + b.second);
+        }
+
+        public static TupleF operator -(TupleF a, TupleF b)
+        {
+            return new TupleF(a.first - b.first, a.second - b.second);
+        }
+
+        public static TupleF operator *(TupleF a, TupleF b)
+        {
+            return new TupleF(a.first * b.first, a.second * b.second);
+        }
+
+        public static TupleF operator /(TupleF a, TupleF b)
+        {
+            return new TupleF(a.first / b.first, a.second / b.second);
+        }
+
+        public static implicit operator UnityEngine.Vector2(TupleF t)
+        {
+            return new UnityEngine.Vector2(t.first, t.second);
+        }
+    }*/
 
     /// <summary>
     /// Tuple class of 2 int
@@ -366,9 +392,44 @@ namespace Unitilities.Tuples
             get { return new TupleI(0, 0); }
         }
 
+        public static TupleI one
+        {
+            get { return new TupleI(1, 1); }
+        }
+
         public TupleI(int a, int b)
             : base(a, b)
         {
+        }
+
+        public static TupleI operator +(TupleI a, TupleI b)
+        {
+            return new TupleI(a.first + b.first, a.second + b.second);
+        }
+
+        public static TupleI operator -(TupleI a, TupleI b)
+        {
+            return new TupleI(a.first - b.first, a.second - b.second);
+        }
+
+        public static TupleI operator *(TupleI a, TupleI b)
+        {
+            return new TupleI(a.first * b.first, a.second * b.second);
+        }
+
+        public static TupleI operator /(TupleI a, TupleI b)
+        {
+            return new TupleI(a.first / b.first, a.second / b.second);
+        }
+
+        public static implicit operator UnityEngine.Vector2(TupleI t)
+        {
+            return new UnityEngine.Vector2(t.first, t.second);
+        }
+
+        public static implicit operator TupleI(UnityEngine.Vector2 v)
+        {
+            return new TupleI((int) v.x, (int) v.y);
         }
     }
 
@@ -386,9 +447,44 @@ namespace Unitilities.Tuples
             get { return new Tuple3I(0, 0, 0); }
         }
 
+        public static Tuple3I one
+        {
+            get { return new Tuple3I(1, 1, 1); }
+        }
+        
         public Tuple3I(int a, int b, int c)
             : base(a, b, c)
         {
+        }
+
+        public static Tuple3I operator +(Tuple3I a, Tuple3I b)
+        {
+            return new Tuple3I(a.first + b.first, a.second + b.second, a.third + b.third);
+        }
+
+        public static Tuple3I operator -(Tuple3I a, Tuple3I b)
+        {
+            return new Tuple3I(a.first - b.first, a.second - b.second, a.third - b.third);
+        }
+
+        public static Tuple3I operator *(Tuple3I a, Tuple3I b)
+        {
+            return new Tuple3I(a.first * b.first, a.second * b.second, a.third * b.third);
+        }
+
+        public static Tuple3I operator /(Tuple3I a, Tuple3I b)
+        {
+            return new Tuple3I(a.first / b.first, a.second / b.second, a.third / b.third);
+        }
+
+        public static implicit operator UnityEngine.Vector3(Tuple3I t)
+        {
+            return new UnityEngine.Vector3(t.first, t.second, t.third);
+        }
+
+        public static implicit operator Tuple3I(UnityEngine.Vector3 v)
+        {
+            return new Tuple3I((int) v.x, (int) v.y, (int) v.z);
         }
     }
 

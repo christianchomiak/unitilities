@@ -66,10 +66,10 @@ namespace Unitilities.Colors
         }
 
         /// <summary>
-        /// Generates a RGB hsvColor using random saturation and value (brightness) and specified hue and alpha
+        /// Generates a RGB hsvColor using random saturation and value (brightness) and specified hue and customAlpha
         /// </summary>
         /// <param name="hue">Hue of the hsvColor</param>
-        /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
+        /// <param name="customAlpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
         /// <returns>RGB hsvColor</returns>
         public static Color WithHue(float hue, float alpha = 1f)
         {
@@ -77,11 +77,11 @@ namespace Unitilities.Colors
         }
 
         /// <summary>
-        /// Generates a RGB hsvColor using random saturation and value (brightness) and specified hue and alpha
+        /// Generates a RGB hsvColor using random saturation and value (brightness) and specified hue and customAlpha
         /// </summary>
         /// <param name="hue">Hue of the hsvColor</param>
         /// <param name="saturation">Saturation of the hsvColor</param>
-        /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
+        /// <param name="customAlpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
         /// <returns>RGB hsvColor</returns>
         public static Color WithHueSaturation(float hue, float saturation, float alpha = 1)
         {
@@ -89,11 +89,11 @@ namespace Unitilities.Colors
         }
 
         /// <summary>
-        /// Generates a RGB hsvColor using random saturation and value (brightness) and specified hue and alpha
+        /// Generates a RGB hsvColor using random saturation and value (brightness) and specified hue and customAlpha
         /// </summary>
         /// <param name="hue">Hue of the hsvColor</param>
         /// <param name="value">Brightness of the hsvColor</param>
-        /// <param name="alpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
+        /// <param name="customAlpha">Transparency: 0 = 100% transparent, 1 = 0% transparent</param>
         /// <returns>RGB hsvColor</returns>
         public static Color WithHueValue(float hue, float value, float alpha = 1)
         {

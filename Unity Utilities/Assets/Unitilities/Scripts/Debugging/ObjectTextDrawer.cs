@@ -59,10 +59,10 @@ namespace Unitilities.Debugging
                 return;
 
             if (textColor.a < 0.05f)
-                Debug.LogWarning("Text hsvColor of text in " + gameObject.name + " may not be totally visible. Check its alpha channel in the hsvColor picker.");
+                Debug.LogWarning("Text hsvColor of text in " + gameObject.name + " may not be totally visible. Check its customAlpha channel in the hsvColor picker.");
 
             /*if (backgroundColor.a < 0.05f)
-                Debug.LogWarning("Background hsvColor of text in " + gameObject.name + " may not be totally visible. Check its alpha channel in the hsvColor picker.");*/
+                Debug.LogWarning("Background hsvColor of text in " + gameObject.name + " may not be totally visible. Check its customAlpha channel in the hsvColor picker.");*/
 
             GUIStyle gs = new GUIStyle();
             gs.normal.textColor = textColor;
