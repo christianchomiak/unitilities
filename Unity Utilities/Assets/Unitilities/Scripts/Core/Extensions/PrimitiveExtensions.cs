@@ -79,6 +79,28 @@ namespace Unitilities
             return regex.IsMatch(s);
         }
 
+        // Taken from: https://www.safaribooksonline.com/library/view/regular-expressions-cookbook/9780596802837/ch07s16.html
+        /// <summary>
+        /// Determines if a string has a valid IPv4 address structure
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static bool IsValidIPv4Address(this string s)
+        {
+            return Regex.IsMatch(s, @"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+        }
+
+        // Taken from: https://www.safaribooksonline.com/library/view/regular-expressions-cookbook/9780596802837/ch07s17.html
+        /// <summary>
+        /// Determines if a string has a valid IPv6 address structure
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static bool IsValidIPv6Address(this string s)
+        {
+            return Regex.IsMatch(s, @"^(?:[A-F0-9]{1,4}:){7}[A-F0-9]{1,4}$");
+        }
+
         /// <summary>
         /// Count all words in a given string
         /// </summary>

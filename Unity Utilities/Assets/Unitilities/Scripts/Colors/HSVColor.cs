@@ -20,10 +20,10 @@ namespace Unitilities.Colors
     {
         #region Variables
 
-        private float hue;
-        private float saturation;
-        private float value;
-        private float alpha;
+        [SerializeField] private float hue;
+        [SerializeField] private float saturation;
+        [SerializeField] private float value;
+        [SerializeField] private float alpha;
 
         #endregion
 

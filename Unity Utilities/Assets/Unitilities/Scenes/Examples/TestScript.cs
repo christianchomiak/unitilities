@@ -1,53 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using Unitilities.Colors;
 
 using Unitilities;
 
-public class TestScript : MonoBehaviour {
+public class TestScript : MonoBehaviour 
+{
+    public Unitilities.Tuples.TupleI pair;
+    public Unitilities.Colors.HSVColor c;
 
-    public string myHex = "";
-    public Color col;
+    //[Regex(@"^(?:\d{1,3}\.){3}\d{1,3}$", "Invalid IP address!\nExample: '127.0.0.1'")]
+    //[Regex(@"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$", "Invalid IP address!\nExample: '127.0.0.1'")]
+    //public string serverAddress = "192.168.0.1";
 
-	// Use this for initialization
-	void Start ()
-    {
-        //col = ColorFromHex(myHex);
-        myHex = col.ToHex();
+    public void Awake()
+    { 
     }
-	
-	// Update is called once per frame
-	void Update () 
-    {
-        HSVColor c = HSVColor.black;
-        c.ToHex();
-    }
-
-    /*string FloatToHex(float f)
-    {
-        string hex = "";
-        byte[] bytes = new byte[1];
-
-        float f2 = f * 255f;
-        bytes[0] = (byte)(f2);
-
-        hex = System.BitConverter.ToString(bytes);
-        return hex;
-    }
-
-    float HexToFloat(string hex)
-    {
-        float f = 0f;
-
-        byte[] hexBytes = StringToByteArrayFastest(hex);
-        Debug.Log("Bytes: " + hexBytes[0].ToString());
-
-        f = ((float)hexBytes[0]) / 255f;
-
-        return f;
-    }*/
-
-
-
 }
