@@ -5,6 +5,7 @@ using Unitilities;
 public class ExampleExtensions : MonoBehaviour 
 {
     public GameObject prefabToClone;
+    
     public Transform parentOfNewClone;
     
 
