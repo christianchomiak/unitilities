@@ -1,0 +1,47 @@
+﻿//This is an example of a valid localization file.
+
+//JSONs do not support comments, so please remove
+//any when creating a real one.
+
+//Each data snippet is made of a tuple where the first
+//element is the keyword related to the translated text,
+//the second element.
+
+//In order to have a correct localization system, make sure
+//that "id" and any keyword is previously defined in LocalizationConfig.cs.
+
+//If a keyword from the system is not found here, the LocalizationManager
+//will try to use its default language as a fallback.
+
+
+//[IMPORTANT] THESE FILES SHOULD BE SAVED IN UTF-8 IF THE LANGUAGE USES ANY FOREIGN CHARACTER TO ENGLISH [/IMPORTANT] 
+
+{
+    //Not really needed, but could be useful for check compatibility with the current structure used when parsing the file
+    "VERSION": "1.0.0",
+
+    //Display name of the language, basically just for readability of the developer
+    "NAME": "English",
+
+    //The id of the language of this file. Must match one of the defined languages in LocalizationConfig
+    "ID": "en_us",
+
+    //The different texts that could appear ingame and its corresponding translation to the language
+    //The don't need to appear in the strict order defined in LocalizationConfig and also don't need
+    //to have a translation for all texts (altough it's recommended).
+    //What it can't have is any new keyword.
+    "DATA": [
+        [ "WORD_PLAY", "Play" ],
+        [ "WORD_PAUSE", "Pause" ],
+        [ "WORD_RESTART", "Restart" ],
+        [ "WORD_CONTINUE", "Continue" ],
+        [ "WORD_QUIT", "Quit" ],
+        [ "WORD_CREDITS", "Credits" ],
+        [ "MESSAGE_LVL_COMPLETED", "<b>Excellent!!</b>\nLevel completed" ],
+        [ "MESSAGE_LVL_FAILED", "You ran out of time\n<b>Get more seconds!!</b>" ],
+        [ "NAME_AREA1", "Level 1" ],
+        [ "NAME_AREA2", "Level 2" ],
+        [ "NAME_AREA3", "Level 3" ],
+        [ "ERROR", "::ERROR::" ]
+    ]
+}
