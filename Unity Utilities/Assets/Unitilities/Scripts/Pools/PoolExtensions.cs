@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// PoolExtensions v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// PoolExtensions v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Group of extensions that facilitate working with the provided Pool class.
 /// </summary>
@@ -49,6 +49,17 @@ namespace Unitilities.Pools
         public static void CreatePool(this GameObject prefab)
         {
             PoolManager.Instance.CreatePool(prefab);
+        }
+
+
+        /// <summary>
+        /// Creates a new instance of the Game Object, managed by a pool
+        /// </summary>
+        /// <param name="prefab"></param>
+        /// <returns></returns>
+        public static GameObject Spawn(this GameObject prefab)
+        {
+            return PoolManager.Instance.Spawn(prefab);
         }
 
         /// <summary>
@@ -137,8 +148,18 @@ namespace Unitilities.Pools
         /// <summary>
         /// Removes this gameobject from play
         /// </summary>
-        /// <param name="prefab"></param>
+        /// <param name="go"></param>
         public static void Recycle(this GameObject go)
+        {
+            PoolManager.Instance.Recycle(go);
+        }
+
+        /// <summary>
+        /// [For pooled GameObjects]
+        /// Resets the Transform values of the GameObject to the one of its blueprint.
+        /// </summary>
+        /// <param name="go">GameObject to reset</param>
+        public static void ResetInstanceTransform(this GameObject go)
         {
             PoolManager.Instance.Recycle(go);
         }

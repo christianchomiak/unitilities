@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// PoolManager v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// PoolManager v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Manager in charge of handling the pools that the developer may need.
 /// It's not necessary but highly recommended.
@@ -19,20 +19,6 @@ namespace Unitilities.Pools
         [Header("Pool Manager properties")]
 
         /// <summary>
-        /// If true, when recycling an object also remove its association with the customParent pool.
-        /// </summary>
-        [Tooltip("If true, when recycling an object also remove its association with the customParent pool")]
-        [SerializeField]
-        bool forceRecycleCleanup = false;
-
-        /// <summary>
-        /// If true, creates a new empty child for each pool inside this GameObject
-        /// </summary>
-        [Tooltip("If true, creates a new empty child for each pool inside this GameObject")]
-        [SerializeField]
-        bool createChildForPools = true;
-
-        /// <summary>
         /// Default amount of clones to pre-store when a new pool is created
         /// </summary>
         [Tooltip("Default amount of clones to pre-store when a new pool is created")]
@@ -40,18 +26,33 @@ namespace Unitilities.Pools
         int defaultPrefillQuantity = 0;
 
         /// <summary>
-        /// List of all created pools
+        /// If true, creates a new empty child for each pool inside this GameObject
+        /// </summary>
+        [Tooltip("If true, creates a new empty child for each pool inside this GameObject that acts as a parent for inactive GameObjects")]
+        [SerializeField]
+        bool createChildForPools = true;
+
+        /// <summary>
+        /// If true, when recycling an object also remove its association with the customParent pool.
+        /// </summary>
+        [Tooltip("If true, when recycling an object also remove its association with the customParent pool")]
+        [SerializeField]
+        bool forceRecycleCleanup = false;
+
+
+        /// <summary>
+        /// List of all created pools.
         /// </summary>
         [SerializeField]
         List<Pool> pools;
 
         /// <summary>
-        /// Each spawned GameObject and the pool that created it
+        /// Each spawned GameObject and the pool that created it.
         /// </summary>
         Dictionary<GameObject, Pool> relObjectPool;
 
         /// <summary>
-        /// Each GameObject template and the pool that creates clones from it
+        /// Each GameObject template and the pool that creates clones from it.
         /// </summary>
         Dictionary<GameObject, Pool> relTemplatePool;
 
@@ -99,7 +100,7 @@ namespace Unitilities.Pools
                 {
                     if (createChildForPools)
                     {
-                        GameObject o = new GameObject("[Pool: " + pools[i].Prefab.name + "]");
+                        GameObject o = new GameObject("[Pool Holder: " + pools[i].Prefab.name + "]");
                         o.transform.parent = this.transform;
                         pools[i].parentForPooled = o.transform;
                     }
@@ -177,11 +178,23 @@ namespace Unitilities.Pools
 
         #region Public Functions
 
-        public void ClearPools()
+        /// <summary>
+        /// Removes ALL pools in the manager.
+        /// </summary>
+        /// <param name="deleteChildren">If true, all children of this GameObject will be destroyed</param>
+        public void ClearPools(bool deleteChildren = true)
         {
             pools.Clear();
             relTemplatePool.Clear();
             relObjectPool.Clear();
+
+            if (deleteChildren)
+            {
+                foreach (Transform child in transform)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
         }
 
 
@@ -352,6 +365,26 @@ namespace Unitilities.Pools
 
             Destroy(go);
         }
+
+        /// <summary>
+        /// Resets the Transform values of the GameObject to the ones of its blueprint
+        /// </summary>
+        /// <param name="go">Element to reset</param>
+        public void ResetInstanceTransform(GameObject go)
+        {
+            Pool parentPool = null;
+
+            if (relObjectPool.TryGetValue(go, out parentPool))
+            {
+                if (parentPool != null)
+                {
+                    parentPool.ResetInstanceTransform(go);
+
+                    return;
+                }
+            }
+        }
+
 
         /// <summary>
         /// Given a prefab, returns all spawned clones

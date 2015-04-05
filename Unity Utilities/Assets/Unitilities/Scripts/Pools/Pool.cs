@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Pool v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// Pool v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Structure that holds blueprints of gameobjects and handles
 /// the spawned and recycled objects.
@@ -129,6 +129,11 @@ namespace Unitilities.Pools
             FillPool(this.prefillQuantity); //, this.parentForSpawned);
         }
 
+        public virtual GameObject Spawn()
+        {
+            return Spawn(Vector3.zero);
+        }
+
         public virtual GameObject Spawn(Vector3 position)
         {
             return Spawn(position, Quaternion.Euler(Vector3.zero));
@@ -206,10 +211,12 @@ namespace Unitilities.Pools
                 return;
             }
 
-            e.transform.parent = null;
+            ResetInstanceTransform(e);
+            
+            /*e.transform.parent = null;
             e.transform.position = prefab.transform.position;
             e.transform.localScale = prefab.transform.localScale;
-            e.transform.rotation = prefab.transform.rotation;
+            e.transform.rotation = prefab.transform.rotation;*/
 
             e.SetActive(false);
             e.transform.SetParent(this.parentForPooled, false); // parent = this.parentForPooled;
@@ -233,6 +240,21 @@ namespace Unitilities.Pools
             }
 
             stored.Clear();
+        }
+
+        /// <summary>
+        /// Resets the Transform values of the GameObject to the ones of its blueprint
+        /// </summary>
+        /// <param name="go">Element to remove</param>
+        public void ResetInstanceTransform(GameObject go)
+        {
+            if (go == null)
+                return;
+
+            go.transform.parent = null;
+            go.transform.position = prefab.transform.position;
+            go.transform.localScale = prefab.transform.localScale;
+            go.transform.rotation = prefab.transform.rotation;
         }
 
         #endregion
