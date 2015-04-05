@@ -1,5 +1,5 @@
-Unitilities v1.0.0
-===============
+Unitilities v1.2.1
+==================
 
 Set of utility scripts to facilitate work in Unity.
 
@@ -20,6 +20,7 @@ Currently, it includes:
   * Tuple (Tuple-2, Tuple-3 and Tuple-4) to hold and bind generic types.
 * PlayerPrefs window to view and modify preferences inside the Unity Editor.
 * Gizmo-helpers for the Editor.
+* Localization
 
 The project is currently divided into these namespaces:
 * Unitilities: for basic things. It's everything located under /Core.
@@ -29,3 +30,4 @@ The project is currently divided into these namespaces:
 * Unitilities.Debugging
 * Unitilities.EditorStuff
 * Unitilities.Timers
+* Unitilities.Localization
