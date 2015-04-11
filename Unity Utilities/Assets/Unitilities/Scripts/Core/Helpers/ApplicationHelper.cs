@@ -1,5 +1,5 @@
 ﻿// <summary>
-/// ApplicationHelper v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// ApplicationHelper v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Shortcuts for common queries to Unity's Application.
 /// </summary>
@@ -31,8 +31,15 @@ namespace Unitilities
                 return Application.platform == RuntimePlatform.WindowsPlayer ||
                    Application.platform == RuntimePlatform.LinuxPlayer ||
                    Application.platform == RuntimePlatform.OSXPlayer ||
-                   Application.platform == RuntimePlatform.WSAPlayerX86 ||
-                   Application.platform == RuntimePlatform.WSAPlayerX64;
+
+                    #if UNITY_5_0
+                    Application.platform == RuntimePlatform.WSAPlayerX86 ||
+                    Application.platform == RuntimePlatform.WSAPlayerX64;
+                    #else
+                        Application.platform == RuntimePlatform.MetroPlayerX86||
+                        Application.platform == RuntimePlatform.MetroPlayerX64;
+                    #endif
+
             }
         }
 
@@ -52,6 +59,9 @@ namespace Unitilities
             get
             {
                 return Application.platform == RuntimePlatform.WindowsWebPlayer ||
+                        #if UNITY_5_0
+                         Application.platform == RuntimePlatform.WebGLPlayer ||
+                        #endif
                     Application.platform == RuntimePlatform.OSXWebPlayer;
             }
         }
@@ -64,7 +74,12 @@ namespace Unitilities
                        Application.platform == RuntimePlatform.IPhonePlayer ||
                        Application.platform == RuntimePlatform.BlackBerryPlayer ||
                        Application.platform == RuntimePlatform.WP8Player ||
-                       Application.platform == RuntimePlatform.WSAPlayerARM;
+
+                        #if UNITY_5_0
+                         Application.platform == RuntimePlatform.WSAPlayerARM;
+                        #else
+                         Application.platform == RuntimePlatform.MetroPlayerARM;
+                        #endif
             }
         }
 

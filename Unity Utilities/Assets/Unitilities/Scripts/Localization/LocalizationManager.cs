@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// LocalizationManager v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// LocalizationManager v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Manager in charge of translating the LocalizedTexts.
 /// 
@@ -192,7 +192,7 @@ namespace Unitilities.Localization
                 case SystemLanguage.Japanese:
                     systemLanguage = LocalizationLanguage.JA_JP;
                     break;
-                case SystemLanguage.ChineseSimplified:
+                case SystemLanguage.Chinese:
                     systemLanguage = LocalizationLanguage.ZH_CHS;
                     break;
                 case SystemLanguage.Arabic:

@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// PrimitiveExtensions v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// PrimitiveExtensions v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions that facilitate the use of C# primitives. 
 /// </summary>
@@ -121,6 +121,19 @@ namespace Unitilities
             }
             return count;
         }
+
+        /// <summary>
+        /// Returns a copy of the input string, with its characters reversed
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string Reverse(this string s)
+        {
+            char[] charArray = s.ToCharArray();
+            System.Array.Reverse(charArray);
+            return new string(charArray);
+        }
+
         #endregion
 
     }

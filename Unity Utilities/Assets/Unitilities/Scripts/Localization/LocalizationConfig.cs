@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// LocalizationConfig v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// LocalizationConfig v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// MonoBehaviour that makes use of the LocalizationManager and modify 
 /// the sibling UI Text as needed.
@@ -74,6 +74,16 @@ namespace Unitilities.Localization
         CUSTOM
     }
 
+    /// <summary>
+    /// LTR: Left-to-Right
+    /// RTL: Right-to-Left
+    /// </summary>
+    public enum WritingSystem
+    {
+        LTR,
+        RTL
+    }
+
 
     /// <summary>
     /// Container of the translations for each language
@@ -95,6 +105,9 @@ namespace Unitilities.Localization
         //[IMPORTANT] THESE FILES SHOULD BE IN UTF-8 IF THE LANGUAGE USES ANY FOREIGN CHARACTER TO ENGLISH [/IMPORTANT]
         [SerializeField]
         TextAsset dataFile;
+
+        [SerializeField]
+        WritingSystem writingSystem;
 
         Dictionary<LocalizationKeyword, string> data;
 
@@ -134,6 +147,7 @@ namespace Unitilities.Localization
             dataFile = newDataFile;
             data = new Dictionary<LocalizationKeyword, string>();
             name = languageName;
+            writingSystem = WritingSystem.LTR;
         }
 
         #endregion
@@ -153,6 +167,7 @@ namespace Unitilities.Localization
                 Data.Add(type, value);
             }
         }
+
 
         #endregion
 
@@ -189,6 +204,16 @@ namespace Unitilities.Localization
             string name = rawLanguageData["NAME"].Value;
             string id = rawLanguageData["ID"].Value;
 
+            string scriptType = rawLanguageData["SCRIPT"].Value;
+
+            //The writing system is defined on the Inspector, but it could
+            //be read from the data file and determined using this code.
+            /*if (scriptType == "RTL")
+                writingSystem = WritingSystem.RTL;
+            else
+                writingSystem = WritingSystem.LTR;*/
+
+
             //TODO: Check if the id key exists
             //LocalizationLanguage newLanguageID = languagesIDTable[id.ToUpper()];
             //LocalizationData newData = new LocalizationData(newLanguageID, null, null); //id
@@ -198,10 +223,14 @@ namespace Unitilities.Localization
             for (int i = 0; i < data.Count; i++)
             {
                 var dataValue = data[i];
-                string textTypeKey = dataValue[0].Value;
+                string keyword = dataValue[0].Value;
+                string translation = dataValue[1].Value;
+
+                if (writingSystem == WritingSystem.RTL)
+                    translation.Reverse(); 
 
                 //TODO: Check if the type key exists
-                AddData(LocalizationManager.Instance.GetDataType(textTypeKey), dataValue[1].Value);
+                AddData(LocalizationManager.Instance.GetDataType(keyword), translation);
             }
 
             //languages.Add(newLanguageID, newData);
@@ -224,7 +253,6 @@ namespace Unitilities.Localization
             Debug.LogError("There's no record of a text of type \"" + request.ToString() + "\" in the language \"" + language.ToString() + "\".");
 
             return null;
-            //return "[ERROR]";
         }
 
         #endregion

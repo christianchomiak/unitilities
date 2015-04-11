@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// LocalizedText v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// LocalizedText v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// MonoBehaviour that makes use of the LocalizationManager and modify 
 /// the sibling UI Text as needed.
@@ -107,6 +107,13 @@ namespace Unitilities.Localization
         {
             content = newType;
             GetTextTranslated();
+        }
+
+        public void SetCustomLanguage(LocalizationLanguage newLanguage)
+        {
+            customLanguage = newLanguage;
+            if (localizationPreference == LocalizationPreference.CUSTOM)
+                GetTextTranslated();
         }
 
         #endregion
