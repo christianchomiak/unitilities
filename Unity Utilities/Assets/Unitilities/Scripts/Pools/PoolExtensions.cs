@@ -161,7 +161,7 @@ namespace Unitilities.Pools
         /// <param name="go">GameObject to reset</param>
         public static void ResetInstanceTransform(this GameObject go)
         {
-            PoolManager.Instance.Recycle(go);
+            PoolManager.Instance.ResetInstanceTransform(go);
         }
     }
 
