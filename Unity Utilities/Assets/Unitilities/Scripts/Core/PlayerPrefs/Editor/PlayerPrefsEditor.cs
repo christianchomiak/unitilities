@@ -62,7 +62,12 @@ namespace Unitilities.Debugging
         {
             // Get existing open window or if none, make a new one:
             PlayerPrefsEditor window = (PlayerPrefsEditor) EditorWindow.GetWindow(typeof(PlayerPrefsEditor));
-            window.title = "PlayerPrefs Editor";
+
+            #if UNITY_5
+                window.titleContent.text = "PlayerPrefs Editor";
+            #else
+                window.title = "PlayerPrefs Editor";
+            #endif
             //window.somethingWasDeleted = false;
         }
         #endif
@@ -72,6 +77,7 @@ namespace Unitilities.Debugging
         static void DeleteAllPlayerPrefsMenuShortcut()
         {
             PlayerPrefs.DeleteAll();
+            Debug.Log("All PlayerPrefs were deleted.");
         }
 
 
