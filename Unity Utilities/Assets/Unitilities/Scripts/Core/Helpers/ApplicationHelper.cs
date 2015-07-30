@@ -32,9 +32,9 @@ namespace Unitilities
                    Application.platform == RuntimePlatform.LinuxPlayer ||
                    Application.platform == RuntimePlatform.OSXPlayer ||
 
-                    #if UNITY_5_0
-                    Application.platform == RuntimePlatform.WSAPlayerX86 ||
-                    Application.platform == RuntimePlatform.WSAPlayerX64;
+                    #if UNITY_5
+                        Application.platform == RuntimePlatform.WSAPlayerX86 ||
+                        Application.platform == RuntimePlatform.WSAPlayerX64;
                     #else
                         Application.platform == RuntimePlatform.MetroPlayerX86||
                         Application.platform == RuntimePlatform.MetroPlayerX64;
@@ -59,7 +59,7 @@ namespace Unitilities
             get
             {
                 return Application.platform == RuntimePlatform.WindowsWebPlayer ||
-                        #if UNITY_5_0
+                        #if UNITY_5
                          Application.platform == RuntimePlatform.WebGLPlayer ||
                         #endif
                     Application.platform == RuntimePlatform.OSXWebPlayer;
@@ -74,12 +74,12 @@ namespace Unitilities
                        Application.platform == RuntimePlatform.IPhonePlayer ||
                        Application.platform == RuntimePlatform.BlackBerryPlayer ||
                        Application.platform == RuntimePlatform.WP8Player ||
-
-                        #if UNITY_5_0
-                         Application.platform == RuntimePlatform.WSAPlayerARM;
-                        #else
-                         Application.platform == RuntimePlatform.MetroPlayerARM;
-                        #endif
+                       
+                       #if UNITY_5
+                        Application.platform == RuntimePlatform.WSAPlayerARM;
+                       #else
+                        Application.platform == RuntimePlatform.MetroPlayerARM;
+                       #endif
             }
         }
 

@@ -63,7 +63,7 @@ namespace Unitilities.Debugging
             // Get existing open window or if none, make a new one:
             PlayerPrefsEditor window = (PlayerPrefsEditor) EditorWindow.GetWindow(typeof(PlayerPrefsEditor));
 
-            #if UNITY_5
+            #if UNITY_5_1
                 window.titleContent.text = "PlayerPrefs Editor";
             #else
                 window.title = "PlayerPrefs Editor";

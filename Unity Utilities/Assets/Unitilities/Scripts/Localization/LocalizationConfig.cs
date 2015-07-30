@@ -201,11 +201,11 @@ namespace Unitilities.Localization
                 return;
             }
 
+            //Not used in the code yet. Commented to avoid warnings.
             string name = rawLanguageData["NAME"].Value;
             string id = rawLanguageData["ID"].Value;
 
-            string scriptType = rawLanguageData["SCRIPT"].Value;
-
+            //string scriptType = rawLanguageData["SCRIPT"].Value;
             //The writing system is defined on the Inspector, but it could
             //be read from the data file and determined using this code.
             /*if (scriptType == "RTL")
