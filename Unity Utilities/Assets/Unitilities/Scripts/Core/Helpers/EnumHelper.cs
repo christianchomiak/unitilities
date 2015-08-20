@@ -4,8 +4,6 @@
 /// Useful functions related to enums.
 /// </summary>
 
-using UnityEngine;
-using System.Collections;
 
 namespace Unitilities
 {

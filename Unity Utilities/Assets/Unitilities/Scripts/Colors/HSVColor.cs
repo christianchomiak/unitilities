@@ -9,8 +9,6 @@
 /// </summary>
 
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Unitilities.Colors
 {
@@ -78,11 +76,11 @@ namespace Unitilities.Colors
         {
             set
             {
-                this.saturation = Mathf.Clamp01(value);
+                saturation = Mathf.Clamp01(value);
             }
             get
             {
-                return this.saturation;
+                return saturation;
             }
         }
 
@@ -94,7 +92,7 @@ namespace Unitilities.Colors
             }
             get
             {
-                return this.value;
+                return value;
             }
         }
 
@@ -102,11 +100,11 @@ namespace Unitilities.Colors
         {
             set
             {
-                this.alpha = Mathf.Clamp01(value);
+                alpha = Mathf.Clamp01(value);
             }
             get
             {
-                return this.alpha;
+                return alpha;
             }
         }
 
@@ -119,10 +117,10 @@ namespace Unitilities.Colors
         public void CopyFrom(Color c)
         {
             HSVColor hsv = HSVColor.FromRGB(c);
-            this.hue = hsv.Hue;
-            this.saturation = hsv.Saturation;
-            this.value = hsv.Value;
-            this.alpha = hsv.Alpha;
+            hue = hsv.Hue;
+            saturation = hsv.Saturation;
+            value = hsv.Value;
+            alpha = hsv.Alpha;
         }
 
         public Color ToRGB()
@@ -179,7 +177,7 @@ namespace Unitilities.Colors
 
         public string ToHex(bool includeAlpha = false)
         {
-            return this.ToRGB().ToHex(includeAlpha);
+            return ToRGB().ToHex(includeAlpha);
         }
 
         /// <summary>
@@ -194,17 +192,17 @@ namespace Unitilities.Colors
         
         public Vector3 ToVector3()
         {
-            return new Vector3(this.hue, this.saturation, this.value);
+            return new Vector3(hue, saturation, value);
         }
 
         public Vector4 ToVector4()
         {
-            return new Vector4(this.hue, this.saturation, this.value, this.alpha);
+            return new Vector4(hue, saturation, value, alpha);
         }
 
         public override string ToString()
         {
-            return string.Format("HSV({0}, {1}, {2}, {3})", this.hue, this.saturation, this.value, this.alpha);
+            return string.Format("HSV({0}, {1}, {2}, {3})", hue, saturation, value, alpha);
         }
 
         public override bool Equals(object obj)

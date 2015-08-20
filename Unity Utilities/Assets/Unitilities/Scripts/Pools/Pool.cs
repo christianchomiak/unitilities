@@ -16,7 +16,6 @@
 /// </summary>
 
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Unitilities.Pools
@@ -117,8 +116,8 @@ namespace Unitilities.Pools
 
         public void Init()
         {
-            this.spawned = new List<GameObject>();
-            this.stored = new Stack<GameObject>();
+            spawned = new List<GameObject>();
+            stored = new Stack<GameObject>();
         }
 
         /// <summary>
@@ -126,7 +125,7 @@ namespace Unitilities.Pools
         /// </summary>
         public void PreFill()
         {
-            FillPool(this.prefillQuantity); //, this.parentForSpawned);
+            FillPool(prefillQuantity); //, this.parentForSpawned);
         }
 
         public virtual GameObject Spawn()
@@ -176,7 +175,7 @@ namespace Unitilities.Pools
                 candidate.transform.SetParent(parentForSpawned, false);//parent = parentForSpawned;
 
 
-            this.spawned.Add(candidate);
+            spawned.Add(candidate);
 
             return candidate;
         }
@@ -192,7 +191,7 @@ namespace Unitilities.Pools
             {
                 GameObject o = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(Vector3.zero)) as GameObject; //prefab.Clone(Vector3.white, EnemyFactory.Instance.transform);
 
-                o.transform.SetParent(this.parentForPooled, false); //parent = this.parentForPooled;
+                o.transform.SetParent(parentForPooled, false); //parent = this.parentForPooled;
 
                 o.gameObject.SetActive(false);
                 stored.Push(o);
@@ -219,7 +218,7 @@ namespace Unitilities.Pools
             e.transform.rotation = prefab.transform.rotation;*/
 
             e.SetActive(false);
-            e.transform.SetParent(this.parentForPooled, false); // parent = this.parentForPooled;
+            e.transform.SetParent(parentForPooled, false); // parent = this.parentForPooled;
 
             spawned.Remove(e);
             stored.Push(e);
@@ -248,7 +247,7 @@ namespace Unitilities.Pools
         /// <param name="go">Element to remove</param>
         public void ResetInstanceTransform(GameObject go)
         {
-            if (go == null)
+            if ((object) go == null)
                 return;
 
             go.transform.parent = null;

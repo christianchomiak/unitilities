@@ -6,7 +6,6 @@
 /// </summary>
 
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Unitilities.Pools
@@ -91,21 +90,22 @@ namespace Unitilities.Pools
 
         private void InitializePools()
         {
+            //TO-DO: Consider a cheaper alternative
             pools.RemoveAll(p => p != null && p.Prefab == null);
 
             for (int i = 0; i < pools.Count; i++)
             {
                 pools[i].Init();
-                if (pools[i].parentForPooled == null)
+                if ((object) pools[i].parentForPooled == null)
                 {
                     if (createChildForPools)
                     {
                         GameObject o = new GameObject("[Pool Holder: " + pools[i].Prefab.name + "]");
-                        o.transform.parent = this.transform;
+                        o.transform.parent = transform;
                         pools[i].parentForPooled = o.transform;
                     }
                     else
-                        pools[i].parentForPooled = this.transform;
+                        pools[i].parentForPooled = transform;
                 }
 
                 pools[i].PreFill();
@@ -151,11 +151,11 @@ namespace Unitilities.Pools
             if (createChildForPools)
             {
                 GameObject o = new GameObject("[Pool: " + prefab.name + "]");
-                o.transform.parent = this.transform;
+                o.transform.parent = transform;
                 parentForPooled = o.transform;
             }
             else
-                parentForPooled = this.transform;
+                parentForPooled = transform;
 
             pool = new Pool(prefab, parentForPooled, parentForSpawned, prefillQuantity);
 
@@ -289,7 +289,7 @@ namespace Unitilities.Pools
         /// <returns></returns>
         public GameObject Spawn(GameObject prefab, Vector3 position, Quaternion rotation, Transform customParent)
         {
-            if (prefab == null)
+            if ((object) prefab == null)
                 return null;
 
 
@@ -348,7 +348,7 @@ namespace Unitilities.Pools
             {
                 if (parentPool != null)
                 {
-                    go.transform.parent = this.transform;
+                    go.transform.parent = transform;
 
                     if (forceRecycleCleanup)
                         relObjectPool.Remove(go);

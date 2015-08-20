@@ -8,8 +8,6 @@
 
 using UnityEngine;
 using UnityEditor;
-
-using System.Collections;
 using System.Collections.Generic;
 
 using Microsoft.Win32;
@@ -88,10 +86,10 @@ namespace Unitilities.Debugging
                 Repaint();
         }
 
-        void OnDestroy()
+        /*void OnDestroy()
         {
             //RefreshPlayerPrefs();
-        }
+        }*/
 
         void SavePlayerPrefs()
         {
@@ -297,15 +295,15 @@ namespace Unitilities.Debugging
             else
                 toBeDeleted.Clear();
 
-            if (undoTexture == null)
+            if ((object)undoTexture == null)
             {
                 undoTexture = AssetDatabase.LoadAssetAtPath(FolderPath() + "undo.png", typeof(Texture2D)) as Texture2D;
             }
-            if (deleteTexture == null)
+            if ((object)deleteTexture == null)
             {
                 deleteTexture = AssetDatabase.LoadAssetAtPath(FolderPath() + "delete.png", typeof(Texture2D)) as Texture2D;
             }
-            if (saveTexture == null)
+            if ((object)saveTexture == null)
             {
                 saveTexture = AssetDatabase.LoadAssetAtPath(FolderPath() + "save.png", typeof(Texture2D)) as Texture2D;
             }

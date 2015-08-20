@@ -5,7 +5,6 @@
 /// </summary>
 
 using UnityEngine;
-using System.Collections;
 
 namespace Unitilities.UI
 {
@@ -41,7 +40,7 @@ namespace Unitilities.UI
 
         void Awake()
         {
-            if (oCamera == null)
+            if ((object) oCamera == null)
             {
                 oCamera = Camera.main; // gameObject.GetComponent<Camera>();
             }
@@ -55,7 +54,7 @@ namespace Unitilities.UI
 
         void OnGUI()
         {
-            if (!Application.isPlaying && this.runInEdit)
+            if (!Application.isPlaying && runInEdit)
             {
                 MatchCameraToScreen();
             }
@@ -96,9 +95,9 @@ namespace Unitilities.UI
                 || !Mathf.Approximately(this.oCamera.transform.position.x, Screen.width / 2)
                 || !Mathf.Approximately(this.oCamera.transform.position.y, Screen.height / 2))*/
 
-            if (!Mathf.Approximately(this.oCamera.orthographicSize, 0.5f)
-                || !Mathf.Approximately(this.oCamera.transform.position.x, 0.5f * oCamera.aspect)
-                || !Mathf.Approximately(this.oCamera.transform.position.y, 0.5f))
+            if (!Mathf.Approximately(oCamera.orthographicSize, 0.5f)
+                || !Mathf.Approximately(oCamera.transform.position.x, 0.5f * oCamera.aspect)
+                || !Mathf.Approximately(oCamera.transform.position.y, 0.5f))
             {
                 return true;
             }

@@ -4,8 +4,6 @@
 /// Functions that facilitate the use of C# primitives. 
 /// </summary>
 
-using UnityEngine;
-using System.Collections;
 using System.Text.RegularExpressions;
 
 namespace Unitilities

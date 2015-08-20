@@ -10,7 +10,6 @@
 
 using SimpleJSON;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Unitilities.Localization
@@ -93,12 +92,10 @@ namespace Unitilities.Localization
     {
         #region Fields
 
-        [SerializeField]
-        [HideInInspector]
+        [SerializeField, HideInInspector]
         string name;
 
-        [ReadOnly]
-        [SerializeField]
+        [ReadOnly, SerializeField]
         LocalizationLanguage language;
 
         //File that stores the translated data
@@ -123,14 +120,15 @@ namespace Unitilities.Localization
 
         public TextAsset DataFile
         {
-            get { return this.dataFile; }
+            get { return dataFile; }
         }
 
         Dictionary<LocalizationKeyword, string> Data
         {
             get
             {
-                if (data == null) data = new Dictionary<LocalizationKeyword, string>();
+                if (data == null)
+                    data = new Dictionary<LocalizationKeyword, string>();
 
                 return data;
             }
@@ -181,9 +179,9 @@ namespace Unitilities.Localization
         {
             //languages = new Dictionary<LocalizationLanguage, LocalizationData>();
 
-            TextAsset localizationData = this.dataFile;
+            TextAsset localizationData = dataFile;
 
-            if (localizationData == null) //System.IO.File.Exists(levelPath))
+            if ((object) localizationData == null) //System.IO.File.Exists(levelPath))
             {
                 Debug.LogError(@"I/O ERROR: Couldn't  load the data file for """ + language.ToString() + @""". Is the field assigned?");
                 //string level_text = System.IO.File.ReadAllText(levelPath);   
@@ -195,7 +193,7 @@ namespace Unitilities.Localization
 
             var rawLanguageData = JSON.Parse(localizationText);
 
-            if (rawLanguageData == null)
+            if ((object) rawLanguageData == null)
             {
                 Debug.LogWarning("JSON is empty");
                 return;

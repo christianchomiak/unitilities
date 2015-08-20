@@ -2,7 +2,7 @@
 /// Tuples v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Structure that holds a certain amount of elements.
-/// Similar to a Vector2/3/4 but more general.
+/// Similar to a Vector2/3/4 but generic.
 /// 
 /// Generic tuples can be created using Tuple<>, Tuple3<> and Tuple4<>.
 /// However, to be able to show its contents in the Unity Inspector, a class must
@@ -16,15 +16,11 @@
 ///     * Source 2: https://gist.github.com/michaelbartnett/5652076
 /// </summary>
 
-
-using System;
-using System.Collections;
 using System.Collections.Generic;
-
 
 namespace Unitilities.Tuples
 {
-    
+
     #region Core
 
     /// <summary>

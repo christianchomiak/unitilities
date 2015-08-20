@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Singleton v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// Singleton v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Base class to provide a singleton status to an object.
 /// 
@@ -12,7 +12,6 @@
 /// </summary>
 
 using UnityEngine;
-using System.Collections;
 
 namespace Unitilities
 {
@@ -34,46 +33,20 @@ namespace Unitilities
         [SerializeField]
         bool isPersistent = true;
 
-        /// <summary>
-        /// Returns the instance of this singleton.
-        /// </summary>
-        public static T Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = (T) FindObjectOfType(typeof(T));
 
-                    if (instance == null)
-                    {
-                        Debug.LogWarning("An instance of " + typeof(T) + " is needed in the scene, but there is none. Generated automatically.");
-
-                        GameObject obj = new GameObject("Singleton_" + typeof(T));
-                        instance = obj.AddComponent(typeof(T)) as T;
-                    }
-                }
-
-                return instance;
-            }
-        }
-
-        public bool IsCurrentSingleton()
-        {
-            if (instance == null)
-                return false;
-
-            return instance.gameObject.GetInstanceID() == this.gameObject.GetInstanceID();
-        }
+        #region Unity
 
         protected virtual void Awake()
         {
-            if (instance != null && !IsCurrentSingleton())
+            if (Exists) //(instance != null && !IsCurrentSingleton())
             {
-                Debug.LogWarning("Warning: More than one instance of singleton " + typeof(T) + " existing.");
-                Destroy(this.gameObject);
+                if (!IsCurrentSingleton())
+                {
+                    Debug.LogWarning("Warning: More than one instance of singleton " + typeof(T) + " existing.");
+                    Destroy(gameObject);
+                }
             }
-            else if (instance == null)
+            else //if (instance == null)
             {
                 instance = gameObject.GetComponent<T>(); // AddComponent(typeof(T)) as T;
 
@@ -89,6 +62,56 @@ namespace Unitilities
                 instance = null;
             }
         }
+
+        #endregion
+
+        #region Public API
+
+        /// <summary>
+        /// Determines whether the specified Singleton exists or not
+        /// </summary>
+        public static bool Exists
+        {
+            get { return ((object)instance != null); }
+        }
+
+        /// <summary>
+        /// Returns the instance of this singleton.
+        /// </summary>
+        public static T Instance
+        {
+            get
+            {
+                if (!Exists)
+                {
+                    instance = (T)FindObjectOfType(typeof(T));
+
+                    if (!Exists)
+                    {
+                        Debug.Log("An instance of " + typeof(T) + " is needed in the scene, but there is none. Generated automatically.");
+
+                        GameObject obj = new GameObject("Singleton_" + typeof(T));
+                        instance = obj.AddComponent(typeof(T)) as T;
+                    }
+                }
+
+                return instance;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the current instance is the one true singleton
+        /// </summary>
+        /// <returns></returns>
+        public bool IsCurrentSingleton()
+        {
+            if (!Exists) // instance == null
+                return false;
+
+            return instance.gameObject.GetInstanceID() == gameObject.GetInstanceID();
+        }
+
+        #endregion
 
     }
 

@@ -8,7 +8,6 @@
 /// </summary>
 
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 namespace Unitilities.Localization
@@ -53,7 +52,7 @@ namespace Unitilities.Localization
 
         void Awake()
         {
-            if (textField == null)
+            if ((object)textField == null)
             {
                 textField = GetComponent<Text>();
             }

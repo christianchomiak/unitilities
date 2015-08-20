@@ -4,8 +4,6 @@
 /// Entity in charge of updating any ManagedTimer.
 /// </summary>
 
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Unitilities.Timers

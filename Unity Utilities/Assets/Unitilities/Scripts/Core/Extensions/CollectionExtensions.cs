@@ -1,12 +1,11 @@
 ﻿/// <summary>
-/// CollectionExtensions v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// CollectionExtensions v1.1 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions that facilitate the use of Collections (arrays, lists, etc.)
 /// </summary>
 
 using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Unitilities
@@ -29,7 +28,7 @@ namespace Unitilities
             }
         }
 
-        public static bool CheckBounds<T>(this List<T> list, int index)
+        public static bool ValidIndex<T>(this List<T> list, int index)
         {
             if (list == null)
             {
@@ -40,7 +39,7 @@ namespace Unitilities
             return index < list.Count && index >= 0;
         }
 
-        public static bool CheckBounds<T>(this T[] array, int index)
+        public static bool ValidIndex<T>(this T[] array, int index)
         {
             return index < array.Length && index >= 0;
         }

@@ -43,18 +43,18 @@ namespace Unitilities.Debugging
             if (!isEnabled)
                 return;
 
-            Gizmos.color = this.color;
+            Gizmos.color = color;
 
             if (shape == Shape.SPHERE)
-                Gizmos.DrawWireSphere(this.transform.position, this.radius);
+                Gizmos.DrawWireSphere(transform.position, radius);
             else
             {
-                Vector3 newScale = this.transform.localScale;
+                Vector3 newScale = transform.localScale;
                 /*newScale = newScale.MultiplyX(scale.x);
                 newScale = newScale.MultiplyY(scale.y);
                 newScale = newScale.MultiplyZ(scale.z);*/
 
-                Gizmos.DrawWireCube(position + this.transform.position, newScale);
+                Gizmos.DrawWireCube(position + transform.position, newScale);
             }
         }
 

@@ -5,7 +5,6 @@
 /// </summary>
 
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Unitilities.Timers
@@ -93,36 +92,36 @@ namespace Unitilities.Timers
 
         public virtual void RemoveOnFinishListener(TimerEventListener listener)
         {
-            this.onFinishListeners.Remove(listener);
+            onFinishListeners.Remove(listener);
         }
 
         public virtual void RemoveOnPauseListener(TimerEventListener listener)
         {
-            this.onPauseListeners.Remove(listener);
+            onPauseListeners.Remove(listener);
         }
 
         public virtual void RemoveOnResumeListener(TimerEventListener listener)
         {
-            this.onResumeListeners.Remove(listener);
+            onResumeListeners.Remove(listener);
         }
 
 
         public virtual void AddOnFinishListener(TimerEventListener listener)
         {
-            if (!this.onFinishListeners.Contains(listener))
-                this.onFinishListeners.Add(listener);
+            if (!onFinishListeners.Contains(listener))
+                onFinishListeners.Add(listener);
         }
 
         public virtual void AddOnPauseListener(TimerEventListener listener)
         {
-            if (!this.onPauseListeners.Contains(listener))
-                this.onPauseListeners.Add(listener);
+            if (!onPauseListeners.Contains(listener))
+                onPauseListeners.Add(listener);
         }
 
         public virtual void AddOnResumeListener(TimerEventListener listener)
         {
-            if (!this.onResumeListeners.Contains(listener))
-                this.onResumeListeners.Add(listener);
+            if (!onResumeListeners.Contains(listener))
+                onResumeListeners.Add(listener);
         }
 
         #endregion
@@ -146,7 +145,7 @@ namespace Unitilities.Timers
         {
             numberOfTimesTriggered++;
 
-            CallListeners(this.onFinishListeners);
+            CallListeners(onFinishListeners);
         }
 
 

@@ -7,7 +7,6 @@
 /// </summary>
 
 using UnityEngine;
-using System.Collections;
 
 namespace Unitilities.UI
 {
@@ -133,7 +132,7 @@ namespace Unitilities.UI
         {
             if (relativeTo == SizeRelation.BothSidesOfScreen)
             {
-                this.transform.localScale = new Vector3(relativeSize.x * Camera.main.aspect, relativeSize.y, transform.localScale.z);
+                transform.localScale = new Vector3(relativeSize.x * Camera.main.aspect, relativeSize.y, transform.localScale.z);
                 //this.transform.position = new Vector3(relativePosition.x * Camera.main.aspect, relativePosition.y, relativePosition.z);
             }
             else if (relativeTo == SizeRelation.OneSideOfScreen)
@@ -159,9 +158,9 @@ namespace Unitilities.UI
                     //this.transform.localScale = new Vector3(relativeSize.x, relativeSize.y, transform.localScale.z);
                 };
                 if (oCamera.matchRealScreenSize)
-                    this.transform.localScale = new Vector3(unit * ratioX * screenFactor, unit * ratioY * screenFactor, transform.localScale.z);
+                    transform.localScale = new Vector3(unit * ratioX * screenFactor, unit * ratioY * screenFactor, transform.localScale.z);
                 else
-                    this.transform.localScale = new Vector3(unit * ratioX, unit * ratioY, transform.localScale.z);
+                    transform.localScale = new Vector3(unit * ratioX, unit * ratioY, transform.localScale.z);
             }
         }
 
@@ -171,13 +170,13 @@ namespace Unitilities.UI
 
             Bounds mainBounds = new Bounds(Vector3.zero, Vector3.zero);
             //mainBounds = this.renderer.bounds;
-            switch (this.anchorBounds)
+            switch (anchorBounds)
             {
                 case AnchorBounds.Renderer:
-                    if (this.GetComponent<Renderer>()) { mainBounds = this.GetComponent<Renderer>().bounds; }
+                    if (GetComponent<Renderer>()) { mainBounds = GetComponent<Renderer>().bounds; }
                     break;
                 case AnchorBounds.Collider:
-                    if (this.GetComponent<Collider>()) { mainBounds = this.GetComponent<Collider>().bounds; }
+                    if (GetComponent<Collider>()) { mainBounds = GetComponent<Collider>().bounds; }
                     break;
                 default:
                     break;
@@ -186,7 +185,7 @@ namespace Unitilities.UI
 
             if (mainBounds.size.magnitude != 0)
             {
-                switch (this.positionAnchor)
+                switch (positionAnchor)
                 {
                     case TextAnchor.LowerCenter:
                         offset.x = 0;
@@ -230,14 +229,14 @@ namespace Unitilities.UI
             }
             else
             {
-                Debug.LogWarning("Warning: GUI3DItem with invalid bound settings -> " + this.gameObject, this.gameObject);
+                Debug.LogWarning("Warning: GUI3DItem with invalid bound settings -> " + gameObject, gameObject);
             }
 
 
             if (oCamera.matchRealScreenSize)
-                this.transform.position = new Vector3(Screen.width * relativePosition.x + offset.x, Screen.height * relativePosition.y + offset.y, this.transform.position.z);
+                transform.position = new Vector3(Screen.width * relativePosition.x + offset.x, Screen.height * relativePosition.y + offset.y, transform.position.z);
             else
-                this.transform.position = new Vector3(relativePosition.x * Camera.main.aspect + offset.x, relativePosition.y + offset.y, this.transform.position.z);
+                transform.position = new Vector3(relativePosition.x * Camera.main.aspect + offset.x, relativePosition.y + offset.y, transform.position.z);
 
         }
 

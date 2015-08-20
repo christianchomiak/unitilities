@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Unitilities
 {
@@ -58,9 +57,9 @@ namespace Unitilities
 
         private void Init(Vector2 pos, TouchPhase inputPhase, int fId)
         {
-            this.position = pos;
-            this.phase = inputPhase;
-            this.fingerId = fId;
+            position = pos;
+            phase = inputPhase;
+            fingerId = fId;
         }
 
         public override string ToString()

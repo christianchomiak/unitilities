@@ -7,7 +7,6 @@
 /// </summary>
 
 using UnityEngine;
-using System.Collections;
 
 namespace Unitilities.Debugging
 {

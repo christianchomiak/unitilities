@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Unitilities.AI
@@ -73,7 +72,7 @@ namespace Unitilities.AI
 
             foreach (FSMTransition t in transitions)
             {
-                if (t.ToState == this || t.ToState.GetType() == this.GetType())
+                if (t.ToState == this || t.ToState.GetType() == GetType())
                 {
                     toDelete.Add(t);
                 }
@@ -87,10 +86,10 @@ namespace Unitilities.AI
         void CheckInitialState()
         {
             if (!isInitialState)
-                this.enabled = false;
+                enabled = false;
             else
             {
-                if (!this.enabled)
+                if (!enabled)
                 {
                     isInitialState = false;
                 }
@@ -117,7 +116,7 @@ namespace Unitilities.AI
 
             toState.DoBeforeEntering();
 
-            this.enabled = false;
+            enabled = false;
         }
 
         protected virtual void Reason()

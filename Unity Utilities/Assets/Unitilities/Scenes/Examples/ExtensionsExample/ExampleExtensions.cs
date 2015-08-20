@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Unitilities;
 
 public class ExampleExtensions : MonoBehaviour 
@@ -18,14 +17,14 @@ public class ExampleExtensions : MonoBehaviour
         Debug.Log("p: " + p.ToString());
 
 
-        if (prefabToClone == null)
+        if ((object)prefabToClone == null)
         {
             Debug.Log("Cannot clone null prefab");
             Destroy(gameObject);
             return;
         }
 
-        if (parentOfNewClone == null)
+        if ((object)parentOfNewClone == null)
         {
             Debug.Log("No customParent was specified, the clone will be at the root of the scene.");
         }

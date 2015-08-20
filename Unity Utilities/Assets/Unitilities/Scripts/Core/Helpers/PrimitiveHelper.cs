@@ -4,8 +4,6 @@
 /// Useful functions for C# primitives.
 /// </summary>
 
-using System;
-using UnityEngine;
 
 namespace Unitilities
 {

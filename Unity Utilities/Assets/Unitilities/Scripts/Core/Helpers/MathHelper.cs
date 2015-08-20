@@ -5,11 +5,10 @@
 /// </summary>
 
 using UnityEngine;
-using System.Collections;
 
 namespace Unitilities
 {
-    
+
     public static class MathHelper
     {
 
@@ -178,7 +177,6 @@ namespace Unitilities
         #region Indexes
 
         //Left-to-right
-
         public static int LinearIndex(int column, int row, int width)
         {
             return column + (row * width);

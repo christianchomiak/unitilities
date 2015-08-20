@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Unitilities.Timers;
-using Unitilities.Colors;
 
 public class DestroyAfterTimerEnds : MonoBehaviour 
 {
