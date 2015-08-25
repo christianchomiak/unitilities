@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// CollectionExtensions v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// CollectionExtensions v1.2 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions that facilitate the use of Collections (arrays, lists, etc.)
 /// </summary>
@@ -42,6 +42,36 @@ namespace Unitilities
         public static bool ValidIndex<T>(this T[] array, int index)
         {
             return index < array.Length && index >= 0;
+        }
+
+        /// <summary>
+        /// Returns the last element of the array.
+        /// </summary>
+        /// <typeparam name="T">Type of the array</typeparam>
+        /// <param name="array">Array of elements</param>
+        /// <returns>The last element of the array</returns>
+        public static T GetLastElement<T>(this T[] array)
+        {
+            if (array.Length == 0)
+                throw new System.ArgumentException("Array is empty", "array");
+            //Debug.LogException(new Exception("Empty list"));
+            //Debug.LogError("Empty list");
+
+            return array[array.Length - 1];
+        }
+
+        /// <summary>
+        /// Returns the last element of a List.
+        /// </summary>
+        /// <typeparam name="T">Type of the list</typeparam>
+        /// <param name="list">List containing elements</param>
+        /// <returns>The last element of the list</returns>
+        public static T GetLastElement<T>(this List<T> list)
+        {
+            if (list == null || list.Count == 0)
+                throw new System.ArgumentException("List is empty", "list");
+            
+            return list[list.Count - 1];
         }
 
         #region Rnd
