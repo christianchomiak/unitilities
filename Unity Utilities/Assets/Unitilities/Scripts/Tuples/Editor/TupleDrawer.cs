@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// Singleton v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
+/// 
+/// Custom drawer for the Tuple class included in Unitilities
+/// </summary>
+
+using UnityEngine;
 using UnityEditor;
 
 namespace Unitilities.Tuples

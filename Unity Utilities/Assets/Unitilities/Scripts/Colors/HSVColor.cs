@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// HSVColor v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// HSVColor v1.1.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Struct to represent colors in the HSV (hue, saturation, value) system.
 /// Includes:

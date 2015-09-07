@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// PlayerPrefsEditor v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// PlayerPrefsEditor v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// PlayerPrefs editor and reader.
 /// 

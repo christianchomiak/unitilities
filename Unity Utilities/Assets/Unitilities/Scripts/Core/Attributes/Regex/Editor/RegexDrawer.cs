@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// RegexDrawer v1.0
+/// RegexDrawer v1.0.0
 /// 
 /// When declaring a variable:
 ///   * For IPv4: [Regex(@"^(?:\d{1,3}\.){3}\d{1,3}$", "Invalid IPv4 address!\nExample: '127.0.0.1'")]

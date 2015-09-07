@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Pool v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// Pool v1.1.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Structure that holds blueprints of gameobjects and handles
 /// the spawned and recycled objects.

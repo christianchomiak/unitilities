@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Timer v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// Timer v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Basic timer to keep track of time. To be used and consulted manually, without a manager.
 /// </summary>

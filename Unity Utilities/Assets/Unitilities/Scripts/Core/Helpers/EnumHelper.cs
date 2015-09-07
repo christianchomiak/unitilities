@@ -1,5 +1,5 @@
 ﻿// <summary>
-/// EnumHelper v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// EnumHelper v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Useful functions related to enums.
 /// </summary>

@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// HSVColorDrawer v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// HSVColorDrawer v1.1.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Custom property drawer for the HSVColor struct.
 /// </summary>

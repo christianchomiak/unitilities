@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// LocalizationManager v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// LocalizationManager v1.1.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Manager in charge of translating the LocalizedTexts.
 /// 

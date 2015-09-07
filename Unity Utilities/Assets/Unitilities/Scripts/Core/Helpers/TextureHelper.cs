@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ColorHelper v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// ColorHelper v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions that facilitate working with Unity Textures.
 /// </summary>

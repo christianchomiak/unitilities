@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// InvisibleObjectDrawerEditor v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// InvisibleObjectDrawerEditor v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Custom editor for InvisibleObjectDrawer.
 /// </summary>

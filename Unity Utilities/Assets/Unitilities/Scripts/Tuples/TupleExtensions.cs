@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// TupleExtensions v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// TupleExtensions v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Some functions to help find the Min and Max values of a Tuple.
 /// 

@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// PoolExtensions v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// PoolExtensions v1.1.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Group of extensions that facilitate working with the provided Pool class.
 /// </summary>

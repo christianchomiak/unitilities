@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// PoolManager v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// PoolManager v1.1.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Manager in charge of handling the pools that the developer may need.
 /// It's not necessary but highly recommended.

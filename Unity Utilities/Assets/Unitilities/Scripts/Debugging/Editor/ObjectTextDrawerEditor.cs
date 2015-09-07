@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ObjectTextDrawerEditor v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// ObjectTextDrawerEditor v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Custom editor for ObjectTextDrawer.
 /// </summary>

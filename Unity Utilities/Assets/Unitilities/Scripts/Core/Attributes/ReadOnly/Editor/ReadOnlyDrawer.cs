@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ReadOnlyDrawer v1.0
+/// ReadOnlyDrawer v1.0.0
 /// 
 /// Taken from: http://answers.unity3d.com/questions/489942/how-to-make-a-readonly-property-in-inspector.html
 /// 

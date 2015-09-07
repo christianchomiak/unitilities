@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Tuples v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// Tuples v1.1.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Structure that holds a certain amount of elements.
 /// Similar to a Vector2/3/4 but generic.

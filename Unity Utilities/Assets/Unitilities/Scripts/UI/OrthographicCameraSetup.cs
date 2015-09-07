@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// OrthographicCameraSetup v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// OrthographicCameraSetup v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Script to facilitate the setup of an ortographic camera.
 /// </summary>

@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// TimerManager v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// TimerManager v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Entity in charge of updating any ManagedTimer.
 /// </summary>

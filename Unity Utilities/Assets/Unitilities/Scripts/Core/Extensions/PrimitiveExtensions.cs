@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// PrimitiveExtensions v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// PrimitiveExtensions v1.1.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions that facilitate the use of C# primitives. 
 /// </summary>

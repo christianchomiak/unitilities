@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Singleton v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// Singleton v1.2.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Base class to provide a singleton status to an object.
 /// 
@@ -33,37 +33,53 @@ namespace Unitilities
         [SerializeField]
         bool isPersistent = true;
 
-
         #region Unity
 
         protected virtual void Awake()
         {
-            if (Exists) //(instance != null && !IsCurrentSingleton())
+            if (Exists)
             {
-                if (!IsCurrentSingleton())
+                if (!IsCurrentSingleton)
                 {
-                    Debug.LogWarning("Warning: More than one instance of singleton " + typeof(T) + " existing.");
+                    Debug.LogWarning("Warning: More than one instance of singleton " + typeof(T) + " exists in the scene. The newest one will be destroyed.");
                     Destroy(gameObject);
                 }
             }
-            else //if (instance == null)
+            else
             {
-                instance = gameObject.GetComponent<T>(); // AddComponent(typeof(T)) as T;
+                // Previously, it was `instance = gameObject.GetComponent<T>();` but this should be more efficient
+                instance = this as T;
 
                 if (isPersistent)
                     DontDestroyOnLoad(gameObject);
             }
         }
 
-        public virtual void OnDestroy()
+        //Only the true singleton can reset the global reference
+        protected virtual void OnDestroy()
         {
-            if (IsCurrentSingleton())
-            {
+            if (IsCurrentSingleton)
                 instance = null;
+        }
+
+        #endregion
+
+        #region Private & Protected
+
+        /// <summary>
+        /// Determines whether the current instance is the one true singleton
+        /// </summary>
+        /// <returns></returns>
+        protected bool IsCurrentSingleton
+        {
+            get
+            {
+                return Exists && instance.gameObject.GetInstanceID() == gameObject.GetInstanceID();
             }
         }
 
         #endregion
+
 
         #region Public API
 
@@ -72,7 +88,14 @@ namespace Unitilities
         /// </summary>
         public static bool Exists
         {
-            get { return ((object)instance != null); }
+            get
+            {
+                #if UNITY_EDITOR
+                    return (instance != null);
+                #else
+                    return ((object) instance != null);
+                #endif
+            }
         }
 
         /// <summary>
@@ -84,33 +107,20 @@ namespace Unitilities
             {
                 if (!Exists)
                 {
-                    instance = (T)FindObjectOfType(typeof(T));
+                    //We could first check inside the scene for an existing instance
+                    //but because how this script is constructed, asking if it `Exists` should be enough.
+                    //instance = (T) FindObjectOfType(typeof(T)); 
+                    
+                    Debug.Log("An instance of " + typeof(T).ToString() + " is needed in the scene, but there was none found.\nOne was generated automatically for you.");
 
-                    if (!Exists)
-                    {
-                        Debug.Log("An instance of " + typeof(T) + " is needed in the scene, but there is none. Generated automatically.");
-
-                        GameObject obj = new GameObject("Singleton_" + typeof(T));
-                        instance = obj.AddComponent(typeof(T)) as T;
-                    }
+                    GameObject obj = new GameObject("Singleton_" + typeof(T));
+                    instance = obj.AddComponent(typeof(T)) as T;
                 }
 
                 return instance;
             }
         }
-
-        /// <summary>
-        /// Determines whether the current instance is the one true singleton
-        /// </summary>
-        /// <returns></returns>
-        public bool IsCurrentSingleton()
-        {
-            if (!Exists) // instance == null
-                return false;
-
-            return instance.gameObject.GetInstanceID() == gameObject.GetInstanceID();
-        }
-
+        
         #endregion
 
     }

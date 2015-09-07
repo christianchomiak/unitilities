@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// CollectionExtensions v1.2 by Christian Chomiak, christianchomiak@gmail.com
+/// CollectionExtensions v1.2.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions that facilitate the use of Collections (arrays, lists, etc.)
 /// </summary>

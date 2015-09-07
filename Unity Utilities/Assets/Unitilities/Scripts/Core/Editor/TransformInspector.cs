@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// TransformInspector v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// TransformInspector v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Script to provide shortcuts in the Transform Inspector to reset the Position,
 /// Scale and Rotation of a GameObject.

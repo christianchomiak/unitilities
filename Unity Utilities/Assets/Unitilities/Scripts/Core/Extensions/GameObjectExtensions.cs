@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// GameObjectExtensions v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// GameObjectExtensions v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions that facilitate the use of GameObjects
 /// </summary>

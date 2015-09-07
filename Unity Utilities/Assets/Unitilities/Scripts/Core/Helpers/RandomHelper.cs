@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// RandomHelper v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// RandomHelper v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Useful functions for random labors.
 /// </summary>
@@ -8,10 +8,8 @@ using UnityEngine;
 
 namespace Unitilities
 {
-
     public static class RandomHelper
     {
-
         #region int
         /// <summary>
         /// Returns 1 or -1 at random.

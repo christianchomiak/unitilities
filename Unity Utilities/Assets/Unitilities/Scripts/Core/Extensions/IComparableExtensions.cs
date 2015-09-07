@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// IComparableExtensions v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// IComparableExtensions v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions that facilitate the use of IComparable objects. 
 /// </summary>

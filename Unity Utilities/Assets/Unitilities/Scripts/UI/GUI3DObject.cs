@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// GUI3DObject v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// GUI3DObject v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Script to position a gameobject relative to the screen (like an UI element).
 /// 

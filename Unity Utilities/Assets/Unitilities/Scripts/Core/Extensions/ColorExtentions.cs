@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ColorExtensions v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// ColorExtensions v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions that facilitate the use of Unity's Color. 
 /// </summary>

@@ -1,5 +1,5 @@
 ﻿// <summary>
-/// PrimitiveHelper v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// PrimitiveHelper v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Useful functions for C# primitives.
 /// </summary>

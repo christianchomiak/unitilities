@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// InvisibleObjectDrawer v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// InvisibleObjectDrawer v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Script to show a GameObject's position ingame.
 /// Meant to be used on objects that are  have no meshrender.

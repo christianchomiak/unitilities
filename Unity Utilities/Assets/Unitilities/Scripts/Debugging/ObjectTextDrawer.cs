@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ObjectTextDrawer v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// ObjectTextDrawer v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Script to show a text, above a GameObject, ingame.
 /// 

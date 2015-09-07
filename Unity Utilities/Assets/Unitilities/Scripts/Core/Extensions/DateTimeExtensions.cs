@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// DateTimeExtensions v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// DateTimeExtensions v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions for manipulating Date/Time.
 /// </summary>

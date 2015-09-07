@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 
-
 namespace Unitilities.Debugging
 {
-
     public enum PlayerPrefsType { Int, Float, String };
 
     public class PlayerPrefsDataType

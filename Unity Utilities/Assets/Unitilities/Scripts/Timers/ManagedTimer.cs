@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ManagedTimer v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// ManagedTimer v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Timer to keep track of time. It uses a manager to update itself and trigger its listeners.
 /// </summary>

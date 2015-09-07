@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// RandomColor v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// RandomColor v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// API to get random colors a given hue, saturation or value as a starting point.
 /// </summary>

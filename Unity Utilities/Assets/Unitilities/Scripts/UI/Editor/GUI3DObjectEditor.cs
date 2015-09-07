@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// GUI3DObjectEditor v1.0 by Christian Chomiak, christianchomiak@gmail.com
+/// GUI3DObjectEditor v1.0.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Custom editor for GUI3DObject
 /// </summary>

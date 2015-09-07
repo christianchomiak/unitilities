@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// ColorHelper v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// ColorHelper v1.1.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Functions that facilitate the manipulation of Unitiy's Color.
 /// </summary>

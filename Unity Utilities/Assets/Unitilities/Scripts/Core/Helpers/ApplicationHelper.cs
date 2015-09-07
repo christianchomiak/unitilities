@@ -1,5 +1,5 @@
 ﻿// <summary>
-/// ApplicationHelper v1.1 by Christian Chomiak, christianchomiak@gmail.com
+/// ApplicationHelper v1.1.0 by Christian Chomiak, christianchomiak@gmail.com
 /// 
 /// Shortcuts for common queries to Unity's Application.
 /// </summary>
